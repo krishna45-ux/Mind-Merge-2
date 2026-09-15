@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="32" fill="url(#bg)" />
+  
+  <!-- Outer Glow / Shadow -->
+  <circle cx="64" cy="64" r="54" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="4" />
+  
+  <!-- Shoulders / Hoodie -->
+  <path d="M28 110 C28 85, 40 78, 64 78 C88 78, 100 85, 100 110" fill="#f97316" /> <!-- Orange hoodie -->
+  <!-- Hoodie strings -->
+  <circle cx="56" cy="94" r="2.5" fill="#e2e8f0" />
+  <line x1="56" y1="84" x2="56" y2="92" stroke="#e2e8f0" stroke-width="1.5" />
+  <circle cx="72" cy="94" r="2.5" fill="#e2e8f0" />
+  <line x1="72" y1="84" x2="72" y2="92" stroke="#e2e8f0" stroke-width="1.5" />
+
+  <!-- Neck -->
+  <rect x="56" y="66" width="16" height="16" rx="4" fill="#ffedd5" />
+
+  <!-- Head / Face -->
+  <rect x="42" y="34" width="44" height="44" rx="22" fill="#ffedd5" />
+
+  <!-- Cool Beanie (hair/headwear) -->
+  <path d="M42 42 C42 26, 86 26, 86 42 Z" fill="#334155" />
+  <rect x="40" y="38" width="48" height="6" rx="3" fill="#475569" />
+
+  <!-- Face features (Eyes, Mouth) -->
+  <circle cx="53" cy="52" r="2" fill="#0f172a" />
+  <circle cx="75" cy="52" r="2" fill="#0f172a" />
+  <path d="M58 64 Q64 70, 70 64" fill="none" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Headphones -->
+  <path d="M38 54 C38 28, 90 28, 90 54" fill="none" stroke="#0f172a" stroke-width="4" />
+  <rect x="34" y="48" width="8" height="16" rx="3" fill="#0f172a" />
+  <rect x="86" y="48" width="8" height="16" rx="3" fill="#0f172a" />
+</svg>

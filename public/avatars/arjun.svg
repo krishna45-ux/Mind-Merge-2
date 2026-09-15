@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="32" fill="url(#bg)" />
+  
+  <!-- Outer Glow / Shadow -->
+  <circle cx="64" cy="64" r="54" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="4" />
+  
+  <!-- Hair (Back curly volume) -->
+  <circle cx="50" cy="36" r="14" fill="#1e293b" />
+  <circle cx="78" cy="36" r="14" fill="#1e293b" />
+  <circle cx="64" cy="30" r="16" fill="#1e293b" />
+
+  <!-- Shoulders / Clothes -->
+  <path d="M28 110 C28 85, 40 78, 64 78 C88 78, 100 85, 100 110" fill="#0d9488" /> <!-- Teal t-shirt -->
+  <path d="M54 78 C54 78, 64 88, 64 88 C64 88, 74 78, 74 78 Z" fill="#ffedd5" /> <!-- Neck cutout -->
+
+  <!-- Neck -->
+  <rect x="56" y="66" width="16" height="16" rx="4" fill="#ffedd5" />
+
+  <!-- Head / Face -->
+  <rect x="42" y="34" width="44" height="44" rx="22" fill="#ffedd5" />
+
+  <!-- Hair (Front curls/spikes) -->
+  <circle cx="48" cy="38" r="8" fill="#1e293b" />
+  <circle cx="64" cy="36" r="10" fill="#1e293b" />
+  <circle cx="80" cy="38" r="8" fill="#1e293b" />
+
+  <!-- Face features (Eyes, Mouth) -->
+  <circle cx="53" cy="52" r="2" fill="#0f172a" />
+  <circle cx="75" cy="52" r="2" fill="#0f172a" />
+  <path d="M58 64 Q64 71, 70 64" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+</svg>

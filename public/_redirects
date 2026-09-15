@@ -1,0 +1,3 @@
+# Cloudflare Pages SPA Routing and API rewrites
+/api/*  http://localhost:3001/api/:splat  200
+/*      /index.html  200

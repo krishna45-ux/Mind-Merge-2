@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="32" fill="url(#bg)" />
+  
+  <!-- Outer Glow / Shadow -->
+  <circle cx="64" cy="64" r="54" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="4" />
+  
+  <!-- Shoulders / Clothes -->
+  <path d="M28 110 C28 85, 40 78, 64 78 C88 78, 100 85, 100 110" fill="#334155" />
+  <path d="M54 78 L64 92 L74 78 Z" fill="#f1f5f9" /> <!-- Inner shirt -->
+  <path d="M56 78 L64 88 L72 78 Z" fill="#6366f1" /> <!-- Indigo tie/collar detail -->
+
+  <!-- Neck -->
+  <rect x="56" y="66" width="16" height="16" rx="4" fill="#ffedd5" />
+
+  <!-- Head / Face -->
+  <rect x="42" y="34" width="44" height="44" rx="22" fill="#ffedd5" />
+
+  <!-- Salt and Pepper Hair -->
+  <path d="M42 42 C40 30, 88 30, 86 42 C82 36, 46 36, 42 42" fill="#475569" />
+  <!-- Sideburns -->
+  <path d="M41 42 L43 50 L45 42 Z" fill="#475569" />
+  <path d="M87 42 L85 50 L83 42 Z" fill="#475569" />
+
+  <!-- Beard / Stubble -->
+  <path d="M42 56 C42 78, 86 78, 86 56 C86 70, 42 70, 42 56" fill="#64748b" opacity="0.6" />
+  
+  <!-- Glasses -->
+  <rect x="45" y="47" width="14" height="10" rx="2" fill="none" stroke="#e2e8f0" stroke-width="2" />
+  <rect x="69" y="47" width="14" height="10" rx="2" fill="none" stroke="#e2e8f0" stroke-width="2" />
+  <line x1="59" y1="52" x2="69" y2="52" stroke="#e2e8f0" stroke-width="2" />
+
+  <!-- Face features (Eyes, Mouth) -->
+  <circle cx="52" cy="52" r="1.5" fill="#0f172a" />
+  <circle cx="76" cy="52" r="1.5" fill="#0f172a" />
+  <path d="M60 66 Q64 69, 68 66" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" />
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="32" fill="url(#bg)" />
+  
+  <!-- Outer Glow / Shadow -->
+  <circle cx="64" cy="64" r="54" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="4" />
+  
+  <!-- Hair (Back) -->
+  <circle cx="64" cy="46" r="24" fill="#1e293b" />
+  
+  <!-- Shoulders / Clothes -->
+  <path d="M28 110 C28 85, 40 78, 64 78 C88 78, 100 85, 100 110" fill="#475569" />
+  <path d="M54 78 L64 92 L74 78 Z" fill="#e2e8f0" /> <!-- Inner shirt -->
+  <path d="M56 78 L64 88 L72 78 Z" fill="#f87171" /> <!-- Red collar detail -->
+
+  <!-- Neck -->
+  <rect x="56" y="66" width="16" height="16" rx="4" fill="#fed7aa" />
+
+  <!-- Head / Face -->
+  <rect x="42" y="34" width="44" height="44" rx="22" fill="#ffedd5" />
+
+  <!-- Hair (Front / Bangs) -->
+  <path d="M42 46 C42 34, 86 34, 86 46 C80 38, 48 38, 42 46" fill="#1e293b" />
+  
+  <!-- Glasses -->
+  <circle cx="53" cy="54" r="8" fill="none" stroke="#eab308" stroke-width="2.5" />
+  <circle cx="75" cy="54" r="8" fill="none" stroke="#eab308" stroke-width="2.5" />
+  <line x1="61" y1="54" x2="67" y2="54" stroke="#eab308" stroke-width="2.5" />
+
+  <!-- Face features (Eyes, Mouth) -->
+  <circle cx="53" cy="54" r="2" fill="#0f172a" />
+  <circle cx="75" cy="54" r="2" fill="#0f172a" />
+  <path d="M60 67 Q64 71, 68 67" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" />
+</svg>
