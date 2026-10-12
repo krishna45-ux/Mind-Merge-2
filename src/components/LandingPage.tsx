@@ -4,7 +4,8 @@ import {
   BookOpen, GraduationCap, Sparkles, ArrowRight, X, Mail,
   Lock, User, Layers, Target, Zap, Users, FileText, Star,
   ChevronRight, Quote, Github, Twitter, Linkedin, Heart, Send,
-  CheckCircle2, ShieldCheck, Globe, Laptop, HelpCircle, ChevronDown, Check
+  CheckCircle2, ShieldCheck, Globe, Laptop, HelpCircle, ChevronDown, Check,
+  Menu
 } from 'lucide-react';
 
 import { getLegalContent, type LegalPageType } from './LegalPages';
@@ -75,6 +76,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
   const [modalRole, setModalRole] = useState<'teacher' | 'student'>('student');
   const [legalModal, setLegalModal] = useState<LegalPageType | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const authModalRef = useRef<HTMLDivElement>(null);
   const legalModalRef = useRef<HTMLDivElement>(null);
@@ -185,17 +187,17 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-            ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#EDE4D8] shadow-[0_4px_24px_rgba(44,26,18,0.06)] py-2.5 sm:py-3'
-            : 'bg-[#FAF7F2]/40 md:bg-transparent backdrop-blur-xs md:backdrop-blur-none border-b border-transparent py-2.5 sm:py-3.5'
+            ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#EDE4D8] shadow-[0_4px_24px_rgba(44,26,18,0.06)] py-2 sm:py-3'
+            : 'bg-[#FAF7F2]/60 md:bg-transparent backdrop-blur-xs md:backdrop-blur-none border-b border-[#EDE4D8]/30 md:border-transparent py-2.5 sm:py-3.5'
           }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-10 lg:px-12 flex items-center justify-between gap-2 sm:gap-4">
           {/* Brand Logo with micro-tilt */}
           <motion.a
             href="#"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] rounded-lg flex-shrink-0"
+            className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] rounded-lg flex-shrink-0"
           >
             <motion.div
               whileHover={{ rotate: [0, -10, 10, -5, 0], scale: 1.1 }}
@@ -204,7 +206,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
             >
               <BookOpen className="w-4 h-4 text-[#2C1A12]" />
             </motion.div>
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#2C1A12] drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+            <span className="font-serif text-lg sm:text-2xl font-bold tracking-tight text-[#2C1A12] drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] truncate">
               MindMerge AI
             </span>
           </motion.a>
@@ -231,12 +233,12 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               onClick={handleLoginClick}
-              className="font-semibold text-sm text-[#2C1A12] hover:text-[#C26D43] px-3 py-1.5 transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] cursor-pointer whitespace-nowrap drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]"
+              className="hidden sm:inline-flex font-semibold text-sm text-[#2C1A12] hover:text-[#C26D43] px-3 py-1.5 transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] cursor-pointer whitespace-nowrap drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]"
             >
               Log In
             </motion.button>
@@ -244,12 +246,89 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
               whileHover={{ scale: 1.04, y: -1, boxShadow: '0 6px 18px rgba(194,109,67,0.25)' }}
               whileTap={{ scale: 0.97 }}
               onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
-              className="bg-[#C26D43] hover:bg-[#AF5E35] text-white text-sm font-semibold px-4.5 py-2 sm:py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer whitespace-nowrap"
+              className="bg-[#C26D43] hover:bg-[#AF5E35] text-white text-xs sm:text-sm font-semibold px-3 sm:px-4.5 py-1.5 sm:py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer whitespace-nowrap"
             >
               Sign Up Free
             </motion.button>
+
+            {/* Mobile Hamburger Menu Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-1.5 sm:p-2 rounded-xl text-[#2C1A12] hover:bg-[#F5EFE6] border border-[#E2D5C3]/70 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] cursor-pointer"
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-[#2C1A12]" /> : <Menu className="w-5 h-5 text-[#2C1A12]" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Navigation Drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="md:hidden border-t border-[#EDE4D8] bg-[#FAF7F2]/98 backdrop-blur-xl px-5 py-4 shadow-lg overflow-hidden"
+            >
+              <div className="flex flex-col gap-2.5">
+                {[
+                  { href: 'features', label: 'Features' },
+                  { href: 'for-teachers', label: 'For Teachers' },
+                  { href: 'for-students', label: 'For Students' },
+                  { href: 'resources', label: 'Resources & FAQ' },
+                ].map((link) => (
+                  <a
+                    key={link.href}
+                    href={`#${link.href}`}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      scrollToSection(e, link.href);
+                    }}
+                    className="py-2.5 px-2 text-sm font-semibold text-[#2C1A12] hover:text-[#C26D43] transition-colors border-b border-[#EDE4D8]/50 flex items-center justify-between"
+                  >
+                    <span>{link.label}</span>
+                    <ChevronRight className="w-4 h-4 text-[#8A7D73]" />
+                  </a>
+                ))}
+
+                <div className="pt-2 flex flex-col gap-2">
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        handleRoleClick('teacher');
+                      }}
+                      className="py-2.5 px-3 rounded-xl bg-[#2C1A12] text-white text-xs font-semibold text-center hover:bg-[#3E261B] transition-colors cursor-pointer"
+                    >
+                      Teacher Portal
+                    </button>
+                    <button
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        handleRoleClick('student');
+                      }}
+                      className="py-2.5 px-3 rounded-xl bg-[#F5EFE6] text-[#2C1A12] border border-[#DFD2C0] text-xs font-semibold text-center hover:bg-[#EDE3D4] transition-colors cursor-pointer"
+                    >
+                      Student Hub
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLoginClick();
+                    }}
+                    className="w-full py-2 text-center text-xs font-semibold text-[#6D6056] hover:text-[#C26D43] transition-colors cursor-pointer"
+                  >
+                    Already have an account? <span className="font-bold underline text-[#2C1A12]">Log in</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.header>
 
       {/* ══════════════════════════════════════════════════════════
@@ -257,8 +336,19 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
           Full-bleed morning sunlit study desk with scroll parallax & staggered typography
       ══════════════════════════════════════════════════════════ */}
       <main id="main-content" className="flex-1">
-        <section className="w-full relative min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex items-center overflow-hidden pt-16 sm:pt-18 lg:pt-20 pb-8 sm:pb-12 bg-[#EDE4D8]">
-          {/* Full-bleed photography background with scroll parallax */}
+        <section className="w-full relative min-h-[580px] sm:min-h-[620px] lg:min-h-[660px] flex items-center overflow-hidden pt-18 sm:pt-20 lg:pt-22 pb-10 sm:pb-12 bg-[#EDE4D8]">
+          {/* Mobile portrait photography background */}
+          <motion.img
+            style={{ y: heroY, scale: heroScale }}
+            src="/theme/hero_mobile.jpg"
+            alt="Cozy sunlit study desk with window and books"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
+            className="md:hidden absolute inset-0 w-full h-[115%] object-cover object-[center_20%] select-none -top-6"
+          />
+
+          {/* Desktop & tablet landscape background */}
           <motion.img
             style={{ y: heroY, scale: heroScale }}
             src="/theme/hero_warm_study.jpg"
@@ -266,13 +356,13 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
             fetchPriority="high"
             loading="eager"
             decoding="async"
-            className="absolute inset-0 w-full h-[115%] object-cover object-[50%_center] sm:object-[58%_center] lg:object-[64%_center] select-none -top-8"
+            className="hidden md:block absolute inset-0 w-full h-[115%] object-cover object-[50%_center] sm:object-[58%_center] lg:object-[64%_center] select-none -top-8"
           />
 
-          {/* Seamless natural morning light scrims */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2]/85 via-[#FAF7F2]/45 to-transparent to-70% pointer-events-none" />
-          <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#FAF7F2]/50 via-[#FAF7F2]/20 to-transparent pointer-events-none" />
-          <div className="absolute bottom-0 inset-x-0 h-32 sm:h-40 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/60 to-transparent pointer-events-none" />
+          {/* Seamless natural morning light scrims (adaptive for mobile portrait & desktop landscape) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7F2]/90 via-[#FAF7F2]/75 to-[#FAF7F2]/95 md:bg-gradient-to-r md:from-[#FAF7F2]/85 md:via-[#FAF7F2]/45 md:to-transparent md:to-70% pointer-events-none" />
+          <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#FAF7F2]/60 via-[#FAF7F2]/25 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 inset-x-0 h-28 sm:h-36 lg:h-40 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/70 to-transparent pointer-events-none" />
 
           {/* Floating Ambient Morning Light Orb behind headline */}
           <motion.div
@@ -291,14 +381,14 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
           />
 
           {/* Overlaid Hero Content - Perfectly Proportioned Editorial Spacing */}
-          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full pt-3 sm:pt-4 lg:pt-6 pb-4 sm:pb-6">
+          <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-10 lg:px-12 w-full pt-4 sm:pt-4 lg:pt-6 pb-6 sm:pb-6">
             <div className="max-w-[460px] lg:max-w-[500px] text-left">
               {/* Pill Badge with twinkle sparkle */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-[#E5DACB] text-[#2C1A12] text-xs font-semibold shadow-xs mb-3.5 sm:mb-4 w-fit"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-sm border border-[#E5DACB] text-[#2C1A12] text-xs font-semibold shadow-xs mb-3.5 sm:mb-4 w-fit"
               >
                 <motion.span
                   animate={{ rotate: [0, 18, -12, 0] }}
@@ -311,7 +401,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
               </motion.div>
 
               {/* Main Headline - Line-by-line masked cinematic reveal */}
-              <h1 className="font-serif text-3xl sm:text-4xl md:text-[42px] lg:text-[46px] font-bold tracking-tight text-[#2C1A12] leading-[1.12] mb-4 sm:mb-4.5">
+              <h1 className="font-serif text-[32px] xs:text-4xl sm:text-4xl md:text-[42px] lg:text-[46px] font-bold tracking-tight text-[#2C1A12] leading-[1.14] sm:leading-[1.12] mb-3.5 sm:mb-4.5">
                 <span className="block overflow-hidden pb-0.5">
                   <motion.span
                     className="block"
@@ -359,23 +449,23 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                 initial={{ opacity: 0, filter: 'blur(5px)', y: 16 }}
                 animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
                 transition={{ duration: 0.6, delay: 0.38 }}
-                className="text-sm sm:text-base text-[#6D6056] leading-relaxed max-w-[430px] mb-6 sm:mb-7"
+                className="text-sm sm:text-base text-[#4A3D34] sm:text-[#6D6056] leading-relaxed max-w-[430px] mb-6 sm:mb-7 font-normal"
               >
                 MindMerge AI helps teachers create stunning learning content in minutes and gives students a space designed to learn, practice and grow.
               </motion.p>
 
-              {/* Action Buttons */}
+              {/* Action Buttons - Stack full width on mobile, inline on sm */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.45 }}
-                className="flex flex-wrap items-center gap-3.5 sm:gap-4"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto"
               >
                 <motion.button
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleRoleClick('teacher')}
-                  className="bg-[#2C1A12] hover:bg-[#3E261B] text-white text-sm sm:text-base font-semibold px-6 py-3.5 rounded-xl flex items-center gap-2.5 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer whitespace-nowrap group"
+                  className="w-full sm:w-auto justify-center bg-[#2C1A12] hover:bg-[#3E261B] text-white text-sm sm:text-base font-semibold px-6 py-3.5 rounded-xl flex items-center gap-2.5 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer whitespace-nowrap group"
                 >
                   <span>Start Creating</span>
                   <motion.span
@@ -391,7 +481,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => handleRoleClick('student')}
-                  className="bg-[#F5EFE6]/90 hover:bg-[#EDE3D4] text-[#2C1A12] text-sm sm:text-base font-semibold px-6 py-3.5 rounded-xl border border-[#DFD2C0] shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer whitespace-nowrap"
+                  className="w-full sm:w-auto justify-center bg-[#F5EFE6]/95 hover:bg-[#EDE3D4] text-[#2C1A12] text-sm sm:text-base font-semibold px-6 py-3.5 rounded-xl border border-[#DFD2C0] shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer whitespace-nowrap text-center"
                 >
                   Explore Student Hub
                 </motion.button>
@@ -450,7 +540,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   boxShadow: "0 20px 40px -15px rgba(44,26,18,0.12)",
                   borderColor: "#D8C5B2",
                 }}
-                className="bg-white border border-[#EDE4D8] rounded-3xl p-6 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
+                className="bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -467,8 +557,8 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   </p>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="w-full h-44 sm:h-52 rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#EDE4D8] relative">
+                <div className="space-y-5 sm:space-y-6">
+                  <div className="w-full h-40 sm:h-52 rounded-xl sm:rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#EDE4D8] relative">
                     <img
                       src="/theme/teacher_preview.jpg"
                       alt="Teacher desk with lesson plan notebook"
@@ -506,7 +596,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   boxShadow: "0 20px 40px -15px rgba(44,26,18,0.12)",
                   borderColor: "#D8C5B2",
                 }}
-                className="bg-white border border-[#EDE4D8] rounded-3xl p-6 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
+                className="bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -523,8 +613,8 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   </p>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="w-full h-44 sm:h-52 rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#EDE4D8] relative">
+                <div className="space-y-5 sm:space-y-6">
+                  <div className="w-full h-40 sm:h-52 rounded-xl sm:rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#EDE4D8] relative">
                     <img
                       src="/theme/student_preview.jpg"
                       alt="Student study textbooks and desk plant"
@@ -558,7 +648,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -3, boxShadow: "0 10px 25px -10px rgba(44,26,18,0.08)" }}
-              className="mt-8 bg-white border border-[#EDE4D8] rounded-2xl p-5 sm:p-6 shadow-[0_4px_16px_rgba(44,26,18,0.02)] flex flex-col sm:flex-row items-center justify-between gap-5 transition-all"
+              className="mt-8 bg-white border border-[#EDE4D8] rounded-2xl p-4 sm:p-6 shadow-[0_4px_16px_rgba(44,26,18,0.02)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5 transition-all"
             >
               <div className="flex items-center gap-4">
                 <motion.img
@@ -853,7 +943,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="bg-[#2C1A12] text-white rounded-3xl p-8 sm:p-14 text-center relative overflow-hidden shadow-2xl"
+              className="bg-[#2C1A12] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-12 lg:p-14 text-center relative overflow-hidden shadow-2xl"
             >
               {/* Floating Aurora / Radial Ambient Glow Orbs */}
               <motion.div
@@ -892,18 +982,18 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   </motion.span>
                   Join Our Community
                 </motion.span>
-                <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+                <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
                   Ready to transform your classroom?
                 </h2>
                 <p className="text-sm sm:text-base text-[#DFD2C2] leading-relaxed mb-8">
                   Get started in seconds. No complex setup or credit card required.
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
                   <motion.button
                     whileHover={{ scale: 1.04, y: -2, boxShadow: '0 8px 24px rgba(194,109,67,0.35)' }}
                     whileTap={{ scale: 0.97 }}
                     onClick={() => handleRoleClick('teacher')}
-                    className="bg-[#C26D43] hover:bg-[#AF5E35] text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl shadow-md transition-all cursor-pointer"
+                    className="w-full sm:w-auto justify-center bg-[#C26D43] hover:bg-[#AF5E35] text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl shadow-md transition-all cursor-pointer"
                   >
                     Start as Teacher
                   </motion.button>
@@ -911,7 +1001,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                     whileHover={{ scale: 1.04, y: -2, backgroundColor: 'rgba(255,255,255,0.18)' }}
                     whileTap={{ scale: 0.97 }}
                     onClick={() => handleRoleClick('student')}
-                    className="bg-white/10 text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl border border-white/20 transition-all cursor-pointer"
+                    className="w-full sm:w-auto justify-center bg-white/10 text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl border border-white/20 transition-all cursor-pointer"
                   >
                     Join as Student
                   </motion.button>
@@ -1022,7 +1112,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
-              className="relative w-full max-w-md bg-white border border-[#EDE4D8] rounded-3xl shadow-2xl overflow-hidden p-8"
+              className="relative w-[calc(100vw-32px)] max-w-md max-h-[90vh] overflow-y-auto bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8"
             >
               <button
                 onClick={() => setShowAuthModal(false)}
@@ -1179,11 +1269,11 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                 initial={{ opacity: 0, scale: 0.95, y: 16 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 16 }}
-                className="relative w-full max-w-2xl max-h-[80vh] bg-white border border-[#EDE4D8] rounded-3xl shadow-2xl overflow-hidden flex flex-col"
+                className="relative w-[calc(100vw-32px)] max-w-2xl max-h-[85vh] bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col"
               >
-                <div className="p-6 border-b border-[#EDE4D8] flex items-start justify-between">
+                <div className="p-5 sm:p-6 border-b border-[#EDE4D8] flex items-start justify-between">
                   <div>
-                    <h3 className="font-serif text-2xl font-bold text-[#2C1A12]">{legal.title}</h3>
+                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#2C1A12]">{legal.title}</h3>
                     <p className="text-xs text-[#7A6E65] mt-1">Last updated: {legal.lastUpdated}</p>
                   </div>
                   <button
@@ -1194,7 +1284,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-                <div className="p-6 overflow-y-auto text-sm text-[#6D6056] leading-relaxed space-y-4">
+                <div className="p-5 sm:p-6 overflow-y-auto text-sm text-[#6D6056] leading-relaxed space-y-4">
                   {legal.content}
                 </div>
               </motion.div>
