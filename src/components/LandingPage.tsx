@@ -165,16 +165,27 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const yOffset = -80;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+    const isMobile = mobileMenuOpen;
+    if (isMobile) {
+      setMobileMenuOpen(false);
+    }
+
+    const scrollTarget = () => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    if (isMobile) {
+      setTimeout(scrollTarget, 150);
+    } else {
+      scrollTarget();
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-[#2C1A12] font-sans selection:bg-[#C26D43]/20 selection:text-[#2C1A12] flex flex-col">
+    <div className="min-h-screen bg-[#FAF7F2] text-[#2C1A12] font-sans selection:bg-[#C26D43]/20 selection:text-[#2C1A12] flex flex-col w-full">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -197,7 +208,11 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
             href="#"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] rounded-lg flex-shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] rounded-lg flex-shrink-0 cursor-pointer"
           >
             <motion.div
               whileHover={{ rotate: [0, -10, 10, -5, 0], scale: 1.1 }}
@@ -246,7 +261,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
               whileHover={{ scale: 1.04, y: -1, boxShadow: '0 6px 18px rgba(194,109,67,0.25)' }}
               whileTap={{ scale: 0.97 }}
               onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
-              className="bg-[#C26D43] hover:bg-[#AF5E35] text-white text-xs sm:text-sm font-semibold px-3 sm:px-4.5 py-1.5 sm:py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer whitespace-nowrap"
+              className="hidden sm:inline-flex bg-[#C26D43] hover:bg-[#AF5E35] text-white text-xs sm:text-sm font-semibold px-4 py-2 sm:py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer whitespace-nowrap"
             >
               Sign Up Free
             </motion.button>
@@ -254,7 +269,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
             {/* Mobile Hamburger Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 sm:p-2 rounded-xl text-[#2C1A12] hover:bg-[#F5EFE6] border border-[#E2D5C3]/70 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] cursor-pointer"
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl text-[#2C1A12] bg-[#F5EFE6]/90 hover:bg-[#EDE3D4] border border-[#E2D5C3] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] cursor-pointer shrink-0 shadow-xs"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -283,38 +298,25 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   <a
                     key={link.href}
                     href={`#${link.href}`}
-                    onClick={(e) => {
-                      setMobileMenuOpen(false);
-                      scrollToSection(e, link.href);
-                    }}
-                    className="py-2.5 px-2 text-sm font-semibold text-[#2C1A12] hover:text-[#C26D43] transition-colors border-b border-[#EDE4D8]/50 flex items-center justify-between"
+                    onClick={(e) => scrollToSection(e, link.href)}
+                    className="py-2.5 px-2 text-sm font-semibold text-[#2C1A12] hover:text-[#C26D43] transition-colors border-b border-[#EDE4D8]/50 flex items-center justify-between cursor-pointer"
                   >
                     <span>{link.label}</span>
                     <ChevronRight className="w-4 h-4 text-[#8A7D73]" />
                   </a>
                 ))}
 
-                <div className="pt-2 flex flex-col gap-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        handleRoleClick('teacher');
-                      }}
-                      className="py-2.5 px-3 rounded-xl bg-[#2C1A12] text-white text-xs font-semibold text-center hover:bg-[#3E261B] transition-colors cursor-pointer"
-                    >
-                      Teacher Portal
-                    </button>
-                    <button
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        handleRoleClick('student');
-                      }}
-                      className="py-2.5 px-3 rounded-xl bg-[#F5EFE6] text-[#2C1A12] border border-[#DFD2C0] text-xs font-semibold text-center hover:bg-[#EDE3D4] transition-colors cursor-pointer"
-                    >
-                      Student Hub
-                    </button>
-                  </div>
+                <div className="pt-2.5 flex flex-col gap-2.5">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setAuthMode('signup');
+                      setShowAuthModal(true);
+                    }}
+                    className="w-full py-3 px-4 rounded-xl bg-[#C26D43] hover:bg-[#AF5E35] text-white text-sm font-semibold text-center transition-colors cursor-pointer shadow-xs"
+                  >
+                    Sign Up Free
+                  </button>
                   <button
                     onClick={() => {
                       setMobileMenuOpen(false);
@@ -540,14 +542,14 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   boxShadow: "0 20px 40px -15px rgba(44,26,18,0.12)",
                   borderColor: "#D8C5B2",
                 }}
-                className="bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
+                className="scroll-mt-24 bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-extrabold tracking-widest uppercase text-[#C26D43] bg-[#F5EFE6] px-3 py-1 rounded-full border border-[#E5DACB]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-[#C26D43] bg-[#F5EFE6] px-2.5 sm:px-3 py-1 rounded-full border border-[#E5DACB] whitespace-nowrap shrink-0 shadow-xs">
                       Faculty & Educators
                     </span>
-                    <span className="text-xs text-[#8A7D73] font-medium">Step 1 &bull; Synthesis & Review</span>
+                    <span className="text-[11px] sm:text-xs text-[#8A7D73] font-medium whitespace-nowrap">Step 1 &bull; Synthesis & Review</span>
                   </div>
                   <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2C1A12] mb-2.5">
                     For Teachers
@@ -596,14 +598,14 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                   boxShadow: "0 20px 40px -15px rgba(44,26,18,0.12)",
                   borderColor: "#D8C5B2",
                 }}
-                className="bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
+                className="scroll-mt-24 bg-white border border-[#EDE4D8] rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-extrabold tracking-widest uppercase text-[#C26D43] bg-[#F5EFE6] px-3 py-1 rounded-full border border-[#E5DACB]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-[#C26D43] bg-[#F5EFE6] px-2.5 sm:px-3 py-1 rounded-full border border-[#E5DACB] whitespace-nowrap shrink-0 shadow-xs">
                       Learners & Classes
                     </span>
-                    <span className="text-xs text-[#8A7D73] font-medium">Step 2 &bull; Active Recall</span>
+                    <span className="text-[11px] sm:text-xs text-[#8A7D73] font-medium whitespace-nowrap">Step 2 &bull; Active Recall</span>
                   </div>
                   <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2C1A12] mb-2.5">
                     For Students
@@ -688,7 +690,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
         {/* ══════════════════════════════════════════════════════════
             4. PLATFORM FEATURES DEEP-DIVE
         ══════════════════════════════════════════════════════════ */}
-        <section id="features" className="px-4 sm:px-6 lg:px-8 py-16 bg-[#FAF7F2]">
+        <section id="features" className="scroll-mt-24 px-4 sm:px-6 lg:px-8 py-16 bg-[#FAF7F2]">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
@@ -867,7 +869,7 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
         {/* ══════════════════════════════════════════════════════════
             6. FREQUENTLY ASKED QUESTIONS (Resources)
         ══════════════════════════════════════════════════════════ */}
-        <section id="resources" className="px-4 sm:px-6 lg:px-8 py-16">
+        <section id="resources" className="scroll-mt-24 px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 24 }}

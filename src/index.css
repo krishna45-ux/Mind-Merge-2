@@ -146,6 +146,8 @@ html {
   background-color: #FAF7F2;
   color: #2C1A12;
   scroll-behavior: smooth;
+  overflow-x: clip;
+  width: 100%;
 }
 
 body {
@@ -153,11 +155,14 @@ body {
   background-color: #FAF7F2;
   color: #2C1A12;
   font-family: var(--font-sans);
+  overflow-x: clip;
+  width: 100%;
 }
 
 #root {
   min-height: 100vh;
   background-color: #FAF7F2;
+  width: 100%;
 }
 
 /* ─── Custom Scrollbar ─────────────────────────────────────── */
