@@ -52,7 +52,7 @@ function AppContent() {
   ];
 
   return (
-    <div className="page-shell min-h-screen overflow-hidden">
+    <div className="page-shell min-h-screen">
       <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-slate-400 font-sans"><div className="w-6 h-6 border-2 border-slate-700 border-t-lagoon-500 rounded-full animate-spin mr-3"></div>Loading workspace...</div>}>
         <AnimatePresence mode="wait">
           {currentStage === 'landing' && (
@@ -98,14 +98,14 @@ function AppContent() {
 
       {/* Development-only Navigation — hidden in production builds */}
       {import.meta.env.DEV && (
-        <div className="fixed bottom-4 right-4 flex gap-1 z-50 glass-card p-1.5 rounded-full shadow-xl border border-white/50">
+        <div className="fixed bottom-4 right-4 flex gap-1 z-50 bg-white/90 backdrop-blur-md p-1.5 rounded-full shadow-xl border border-[#EDE4D8]">
           {stages.map((s) => (
             <button
               key={s.key}
               onClick={() => setCurrentStage(s.key)}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all duration-200 ${currentStage === s.key
-                ? 'bg-gradient-to-r from-lagoon-500 to-blue-600 text-white shadow-md shadow-lagoon-500/25'
-                : 'text-slate-500 hover:bg-slate-100 hover:text-slate-700'
+                ? 'bg-[#684736] text-white shadow-md'
+                : 'text-[#6D6056] hover:bg-[#F5EFE6] hover:text-[#2C1A12]'
                 }`}
             >
               {s.icon}

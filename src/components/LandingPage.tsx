@@ -1,54 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'motion/react';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-const HeroCanvas = React.lazy(() => import('./3d/HeroCanvas'));
-import { ReactLenis } from 'lenis/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import {
   BookOpen, GraduationCap, Sparkles, ArrowRight, X, Mail,
   Lock, User, Layers, Target, Zap, Users, FileText, Star,
-  ChevronRight, Quote, Github, Twitter, Linkedin, Heart, Send
+  ChevronRight, Quote, Github, Twitter, Linkedin, Heart, Send,
+  CheckCircle2, ShieldCheck, Globe, Laptop, HelpCircle, ChevronDown, Check
 } from 'lucide-react';
 
-gsap.registerPlugin(ScrollTrigger);
 import { getLegalContent, type LegalPageType } from './LegalPages';
 import { useAppContext } from '../context/AppContext';
 import { useFocusTrap } from '../lib/useFocusTrap';
 import { trackEvent } from '../lib/analytics';
 
-
 interface LandingPageProps {
   onSelectRole: (role: 'teacher' | 'student') => void;
 }
 
-/* ── Animated counter hook ─────────────────────────────────── */
-function useCounter<T extends Element = HTMLElement>(end: number, duration = 2000, startOnView = true) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<T>(null);
-  const isInView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (!startOnView || !isInView) return;
-    let start = 0;
-    const increment = end / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [end, duration, isInView, startOnView]);
-
-  return { count, ref };
-}
-
-/* ── Testimonial data ──────────────────────────────────────── */
+/* ── Testimonials Data ─────────────────────────────────────── */
 const TESTIMONIALS = [
+  {
+    name: 'Ananya Sharma',
+    role: 'Biology Teacher, Delhi Public School',
+    quote: 'MindMerge AI has completely changed how we create and deliver content. Turning textbook chapters into interactive study modules takes minutes now.',
+    rating: 5,
+    avatar: '/theme/ananya_avatar.jpg',
+  },
   {
     name: 'Prof. Meera Patel',
     role: 'Computer Science, IIT Delhi',
@@ -59,7 +35,7 @@ const TESTIMONIALS = [
   {
     name: 'Arjun Krishnamurthy',
     role: 'B.Tech Student, NIT Trichy',
-    quote: 'The flashcard system is incredible — I went from passive reading to active recall in minutes. My exam scores improved 40%.',
+    quote: 'The flashcard system is incredible — I went from passive reading to active recall in minutes. My exam scores improved significantly.',
     rating: 5,
     avatar: '/avatars/arjun.svg',
   },
@@ -72,12 +48,33 @@ const TESTIMONIALS = [
   },
 ];
 
+/* ── FAQ Data ──────────────────────────────────────────────── */
+const FAQS = [
+  {
+    question: 'How does MindMerge AI process classroom materials?',
+    answer: 'Teachers can upload lecture slides, PDFs, notes, or syllabi. Our AI extracts core concepts, structures them into clean master notes, and automatically generates interactive quizzes and flashcards for students.',
+  },
+  {
+    question: 'Do teachers have control over what students see?',
+    answer: 'Yes, completely! Every AI-generated note goes through a dedicated Teacher Review Workspace where educators can edit, reorder, adjust difficulty, or approve content before publishing to the student hub.',
+  },
+  {
+    question: 'Can students track their own revision progress?',
+    answer: 'Students have access to spaced repetition flashcards, self-grading interactive quizzes, AI concept explanations, and personalized mastery metrics for each subject.',
+  },
+  {
+    question: 'Is MindMerge AI free to use?',
+    answer: 'We offer a generous free tier for educators and learners to create, study, and share class materials with zero setup required.',
+  },
+];
+
 export default function LandingPage({ onSelectRole }: LandingPageProps) {
   const { login, signup } = useAppContext();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
   const [modalRole, setModalRole] = useState<'teacher' | 'student'>('student');
   const [legalModal, setLegalModal] = useState<LegalPageType | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const authModalRef = useRef<HTMLDivElement>(null);
   const legalModalRef = useRef<HTMLDivElement>(null);
@@ -91,19 +88,19 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
-
+  const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
-  const yBg1 = useTransform(scrollY, [0, 1000], [0, 400]);
-  const yBg2 = useTransform(scrollY, [0, 1000], [0, -400]);
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const heroY = useTransform(scrollY, [0, 500], [0, 60]);
+  const heroScale = useTransform(scrollY, [0, 500], [1, 1.05]);
 
-  const notesCounter = useCounter<HTMLParagraphElement>(12500);
-  const teacherCounter = useCounter<HTMLParagraphElement>(680);
-  const subjectCounter = useCounter<HTMLParagraphElement>(95);
-
-  const featuresRef = useRef(null);
-  const featuresInView = useInView(featuresRef, { once: true, margin: "-100px" });
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const resetForm = () => {
     setName('');
@@ -168,593 +165,1000 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
     e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const yOffset = -80;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
-  const mainRef = useRef<HTMLDivElement>(null);
-  
-  useGSAP(() => {
-    // 1. Parallax for canvas container
-    gsap.to('.canvas-container', {
-      scrollTrigger: {
-        trigger: '#main-content',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-      y: 150,
-      opacity: 0.8
-    });
-
-    // 2. How it works progress line and steps
-    const steps = gsap.utils.toArray<HTMLElement>('.how-step');
-    
-    gsap.to('.scroll-progress-line', {
-      scrollTrigger: {
-        trigger: '#how-it-works',
-        start: 'top center',
-        end: 'bottom center',
-        scrub: 1,
-      },
-      scaleY: 1,
-      ease: 'none'
-    });
-
-    steps.forEach((step, i) => {
-      gsap.to(step, {
-        scrollTrigger: {
-          trigger: step,
-          start: 'top 60%',
-          end: 'bottom 40%',
-          toggleClass: 'opacity-100', // Toggles class on and off as it enters/leaves
-        }
-      });
-    });
-
-  }, { scope: mainRef });
-
   return (
-    <ReactLenis root>
-      <div ref={mainRef} className="page-shell min-h-screen flex flex-col font-sans text-slate-800 relative">
-        <div className="canvas-container fixed inset-0 z-0 pointer-events-none">
-          <React.Suspense fallback={null}>
-            <HeroCanvas />
-          </React.Suspense>
-        </div>
-        
-        <div className="relative z-10 flex flex-col min-h-screen">
-          <a href="#main-content" className="skip-link">
-            Skip to main content
-          </a>
-      {/* ═══ Header ═══════════════════════════════════════════ */}
-      <header className="h-20 panel-surface border-b border-white/60 flex items-center justify-between px-6 md:px-12 sticky top-0 z-50">
-        <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 bg-gradient-to-br from-lagoon-500 via-violet-400 to-sun-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200/60 animate-pulse-glow">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <h1 className="font-display text-2xl font-black tracking-tight">
-            <span className="headline-gradient">MindMerge AI</span>
-          </h1>
-        </div>
-        <div className="hidden md:flex items-center gap-8 font-medium text-slate-600">
-          <a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-lagoon-500 transition-colors">Features</a>
-          <a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-lagoon-500 transition-colors">How it Works</a>
-          <a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="hover:text-lagoon-500 transition-colors">Testimonials</a>
-        </div>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={handleLoginClick}
-            className="hidden md:block font-bold text-slate-600 hover:text-slate-900 transition-colors"
+    <div className="min-h-screen bg-[#FAF7F2] text-[#2C1A12] font-sans selection:bg-[#C26D43]/20 selection:text-[#2C1A12] flex flex-col">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+      {/* ══════════════════════════════════════════════════════════
+          1. HEADER / NAVBAR (Persistent Fixed Header with Entrance & Micro-Interactions)
+      ══════════════════════════════════════════════════════════ */}
+      <motion.header
+        initial={{ y: -25, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+            ? 'bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#EDE4D8] shadow-[0_4px_24px_rgba(44,26,18,0.06)] py-2.5 sm:py-3'
+            : 'bg-[#FAF7F2]/40 md:bg-transparent backdrop-blur-xs md:backdrop-blur-none border-b border-transparent py-2.5 sm:py-3.5'
+          }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between gap-4">
+          {/* Brand Logo with micro-tilt */}
+          <motion.a
+            href="#"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] rounded-lg flex-shrink-0"
           >
-            Log In
-          </button>
-          <button
-            onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
-            className="glow-button text-white px-6 py-2.5 rounded-xl font-bold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
-          >
-            Sign Up Free
-          </button>
-        </div>
-      </header>
-
-      {/* ═══ Hero Section ═════════════════════════════════════ */}
-      <main id="main-content" className="hero-grid noise-overlay flex-1 flex flex-col items-center justify-center pt-20 pb-32 px-6 md:px-12 relative overflow-hidden min-h-[92vh]">
-        {/* Parallax BG orbs */}
-        <motion.div style={{ y: yBg1, willChange: 'transform' }} className="absolute top-1/5 left-[8%] w-[30rem] h-[30rem] bg-lagoon-300/30 rounded-full blur-3xl -z-10 mix-blend-multiply"></motion.div>
-        <motion.div style={{ y: yBg2, willChange: 'transform' }} className="absolute bottom-[8%] right-[6%] w-[28rem] h-[28rem] bg-sun-300/35 rounded-full blur-3xl -z-10 mix-blend-multiply"></motion.div>
-
-        {/* Floating decoration elements */}
-        <div className="absolute top-32 right-[14%] hidden lg:block w-28 h-28 rounded-[2rem] border border-white/60 bg-white/50 backdrop-blur-xl shadow-lg rotate-12 -z-10 animate-float"></div>
-        <div className="absolute bottom-24 left-[12%] hidden lg:block w-16 h-16 rounded-full border border-white/60 bg-white/60 backdrop-blur-xl shadow-lg -z-10 animate-float-reverse"></div>
-        <div className="absolute top-[55%] right-[5%] hidden lg:block w-20 h-20 rounded-2xl border border-lagoon-300/30 bg-lagoon-300/10 backdrop-blur-xl shadow-lg -rotate-6 -z-10 animate-float-slow"></div>
-        <div className="absolute top-[15%] left-[5%] hidden xl:block w-12 h-12 rounded-full bg-gradient-to-br from-violet-400/20 to-rose-400/20 blur-sm -z-10 animate-float-reverse"></div>
-
-        {/* Floating icons */}
-        <div className="absolute top-[20%] right-[20%] hidden lg:flex w-14 h-14 rounded-2xl bg-white/70 backdrop-blur-xl shadow-lg border border-white/60 items-center justify-center -z-10 animate-float text-lagoon-500">
-          <BookOpen className="w-6 h-6" />
-        </div>
-        <div className="absolute bottom-[30%] left-[8%] hidden lg:flex w-12 h-12 rounded-xl bg-white/70 backdrop-blur-xl shadow-lg border border-white/60 items-center justify-center -z-10 animate-float-reverse text-sun-500">
-          <Zap className="w-5 h-5" />
-        </div>
-
-        {/* Hero text content */}
-        <motion.div
-          style={{ y: heroY, opacity: heroOpacity, willChange: 'transform, opacity' }}
-          className="text-center max-w-4xl mx-auto mb-16 z-10"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full panel-surface text-slate-700 font-semibold text-sm mb-8 shadow-sm border border-white/70">
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-badge-pulse"></div>
-              <span>Notes, diagrams, quizzes, and flashcards in one learning studio</span>
-              <Sparkles className="w-4 h-4 text-sun-500" />
-            </div>
-            <h2 className="font-display text-5xl md:text-7xl font-extrabold text-slate-900 mb-6 tracking-tight leading-[0.95]">
-              Turn classroom material into a <span className="headline-gradient">living study experience</span>
-            </h2>
-            <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
-              MindMerge AI gives teachers a cinematic workflow for publishing learning content and gives students a hub that feels crafted for curiosity, not just coursework.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm font-semibold text-slate-600">
-              <span className="rounded-full bg-white/70 px-4 py-2 shadow-sm ring-1 ring-white/70 hover:ring-lagoon-300/50 transition-all cursor-default">✨ AI lesson synthesis</span>
-              <span className="rounded-full bg-white/70 px-4 py-2 shadow-sm ring-1 ring-white/70 hover:ring-sun-300/50 transition-all cursor-default">🧠 Interactive practice</span>
-              <span className="rounded-full bg-white/70 px-4 py-2 shadow-sm ring-1 ring-white/70 hover:ring-violet-400/50 transition-all cursor-default">🛡️ Teacher review controls</span>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* ── Social Proof Bar ────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full max-w-3xl mx-auto mb-16 z-10"
-        >
-          <div className="glass-card rounded-2xl px-8 py-5 flex flex-wrap items-center justify-center gap-6 md:gap-12">
-            <div className="text-center">
-              <p ref={notesCounter.ref} className="text-3xl font-black text-slate-900">{notesCounter.count.toLocaleString()}+</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Notes Generated</p>
-            </div>
-            <div className="w-px h-10 bg-slate-200 hidden md:block"></div>
-            <div className="text-center">
-              <p ref={teacherCounter.ref} className="text-3xl font-black text-slate-900">{teacherCounter.count.toLocaleString()}+</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Active Teachers</p>
-            </div>
-            <div className="w-px h-10 bg-slate-200 hidden md:block"></div>
-            <div className="text-center">
-              <p ref={subjectCounter.ref} className="text-3xl font-black text-slate-900">{subjectCounter.count}+</p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-0.5">Subjects Covered</p>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── Role Selection Cards ────────────────────────────── */}
-        <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 px-4 z-10">
-          {/* Teacher Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            onClick={() => handleRoleClick('teacher')}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleRoleClick('teacher');
-              }
-            }}
-            tabIndex={0}
-            role="button"
-            aria-label="Enter Teacher Portal, Creator Mode: Build a studio for your class"
-            className="group mesh-card rounded-[2rem] p-8 md:p-10 border border-white/70 shadow-[0_28px_80px_rgba(15,23,42,0.12)] hover:-translate-y-2 transition-all duration-300 cursor-pointer"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-lagoon-300/10 opacity-80"></div>
-            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold tracking-[0.2em] uppercase">Creator Mode</div>
-
-            <div className="relative z-10">
-              <div className="w-16 h-16 bg-gradient-to-br from-lagoon-500 to-blue-600 text-white rounded-[1.35rem] flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-cyan-200/70">
-                <BookOpen className="w-8 h-8" />
-              </div>
-              <h3 className="font-display text-3xl font-bold text-slate-900 mb-3">Build a studio for your class</h3>
-              <p className="text-slate-600 mb-8 leading-relaxed text-base">
-                Upload lectures, handouts, and raw notes. Shape them into polished master notes, guided review questions, and publish-ready student materials.
-              </p>
-              <div className="grid grid-cols-2 gap-3 mb-8 text-sm font-semibold text-slate-700">
-                <div className="rounded-2xl bg-white/70 p-4 shadow-sm border border-white/60 hover:border-lagoon-300/40 transition-colors">Review drafts before publishing</div>
-                <div className="rounded-2xl bg-white/70 p-4 shadow-sm border border-white/60 hover:border-lagoon-300/40 transition-colors">Mix raw uploads with AI output</div>
-              </div>
-              <div className="flex items-center text-lagoon-500 font-bold group-hover:translate-x-2 transition-transform">
-                Enter Teacher Portal <ArrowRight className="w-5 h-5 ml-2" />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Student Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            onClick={() => handleRoleClick('student')}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleRoleClick('student');
-              }
-            }}
-            tabIndex={0}
-            role="button"
-            aria-label="Enter Student Hub, Learner Mode: Study inside a guided hub"
-            className="group mesh-card rounded-[2rem] p-8 md:p-10 border border-white/70 shadow-[0_28px_80px_rgba(15,23,42,0.12)] hover:-translate-y-2 transition-all duration-300 cursor-pointer"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-sun-300/10 opacity-80"></div>
-            <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/80 text-slate-700 text-xs font-bold tracking-[0.2em] uppercase shadow-sm">Learner Mode</div>
-
-            <div className="relative z-10">
-              <div className="w-16 h-16 bg-gradient-to-br from-sun-500 to-rose-400 text-white rounded-[1.35rem] flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-300 shadow-lg shadow-orange-200/70">
-                <GraduationCap className="w-8 h-8" />
-              </div>
-              <h3 className="font-display text-3xl font-bold text-slate-900 mb-3">Study inside a guided hub</h3>
-              <p className="text-slate-600 mb-8 leading-relaxed text-base">
-                Move from reading to practicing without friction. Notes, quizzes, flashcards, and AI help sit together in one focused learning flow.
-              </p>
-              <div className="grid grid-cols-2 gap-3 mb-8 text-sm font-semibold text-slate-700">
-                <div className="rounded-2xl bg-white/70 p-4 shadow-sm border border-white/60 hover:border-sun-300/40 transition-colors">Ask AI while you revise</div>
-                <div className="rounded-2xl bg-white/70 p-4 shadow-sm border border-white/60 hover:border-sun-300/40 transition-colors">Flip cards and test recall</div>
-              </div>
-              <div className="flex items-center text-sun-500 font-bold group-hover:translate-x-2 transition-transform">
-                Enter Student Hub <ArrowRight className="w-5 h-5 ml-2" />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </main>
-
-
-
-      {/* ═══ Features Section ═════════════════════════════════ */}
-      <section id="features" className="py-24 w-full relative z-20" ref={featuresRef}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
+              whileHover={{ rotate: [0, -10, 10, -5, 0], scale: 1.1 }}
+              transition={{ duration: 0.4 }}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#F5EFE6] border border-[#E2D5C3] flex items-center justify-center text-[#2C1A12] shadow-xs group-hover:border-[#C26D43] transition-colors"
             >
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lagoon-500/10 text-lagoon-500 font-bold text-sm mb-4">
-                <Sparkles className="w-4 h-4" /> Platform Features
-              </span>
-              <h2 className="font-display text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">A learning product with stage presence</h2>
-              <p className="text-lg text-slate-500 max-w-3xl mx-auto">Every screen is designed to guide momentum, from teacher curation to student recall practice.</p>
+              <BookOpen className="w-4 h-4 text-[#2C1A12]" />
+            </motion.div>
+            <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-[#2C1A12] drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
+              MindMerge AI
+            </span>
+          </motion.a>
+
+          {/* Centered Navigation with micro-hover lifts */}
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-semibold text-[#2C1A12]" aria-label="Main Navigation">
+            {[
+              { href: 'features', label: 'Features' },
+              { href: 'for-teachers', label: 'For Teachers' },
+              { href: 'for-students', label: 'For Students' },
+              { href: 'resources', label: 'Resources' },
+            ].map((link) => (
+              <motion.a
+                key={link.href}
+                href={`#${link.href}`}
+                whileHover={{ y: -1.5, color: '#C26D43' }}
+                whileTap={{ scale: 0.96 }}
+                onClick={(e) => scrollToSection(e, link.href)}
+                className="text-[#2C1A12] hover:text-[#C26D43] transition-colors whitespace-nowrap drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] relative py-1"
+              >
+                {link.label}
+              </motion.a>
+            ))}
+          </nav>
+
+          {/* Right Action Buttons */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              onClick={handleLoginClick}
+              className="font-semibold text-sm text-[#2C1A12] hover:text-[#C26D43] px-3 py-1.5 transition-colors rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C26D43] cursor-pointer whitespace-nowrap drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]"
+            >
+              Log In
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.04, y: -1, boxShadow: '0 6px 18px rgba(194,109,67,0.25)' }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => { setAuthMode('signup'); setShowAuthModal(true); }}
+              className="bg-[#C26D43] hover:bg-[#AF5E35] text-white text-sm font-semibold px-4.5 py-2 sm:py-2.5 rounded-xl shadow-xs transition-all duration-200 cursor-pointer whitespace-nowrap"
+            >
+              Sign Up Free
+            </motion.button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* ══════════════════════════════════════════════════════════
+          2. HERO SECTION
+          Full-bleed morning sunlit study desk with scroll parallax & staggered typography
+      ══════════════════════════════════════════════════════════ */}
+      <main id="main-content" className="flex-1">
+        <section className="w-full relative min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex items-center overflow-hidden pt-16 sm:pt-18 lg:pt-20 pb-8 sm:pb-12">
+          {/* Full-bleed photography background with scroll parallax */}
+          <motion.img
+            style={{ y: heroY, scale: heroScale }}
+            src="/theme/hero_warm_study.png"
+            alt="Cozy sunlit study desk with books, lamp, and laptop"
+            className="absolute inset-0 w-full h-[115%] object-cover object-[50%_center] sm:object-[58%_center] lg:object-[64%_center] select-none -top-8"
+          />
+
+          {/* Seamless natural morning light scrims */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2]/85 via-[#FAF7F2]/45 to-transparent to-70% pointer-events-none" />
+          <div className="absolute top-0 inset-x-0 h-28 bg-gradient-to-b from-[#FAF7F2]/50 via-[#FAF7F2]/20 to-transparent pointer-events-none" />
+          <div className="absolute bottom-0 inset-x-0 h-32 sm:h-40 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/60 to-transparent pointer-events-none" />
+
+          {/* Floating Ambient Morning Light Orb behind headline */}
+          <motion.div
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.3, 0.55, 0.3],
+              x: [0, 15, 0],
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute top-20 left-12 w-80 h-80 rounded-full bg-gradient-to-br from-[#E2D5C3]/40 via-[#F5EFE6]/50 to-transparent blur-3xl pointer-events-none"
+          />
+
+          {/* Overlaid Hero Content - Perfectly Proportioned Editorial Spacing */}
+          <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 w-full pt-3 sm:pt-4 lg:pt-6 pb-4 sm:pb-6">
+            <div className="max-w-[460px] lg:max-w-[500px] text-left">
+              {/* Pill Badge with twinkle sparkle */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-[#E5DACB] text-[#2C1A12] text-xs font-semibold shadow-xs mb-3.5 sm:mb-4 w-fit"
+              >
+                <motion.span
+                  animate={{ rotate: [0, 18, -12, 0] }}
+                  transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+                  className="inline-block"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#C26D43]" />
+                </motion.span>
+                <span>AI for better learning</span>
+              </motion.div>
+
+              {/* Main Headline - Line-by-line masked cinematic reveal */}
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-[42px] lg:text-[46px] font-bold tracking-tight text-[#2C1A12] leading-[1.12] mb-4 sm:mb-4.5">
+                <span className="block overflow-hidden pb-0.5">
+                  <motion.span
+                    className="block"
+                    initial={{ y: '100%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                  >
+                    Turn classroom
+                  </motion.span>
+                </span>
+                <span className="block overflow-hidden pb-0.5">
+                  <motion.span
+                    className="block"
+                    initial={{ y: '100%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
+                  >
+                    material into a
+                  </motion.span>
+                </span>
+                <span className="block overflow-hidden pb-0.5">
+                  <motion.span
+                    className="block italic font-normal"
+                    initial={{ y: '100%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.26 }}
+                  >
+                    living study
+                  </motion.span>
+                </span>
+                <span className="block overflow-hidden pb-0.5">
+                  <motion.span
+                    className="block"
+                    initial={{ y: '100%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.34 }}
+                  >
+                    experience.
+                  </motion.span>
+                </span>
+              </h1>
+
+              {/* Subtitle Description - Blur-to-focus fade */}
+              <motion.p
+                initial={{ opacity: 0, filter: 'blur(5px)', y: 16 }}
+                animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+                transition={{ duration: 0.6, delay: 0.38 }}
+                className="text-sm sm:text-base text-[#6D6056] leading-relaxed max-w-[430px] mb-6 sm:mb-7"
+              >
+                MindMerge AI helps teachers create stunning learning content in minutes and gives students a space designed to learn, practice and grow.
+              </motion.p>
+
+              {/* Action Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+                className="flex flex-wrap items-center gap-3.5 sm:gap-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleRoleClick('teacher')}
+                  className="bg-[#2C1A12] hover:bg-[#3E261B] text-white text-sm sm:text-base font-semibold px-6 py-3.5 rounded-xl flex items-center gap-2.5 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer whitespace-nowrap group"
+                >
+                  <span>Start Creating</span>
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                    className="inline-block"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.span>
+                </motion.button>
+
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => handleRoleClick('student')}
+                  className="bg-[#F5EFE6]/90 hover:bg-[#EDE3D4] text-[#2C1A12] text-sm sm:text-base font-semibold px-6 py-3.5 rounded-xl border border-[#DFD2C0] shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer whitespace-nowrap"
+                >
+                  Explore Student Hub
+                </motion.button>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            3. ROLE WORKSPACES: Dedicated Portals for Teachers & Students
+        ══════════════════════════════════════════════════════════ */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div className="max-w-7xl mx-auto">
+            {/* Section Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-xl mx-auto mb-12"
+            >
+              <motion.span
+                initial={{ scale: 0.9, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4 }}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5EFE6] border border-[#E5DACB] text-xs font-semibold text-[#2C1A12] mb-3"
+              >
+                <motion.span
+                  animate={{ rotate: [0, 15, -15, 0] }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#C26D43]" />
+                </motion.span>
+                Role-Tailored Workspaces
+              </motion.span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#2C1A12] tracking-tight mb-2.5">
+                Choose Your Experience
+              </h2>
+              <p className="text-sm sm:text-base text-[#7A6E65]">
+                Dedicated tools crafted for educators to curate content and students to master concepts.
+              </p>
+            </motion.div>
+
+            {/* 2 Equal-Width Portal Cards with distinct entrance motions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+              {/* Card 1: For Teachers (Slides in from Left with subtle angle) */}
+              <motion.div
+                id="for-teachers"
+                initial={{ opacity: 0, x: -40, rotate: -1.5 }}
+                whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{
+                  y: -8,
+                  boxShadow: "0 20px 40px -15px rgba(44,26,18,0.12)",
+                  borderColor: "#D8C5B2",
+                }}
+                className="bg-white border border-[#EDE4D8] rounded-3xl p-6 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[11px] font-extrabold tracking-widest uppercase text-[#C26D43] bg-[#F5EFE6] px-3 py-1 rounded-full border border-[#E5DACB]">
+                      Faculty & Educators
+                    </span>
+                    <span className="text-xs text-[#8A7D73] font-medium">Step 1 &bull; Synthesis & Review</span>
+                  </div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2C1A12] mb-2.5">
+                    For Teachers
+                  </h3>
+                  <p className="text-sm text-[#7A6E65] leading-relaxed mb-6">
+                    Create, review and publish beautiful study content with AI synthesis. Keep total editorial control before releasing material to your classroom.
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="w-full h-44 sm:h-52 rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#EDE4D8] relative">
+                    <img
+                      src="/theme/teacher_preview.jpg"
+                      alt="Teacher desk with lesson plan notebook"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleRoleClick('teacher')}
+                    className="w-full bg-[#684736] hover:bg-[#58392B] text-white text-sm font-semibold py-3.5 px-5 rounded-xl flex items-center justify-center gap-2.5 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+                  >
+                    <span>Enter Teacher Workspace</span>
+                    <motion.span
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.span>
+                  </motion.button>
+                </div>
+              </motion.div>
+
+              {/* Card 2: For Students (Slides in from Right with subtle angle) */}
+              <motion.div
+                id="for-students"
+                initial={{ opacity: 0, x: 40, rotate: 1.5 }}
+                whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{
+                  y: -8,
+                  boxShadow: "0 20px 40px -15px rgba(44,26,18,0.12)",
+                  borderColor: "#D8C5B2",
+                }}
+                className="bg-white border border-[#EDE4D8] rounded-3xl p-6 sm:p-8 shadow-[0_6px_24px_rgba(44,26,18,0.03)] transition-colors duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[11px] font-extrabold tracking-widest uppercase text-[#C26D43] bg-[#F5EFE6] px-3 py-1 rounded-full border border-[#E5DACB]">
+                      Learners & Classes
+                    </span>
+                    <span className="text-xs text-[#8A7D73] font-medium">Step 2 &bull; Active Recall</span>
+                  </div>
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2C1A12] mb-2.5">
+                    For Students
+                  </h3>
+                  <p className="text-sm text-[#7A6E65] leading-relaxed mb-6">
+                    Explore verified notes, take adaptive quizzes and master tough concepts with interactive flashcards inside your personal learning dashboard.
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="w-full h-44 sm:h-52 rounded-2xl overflow-hidden bg-[#FAF7F2] border border-[#EDE4D8] relative">
+                    <img
+                      src="/theme/student_preview.jpg"
+                      alt="Student study textbooks and desk plant"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                  </div>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleRoleClick('student')}
+                    className="w-full bg-[#684736] hover:bg-[#58392B] text-white text-sm font-semibold py-3.5 px-5 rounded-xl flex items-center justify-center gap-2.5 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer"
+                  >
+                    <span>Enter Student Hub</span>
+                    <motion.span
+                      animate={{ x: [0, 4, 0] }}
+                      transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut", delay: 0.3 }}
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                    </motion.span>
+                  </motion.button>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Testimonial Banner Strip with Sequential Star Twinkle Pop */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96, y: 20 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -3, boxShadow: "0 10px 25px -10px rgba(44,26,18,0.08)" }}
+              className="mt-8 bg-white border border-[#EDE4D8] rounded-2xl p-5 sm:p-6 shadow-[0_4px_16px_rgba(44,26,18,0.02)] flex flex-col sm:flex-row items-center justify-between gap-5 transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <motion.img
+                  whileHover={{ scale: 1.1, rotate: 4 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  src="/theme/ananya_avatar.jpg"
+                  alt="Ananya Sharma"
+                  className="w-12 h-12 rounded-full object-cover border border-[#EDE4D8] shrink-0"
+                />
+                <div>
+                  <p className="font-serif text-sm sm:text-base text-[#2C1A12] italic leading-snug">
+                    “MindMerge AI has completely changed how we create and deliver content across our faculty.”
+                  </p>
+                  <p className="text-xs text-[#8A7D73] font-medium mt-1">
+                    Ananya Sharma &bull; Biology Teacher &bull; Verified Educator
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 text-[#C26D43] shrink-0">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ scale: 0, rotate: -40, opacity: 0 }}
+                    whileInView={{ scale: 1, rotate: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.08, type: "spring", stiffness: 400, damping: 15 }}
+                    whileHover={{ scale: 1.35, rotate: 15 }}
+                  >
+                    <Star className="w-4 h-4 fill-current cursor-pointer" />
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <Sparkles className="w-7 h-7" />,
-                title: 'Editorial-grade AI notes',
-                desc: 'Transform rough source files into cleaner, more teachable content with stronger structure and clearer emphasis.',
-                gradient: 'from-lagoon-500 to-blue-600',
-                shadow: 'shadow-cyan-200/70',
-                delay: 0,
-              },
-              {
-                icon: <Layers className="w-7 h-7" />,
-                title: 'Memory-first study tools',
-                desc: 'Flashcards and question banks feel built into the lesson, not bolted on after the fact.',
-                gradient: 'from-sun-500 to-rose-400',
-                shadow: 'shadow-orange-200/70',
-                delay: 0.1,
-              },
-              {
-                icon: <Target className="w-7 h-7" />,
-                title: 'Practice with built-in feedback',
-                desc: 'Students can read, answer, flip, and ask for help without breaking their concentration.',
-                gradient: 'from-violet-400 to-lagoon-500',
-                shadow: 'shadow-violet-200/70',
-                delay: 0.2,
-              },
-            ].map((f, i) => (
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            4. PLATFORM FEATURES DEEP-DIVE
+        ══════════════════════════════════════════════════════════ */}
+        <section id="features" className="px-4 sm:px-6 lg:px-8 py-16 bg-[#FAF7F2]">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-2xl mx-auto mb-14"
+            >
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5EFE6] border border-[#E5DACB] text-xs font-semibold text-[#2C1A12] mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-[#C26D43]" />
+                Crafted for Clarity
+              </span>
+              <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#2C1A12] tracking-tight mb-4">
+                Everything required for effective teaching and learning
+              </h2>
+              <p className="text-sm sm:text-base text-[#6D6056] leading-relaxed">
+                From raw syllabus PDFs to interactive recall questions, every tool is calibrated for deep comprehension.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Feature 1: Page-Turn Wiggle Icon */}
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: f.delay + 0.2 }}
-                whileHover={{ y: -8 }}
-                className="mesh-card p-8 rounded-[2rem] border border-white/70 shadow-lg hover:shadow-[0_32px_64px_rgba(15,23,42,0.15)] transition-shadow duration-300 group bg-white"
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -8, boxShadow: "0 16px 32px -10px rgba(44,26,18,0.08)" }}
+                className="bg-white border border-[#EDE4D8] rounded-3xl p-8 shadow-sm transition-all duration-300 group flex flex-col justify-between"
               >
-                <div className={`w-14 h-14 bg-gradient-to-br ${f.gradient} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg ${f.shadow} group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300`}>
-                  {f.icon}
+                <div>
+                  <motion.div
+                    whileHover={{ rotate: [-6, 6, -3, 0], scale: 1.15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-12 h-12 rounded-2xl bg-[#F5EFE6] border border-[#E2D5C3] flex items-center justify-center text-[#2C1A12] mb-6 cursor-pointer"
+                  >
+                    <FileText className="w-6 h-6 text-[#C26D43]" />
+                  </motion.div>
+                  <h3 className="font-serif text-xl font-bold text-[#2C1A12] mb-2.5">
+                    Editorial-Grade Master Notes
+                  </h3>
+                  <p className="text-sm text-[#6D6056] leading-relaxed">
+                    Transform disorganized lecture transcripts or textbooks into elegant, structured markdown notes with clear conceptual hierarchies.
+                  </p>
                 </div>
-                <h3 className="font-display text-xl font-bold mb-3 text-slate-800">{f.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{f.desc}</p>
+                <div className="w-8 group-hover:w-16 h-0.5 bg-[#C26D43] mt-6 rounded-full transition-all duration-300" />
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ How It Works Section (Scroll Driven) ══════════════ */}
-      <section id="how-it-works" className="py-32 w-full relative z-20">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-24">
-            <h2 className="font-display text-4xl md:text-6xl font-extrabold mb-6 text-slate-900">Four steps, one creative workflow</h2>
-            <p className="text-xl text-slate-500">Scroll to see the transformation.</p>
-          </div>
-
-          <div className="relative">
-            {/* Central Progression Line */}
-            <div className="absolute top-0 bottom-0 left-[27px] md:left-1/2 w-1 bg-slate-200 -translate-x-1/2 z-0"></div>
-            
-            {/* GSAP Trigger container for the line */}
-            <div className="scroll-progress-line absolute top-0 left-[27px] md:left-1/2 w-1 bg-lagoon-500 -translate-x-1/2 z-1 origin-top scale-y-0 h-full"></div>
-
-            <div className="space-y-32 relative z-10">
-              {[
-                { step: '01', title: 'Upload Material', desc: 'Teachers upload raw PDFs, lectures, or text.', icon: <FileText className="w-6 h-6 text-lagoon-500" /> },
-                { step: '02', title: 'Mind Merge', desc: 'Our AI engine processes, structures, and synthesizes the content.', icon: <Sparkles className="w-6 h-6 text-violet-500" /> },
-                { step: '03', title: 'Teacher Review', desc: 'Edit, refine, and approve the generated notes before publishing.', icon: <Target className="w-6 h-6 text-sun-500" /> },
-                { step: '04', title: 'Student Hub', desc: 'Learners access an interactive study environment.', icon: <GraduationCap className="w-6 h-6 text-rose-500" /> }
-              ].map((s, i) => (
-                <div key={i} className={`how-step flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''} opacity-30 transition-opacity duration-500`}>
-                  <div className={`flex-1 ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'} w-full pl-16 md:pl-0`}>
-                    <h3 className="font-display text-3xl font-bold text-slate-900 mb-4">{s.title}</h3>
-                    <p className="text-slate-600 text-lg">{s.desc}</p>
-                  </div>
-                  <div className="absolute left-0 md:relative w-14 h-14 rounded-full bg-white border-4 border-slate-100 flex items-center justify-center shadow-lg flex-shrink-0 z-10">
-                    {s.icon}
-                  </div>
-                  <div className="flex-1 hidden md:block"></div>
+              {/* Feature 2: Target Spin/Radar Pulse Icon */}
+              <motion.div
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -8, boxShadow: "0 16px 32px -10px rgba(44,26,18,0.08)" }}
+                className="bg-white border border-[#EDE4D8] rounded-3xl p-8 shadow-sm transition-all duration-300 group flex flex-col justify-between"
+              >
+                <div>
+                  <motion.div
+                    whileHover={{ rotate: 90, scale: 1.2 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="w-12 h-12 rounded-2xl bg-[#F5EFE6] border border-[#E2D5C3] flex items-center justify-center text-[#2C1A12] mb-6 cursor-pointer"
+                  >
+                    <Target className="w-6 h-6 text-[#C26D43]" />
+                  </motion.div>
+                  <h3 className="font-serif text-xl font-bold text-[#2C1A12] mb-2.5">
+                    Curated Active Recall
+                  </h3>
+                  <p className="text-sm text-[#6D6056] leading-relaxed">
+                    Flashcard decks and scenario quizzes automatically extract key formulas, definitions, and reasoning traps to guarantee retention.
+                  </p>
                 </div>
+                <div className="w-8 group-hover:w-16 h-0.5 bg-[#C26D43] mt-6 rounded-full transition-all duration-300" />
+              </motion.div>
+
+              {/* Feature 3: Shield Pop Icon */}
+              <motion.div
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -8, boxShadow: "0 16px 32px -10px rgba(44,26,18,0.08)" }}
+                className="bg-white border border-[#EDE4D8] rounded-3xl p-8 shadow-sm transition-all duration-300 group flex flex-col justify-between"
+              >
+                <div>
+                  <motion.div
+                    whileHover={{ scale: 1.25, y: -2 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                    className="w-12 h-12 rounded-2xl bg-[#F5EFE6] border border-[#E2D5C3] flex items-center justify-center text-[#2C1A12] mb-6 cursor-pointer"
+                  >
+                    <ShieldCheck className="w-6 h-6 text-[#C26D43]" />
+                  </motion.div>
+                  <h3 className="font-serif text-xl font-bold text-[#2C1A12] mb-2.5">
+                    Teacher-in-the-Loop Safeguards
+                  </h3>
+                  <p className="text-sm text-[#6D6056] leading-relaxed">
+                    No automated hallucination reaches a student. Educators have complete editorial power to audit, refine, and augment all content.
+                  </p>
+                </div>
+                <div className="w-8 group-hover:w-16 h-0.5 bg-[#C26D43] mt-6 rounded-full transition-all duration-300" />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            5. COMMUNITY TESTIMONIALS
+        ══════════════════════════════════════════════════════════ */}
+        <section id="testimonials" className="px-4 sm:px-6 lg:px-8 py-16 bg-[#F5EFE6]/50 border-y border-[#EDE4D8]">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-2xl mx-auto mb-14"
+            >
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#E5DACB] text-xs font-semibold text-[#2C1A12] mb-3">
+                <motion.span
+                  animate={{ scale: [1, 1.25, 1, 1.2, 1] }}
+                  transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
+                  className="inline-block"
+                >
+                  <Heart className="w-3.5 h-3.5 text-[#C26D43] fill-[#C26D43]" />
+                </motion.span>
+                Loved by Educators
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#2C1A12] tracking-tight mb-3">
+                What educators and students say
+              </h2>
+              <p className="text-sm sm:text-base text-[#6D6056]">
+                Real feedback from universities and schools using MindMerge AI daily.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {TESTIMONIALS.map((t, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30, rotate: idx % 2 === 0 ? -1.5 : 1.5 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.55, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  whileHover={{ y: -8, scale: 1.02, boxShadow: "0 16px 32px -10px rgba(44,26,18,0.09)" }}
+                  className="bg-white border border-[#EDE4D8] rounded-3xl p-6 shadow-sm flex flex-col justify-between transition-all duration-300"
+                >
+                  <div>
+                    <div className="flex items-center gap-1 mb-4 text-[#C26D43]">
+                      {Array.from({ length: t.rating }).map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-current" />
+                      ))}
+                    </div>
+                    <p className="font-serif text-sm text-[#2C1A12] leading-relaxed mb-6 italic">
+                      "{t.quote}"
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#F2ECE2]">
+                    <motion.img
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ type: "spring", stiffness: 350 }}
+                      src={t.avatar}
+                      alt={t.name}
+                      className="w-10 h-10 rounded-full object-cover border border-[#EDE4D8]"
+                    />
+                    <div>
+                      <p className="font-bold text-xs text-[#2C1A12]">{t.name}</p>
+                      <p className="text-[11px] text-[#8A7D73] leading-tight">{t.role}</p>
+                    </div>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
-      {/* ═══ AI Generation Section (Watch Mind Merge think) ════ */}
-      <section className="py-32 w-full relative z-20 overflow-hidden bg-slate-900 text-white clip-path-slant">
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 opacity-80"></div>
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-extrabold mb-4">Watch Mind Merge think</h2>
-            <p className="text-xl text-slate-400">From raw material to structured knowledge in seconds.</p>
-          </div>
+        </section>
 
-          <div className="flex flex-col md:flex-row items-center justify-center gap-12 mt-20">
-            {/* Input */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="w-full md:w-1/4 p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl flex flex-col items-center justify-center gap-4"
+        {/* ══════════════════════════════════════════════════════════
+            6. FREQUENTLY ASKED QUESTIONS (Resources)
+        ══════════════════════════════════════════════════════════ */}
+        <section id="resources" className="px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
             >
-              <FileText className="w-12 h-12 text-slate-300" />
-              <div className="text-center">
-                <p className="font-bold">Raw Material</p>
-                <p className="text-sm text-slate-400">PDF, Doc, or URL</p>
-              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#2C1A12] tracking-tight mb-3">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-sm sm:text-base text-[#6D6056]">
+                Everything you need to know about getting started with MindMerge AI.
+              </p>
             </motion.div>
 
-            {/* AI Process */}
-            <div className="hidden md:flex flex-col items-center justify-center gap-2">
-              <div className="w-16 h-1 bg-gradient-to-r from-transparent to-indigo-500 rounded-full animate-pulse"></div>
-              <Sparkles className="w-6 h-6 text-indigo-400" />
-              <div className="w-16 h-1 bg-gradient-to-l from-transparent to-indigo-500 rounded-full animate-pulse"></div>
+            <div className="space-y-4">
+              {FAQS.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.08, duration: 0.5 }}
+                    className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-[#C26D43]/40 shadow-sm' : 'border-[#EDE4D8]'
+                      }`}
+                  >
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 font-serif text-lg font-bold text-[#2C1A12] hover:text-[#C26D43] transition-colors focus:outline-none cursor-pointer"
+                    >
+                      <span>{faq.question}</span>
+                      <motion.div
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="shrink-0"
+                      >
+                        <ChevronDown className={`w-5 h-5 transition-colors ${isOpen ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
+                      </motion.div>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="content"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-6 pb-5 pt-1 text-sm text-[#6D6056] leading-relaxed border-t border-[#F5EFE6]">
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════════════════════════════════
+            7. CALL TO ACTION BANNER
+        ══════════════════════════════════════════════════════════ */}
+        <section className="px-4 sm:px-6 lg:px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 30 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#2C1A12] text-white rounded-3xl p-8 sm:p-14 text-center relative overflow-hidden shadow-2xl"
+            >
+              {/* Floating Aurora / Radial Ambient Glow Orbs */}
+              <motion.div
+                animate={{
+                  x: [0, 40, 0],
+                  y: [0, -30, 0],
+                  scale: [1, 1.25, 1],
+                  opacity: [0.25, 0.45, 0.25]
+                }}
+                transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-gradient-to-br from-[#C26D43] to-[#AF5E35] blur-3xl pointer-events-none"
+              />
+              <motion.div
+                animate={{
+                  x: [0, -40, 0],
+                  y: [0, 30, 0],
+                  scale: [1, 1.2, 1],
+                  opacity: [0.2, 0.4, 0.2]
+                }}
+                transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-gradient-to-tl from-[#E2D5C3]/30 to-[#C26D43]/30 blur-3xl pointer-events-none"
+              />
+
+              <div className="relative z-10 max-w-2xl mx-auto">
+                <motion.span
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-[#FAF7F2] mb-4"
+                >
+                  <motion.span
+                    animate={{ rotate: [0, 20, -20, 0] }}
+                    transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-[#C26D43]" />
+                  </motion.span>
+                  Join Our Community
+                </motion.span>
+                <h2 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+                  Ready to transform your classroom?
+                </h2>
+                <p className="text-sm sm:text-base text-[#DFD2C2] leading-relaxed mb-8">
+                  Get started in seconds. No complex setup or credit card required.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <motion.button
+                    whileHover={{ scale: 1.04, y: -2, boxShadow: '0 8px 24px rgba(194,109,67,0.35)' }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => handleRoleClick('teacher')}
+                    className="bg-[#C26D43] hover:bg-[#AF5E35] text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl shadow-md transition-all cursor-pointer"
+                  >
+                    Start as Teacher
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.04, y: -2, backgroundColor: 'rgba(255,255,255,0.18)' }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => handleRoleClick('student')}
+                    className="bg-white/10 text-white font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl border border-white/20 transition-all cursor-pointer"
+                  >
+                    Join as Student
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+
+      {/* ══════════════════════════════════════════════════════════
+          8. FOOTER
+      ══════════════════════════════════════════════════════════ */}
+      <motion.footer
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.6 }}
+        className="bg-[#F5EFE6] border-t border-[#EDE4D8] mt-12 py-14"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+            {/* Brand Col */}
+            <div className="col-span-2">
+              <div className="flex items-center gap-2.5 mb-3">
+                <motion.div
+                  whileHover={{ rotate: [0, -10, 10, 0] }}
+                  transition={{ duration: 0.4 }}
+                  className="w-8 h-8 rounded-lg bg-white border border-[#E2D5C3] flex items-center justify-center text-[#2C1A12]"
+                >
+                  <BookOpen className="w-4 h-4 text-[#2C1A12]" />
+                </motion.div>
+                <span className="font-serif text-xl font-bold text-[#2C1A12]">MindMerge AI</span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#7A6E65] leading-relaxed max-w-sm mb-4">
+                Empowering teachers to transform classroom material into living, interactive study experiences.
+              </p>
+              <div className="flex items-center gap-2 text-xs text-[#8A7D73]">
+                <span>Crafted with</span>
+                <motion.span
+                  animate={{ scale: [1, 1.25, 1] }}
+                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                >
+                  <Heart className="w-3.5 h-3.5 text-[#C26D43] fill-[#C26D43]" />
+                </motion.span>
+                <span>for educators everywhere</span>
+              </div>
             </div>
 
-            {/* Staggered Output Cards */}
-            <div className="w-full md:w-1/2 relative h-[300px] flex items-center justify-center">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 0, x: 0, rotate: -5 }}
-                whileInView={{ opacity: 1, scale: 1, y: -40, x: -40, rotate: -5 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
-                className="absolute w-64 p-5 rounded-2xl bg-white border border-slate-200 shadow-xl text-slate-800"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-lagoon-100 flex items-center justify-center">
-                    <BookOpen className="w-4 h-4 text-lagoon-600" />
-                  </div>
-                  <p className="font-bold text-sm">Summary Generated</p>
-                </div>
-                <div className="space-y-2 mt-4">
-                  <div className="h-2 w-full bg-slate-100 rounded"></div>
-                  <div className="h-2 w-5/6 bg-slate-100 rounded"></div>
-                  <div className="h-2 w-4/6 bg-slate-100 rounded"></div>
-                </div>
-              </motion.div>
+            {/* Links 1 */}
+            <div>
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#2C1A12] mb-3">Product</h4>
+              <ul className="space-y-2 text-xs text-[#6D6056]">
+                <li><a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-[#2C1A12] transition-colors">Features</a></li>
+                <li><a href="#for-teachers" onClick={(e) => scrollToSection(e, 'for-teachers')} className="hover:text-[#2C1A12] transition-colors">For Teachers</a></li>
+                <li><a href="#for-students" onClick={(e) => scrollToSection(e, 'for-students')} className="hover:text-[#2C1A12] transition-colors">For Students</a></li>
+              </ul>
+            </div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 0, x: 0, rotate: 5 }}
-                whileInView={{ opacity: 1, scale: 1, y: 40, x: 40, rotate: 5 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.6, type: "spring" }}
-                className="absolute w-64 p-5 rounded-2xl bg-white border border-slate-200 shadow-xl text-slate-800"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-                    <Target className="w-4 h-4 text-rose-600" />
-                  </div>
-                  <p className="font-bold text-sm">Flashcards Generated</p>
-                </div>
-                <div className="mt-4 flex gap-2">
-                  <div className="w-1/2 h-16 bg-slate-50 rounded-xl border border-slate-100"></div>
-                  <div className="w-1/2 h-16 bg-slate-50 rounded-xl border border-slate-100"></div>
-                </div>
-              </motion.div>
+            {/* Links 2 */}
+            <div>
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#2C1A12] mb-3">Support</h4>
+              <ul className="space-y-2 text-xs text-[#6D6056]">
+                <li><a href="mailto:hello@mindmerge.ai" className="hover:text-[#2C1A12] transition-colors">Contact Us</a></li>
+                <li><a href="mailto:support@mindmerge.ai" className="hover:text-[#2C1A12] transition-colors">Help Desk</a></li>
+                <li><a href="#resources" onClick={(e) => scrollToSection(e, 'resources')} className="hover:text-[#2C1A12] transition-colors">FAQ</a></li>
+              </ul>
+            </div>
 
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 0, x: 0, rotate: 0 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0, x: 0, rotate: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.9, type: "spring" }}
-                className="absolute z-10 w-64 p-5 rounded-2xl bg-white border border-indigo-100 shadow-2xl text-slate-800"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-indigo-600" />
-                  </div>
-                  <p className="font-bold text-sm text-indigo-600">Quiz Ready</p>
-                </div>
-                <div className="mt-4 space-y-3">
-                  <div className="h-8 w-full bg-indigo-50 rounded-lg flex items-center px-3 text-xs text-indigo-400">What is the main...</div>
-                  <div className="h-8 w-full bg-slate-50 rounded-lg"></div>
-                </div>
-              </motion.div>
+            {/* Links 3 */}
+            <div>
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#2C1A12] mb-3">Legal</h4>
+              <ul className="space-y-2 text-xs text-[#6D6056]">
+                <li><button onClick={() => setLegalModal('privacy')} className="hover:text-[#2C1A12] transition-colors cursor-pointer">Privacy Policy</button></li>
+                <li><button onClick={() => setLegalModal('terms')} className="hover:text-[#2C1A12] transition-colors cursor-pointer">Terms of Service</button></li>
+                <li><button onClick={() => setLegalModal('cookies')} className="hover:text-[#2C1A12] transition-colors cursor-pointer">Cookie Policy</button></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-[#EAE0D3] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#8A7D73]">
+            <p>&copy; {new Date().getFullYear()} MindMerge AI. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <button onClick={() => setLegalModal('privacy')} className="hover:text-[#2C1A12] transition-colors cursor-pointer">Privacy</button>
+              <button onClick={() => setLegalModal('terms')} className="hover:text-[#2C1A12] transition-colors cursor-pointer">Terms</button>
+              <button onClick={() => setLegalModal('cookies')} className="hover:text-[#2C1A12] transition-colors cursor-pointer">Security</button>
             </div>
           </div>
         </div>
-      </section>
+      </motion.footer>
 
-      {/* ═══ Testimonials Section ═════════════════════════════ */}
-      <section id="testimonials" className="py-24 w-full relative z-20">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sun-500/10 text-sun-500 font-bold text-sm mb-4">
-              <Heart className="w-4 h-4" /> Loved by Educators & Students
-            </span>
-            <h2 className="font-display text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">What our community says</h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">Real feedback from teachers and students using MindMerge AI every day.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {TESTIMONIALS.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="mesh-card rounded-[2rem] p-8 border border-white/70 shadow-lg relative"
+      {/* ══════════════════════════════════════════════════════════
+          9. AUTH MODAL (Login / Signup)
+          Cohesive warm cream & espresso design
+      ══════════════════════════════════════════════════════════ */}
+      <AnimatePresence>
+        {showAuthModal && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAuthModal(false)}
+              className="absolute inset-0 bg-[#2C1A12]/40 backdrop-blur-sm"
+            />
+            <motion.div
+              ref={authModalRef}
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              className="relative w-full max-w-md bg-white border border-[#EDE4D8] rounded-3xl shadow-2xl overflow-hidden p-8"
+            >
+              <button
+                onClick={() => setShowAuthModal(false)}
+                className="absolute top-6 right-6 text-[#8A7D73] hover:text-[#2C1A12] transition-colors p-1 rounded-lg"
+                aria-label="Close modal"
               >
-                {/* Quote mark */}
-                <div className="absolute top-6 right-6 text-slate-200">
-                  <Quote className="w-8 h-8" />
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="mb-6">
+                <div className="w-10 h-10 rounded-xl bg-[#F5EFE6] border border-[#E2D5C3] flex items-center justify-center text-[#2C1A12] mb-3">
+                  <BookOpen className="w-5 h-5 text-[#C26D43]" />
                 </div>
-                {/* Stars */}
-                <div className="flex items-center gap-0.5 mb-4">
-                  {Array.from({ length: t.rating }).map((_, j) => (
-                    <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                  ))}
+                <h3 className="font-serif text-2xl font-bold text-[#2C1A12]">
+                  {authMode === 'login' ? 'Welcome back' : 'Join MindMerge AI'}
+                </h3>
+                <p className="text-xs sm:text-sm text-[#7A6E65] mt-1">
+                  {authMode === 'login'
+                    ? 'Enter your credentials to enter your workspace.'
+                    : 'Start creating and studying with intelligent classroom tools.'}
+                </p>
+              </div>
+
+              {/* Role Toggle for Signup */}
+              {authMode === 'signup' && (
+                <div className="flex p-1 bg-[#FAF7F2] border border-[#EAE0D3] rounded-xl mb-5">
+                  <button
+                    type="button"
+                    onClick={() => setModalRole('teacher')}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${modalRole === 'teacher'
+                        ? 'bg-[#2C1A12] text-white shadow-sm'
+                        : 'text-[#6D6056] hover:text-[#2C1A12]'
+                      }`}
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    Teacher
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setModalRole('student')}
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${modalRole === 'student'
+                        ? 'bg-[#2C1A12] text-white shadow-sm'
+                        : 'text-[#6D6056] hover:text-[#2C1A12]'
+                      }`}
+                  >
+                    <GraduationCap className="w-3.5 h-3.5" />
+                    Student
+                  </button>
                 </div>
-                {/* Quote */}
-                <p className="text-slate-700 leading-relaxed mb-6 text-[15px]">"{t.quote}"</p>
-                {/* Author */}
-                <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
-                  <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full ring-2 ring-white shadow-sm" referrerPolicy="no-referrer" />
+              )}
+
+              <form onSubmit={handleAuthSubmit} className="space-y-4">
+                {authMode === 'signup' && (
                   <div>
-                    <p className="font-bold text-slate-800 text-sm">{t.name}</p>
-                    <p className="text-xs text-slate-500">{t.role}</p>
+                    <label className="block text-xs font-semibold text-[#2C1A12] mb-1.5">Full Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="e.g. Ananya Sharma"
+                      className="w-full px-4 py-2.5 rounded-xl border border-[#EDE4D8] bg-[#FAF7F2] text-[#2C1A12] text-sm focus:outline-none focus:border-[#C26D43] transition-colors"
+                    />
                   </div>
+                )}
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#2C1A12] mb-1.5">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@institution.edu"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE4D8] bg-[#FAF7F2] text-[#2C1A12] text-sm focus:outline-none focus:border-[#C26D43] transition-colors"
+                  />
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ CTA Section ══════════════════════════════════════ */}
-      <section className="py-20 w-full relative z-20">
-        <div className="max-w-4xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="panel-dark section-glow rounded-[2.5rem] p-10 md:p-16 text-center relative overflow-hidden"
-          >
-            <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white mb-4">Ready to transform your classroom?</h2>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-8">Join thousands of educators and students who trust MindMerge AI for a smarter learning experience.</p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <button
-                onClick={() => handleRoleClick('teacher')}
-                className="glow-button text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2"
-              >
-                <BookOpen className="w-5 h-5" /> Start as Teacher
-              </button>
-              <button
-                onClick={() => handleRoleClick('student')}
-                className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-xl font-bold shadow-lg transition-all border border-white/20 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2"
-              >
-                <GraduationCap className="w-5 h-5" /> Start as Student
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══ Footer ═══════════════════════════════════════════ */}
-      <footer className="py-16 relative z-20 border-t border-slate-200/60">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
-            {/* Brand column */}
-            <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-lagoon-500 via-violet-400 to-sun-500 rounded-xl flex items-center justify-center shadow-md">
-                  <Sparkles className="w-4 h-4 text-white" />
+                <div>
+                  <label className="block text-xs font-semibold text-[#2C1A12] mb-1.5">Password</label>
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#EDE4D8] bg-[#FAF7F2] text-[#2C1A12] text-sm focus:outline-none focus:border-[#C26D43] transition-colors"
+                  />
                 </div>
-                <span className="font-display font-bold text-slate-800 text-lg">MindMerge AI</span>
-              </div>
-              <p className="text-sm text-slate-500 leading-relaxed mb-4">Turning raw classroom material into polished, interactive learning experiences.</p>
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 cursor-default" title="Coming soon" aria-label="Twitter — Coming soon">
-                  <Twitter className="w-4 h-4" />
-                </span>
-                <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 cursor-default" title="Coming soon" aria-label="GitHub — Coming soon">
-                  <Github className="w-4 h-4" />
-                </span>
-                <span className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 cursor-default" title="Coming soon" aria-label="LinkedIn — Coming soon">
-                  <Linkedin className="w-4 h-4" />
-                </span>
-              </div>
-            </div>
-            {/* Product links */}
-            <div>
-              <h4 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">Product</h4>
-              <ul className="space-y-2.5 text-sm text-slate-500">
-                <li><a href="#features" onClick={(e) => scrollToSection(e, 'features')} className="hover:text-lagoon-500 transition-colors">Features</a></li>
-                <li><a href="#how-it-works" onClick={(e) => scrollToSection(e, 'how-it-works')} className="hover:text-lagoon-500 transition-colors">How it Works</a></li>
-                <li><a href="#testimonials" onClick={(e) => scrollToSection(e, 'testimonials')} className="hover:text-lagoon-500 transition-colors">Testimonials</a></li>
-              </ul>
-            </div>
-            {/* Contact */}
-            <div>
-              <h4 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">Contact</h4>
-              <ul className="space-y-2.5 text-sm text-slate-500">
-                <li>
-                  <a href="mailto:hello@mindmerge.ai" className="hover:text-lagoon-500 transition-colors flex items-center gap-1.5">
-                    <Send className="w-3.5 h-3.5" /> Get in Touch
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:support@mindmerge.ai" className="hover:text-lagoon-500 transition-colors flex items-center gap-1.5">
-                    <Mail className="w-3.5 h-3.5" /> Support
-                  </a>
-                </li>
-              </ul>
-            </div>
-            {/* Legal */}
-            <div>
-              <h4 className="font-bold text-slate-800 text-sm mb-4 uppercase tracking-wider">Legal</h4>
-              <ul className="space-y-2.5 text-sm text-slate-500">
-                <li><button onClick={() => setLegalModal('privacy')} className="hover:text-lagoon-500 transition-colors text-left">Privacy Policy</button></li>
-                <li><button onClick={() => setLegalModal('terms')} className="hover:text-lagoon-500 transition-colors text-left">Terms of Service</button></li>
-                <li><button onClick={() => setLegalModal('cookies')} className="hover:text-lagoon-500 transition-colors text-left">Cookie Policy</button></li>
-              </ul>
-            </div>
-          </div>
-          {/* Bottom bar */}
-          <div className="pt-8 border-t border-slate-200/60 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-slate-400">&copy; {new Date().getFullYear()} MindMerge AI. All rights reserved.</p>
-            <p className="text-sm text-slate-400 flex items-center gap-1">
-              Made with <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400" /> for educators everywhere
-            </p>
-          </div>
-        </div>
-      </footer>
 
-      {/* ═══ Legal Modal ══════════════════════════════════════ */}
+                {error && (
+                  <p className="text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200">
+                    {error}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={authLoading}
+                  className="w-full py-3 bg-[#2C1A12] hover:bg-[#3E261B] text-white text-sm font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
+                >
+                  {authLoading && <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />}
+                  <span>{authMode === 'login' ? 'Sign In' : 'Create Account'}</span>
+                </button>
+              </form>
+
+              <div className="mt-5 text-center text-xs text-[#7A6E65]">
+                {authMode === 'login' ? (
+                  <p>
+                    Don't have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={() => setAuthMode('signup')}
+                      className="font-bold text-[#C26D43] hover:underline"
+                    >
+                      Sign up for free
+                    </button>
+                  </p>
+                ) : (
+                  <p>
+                    Already have an account?{' '}
+                    <button
+                      type="button"
+                      onClick={() => setAuthMode('login')}
+                      className="font-bold text-[#C26D43] hover:underline"
+                    >
+                      Sign in
+                    </button>
+                  </p>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ══════════════════════════════════════════════════════════
+          10. LEGAL MODAL
+      ══════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {legalModal && (() => {
           const legal = getLegalContent(legalModal);
@@ -765,31 +1169,29 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setLegalModal(null)}
-                className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+                className="absolute inset-0 bg-[#2C1A12]/40 backdrop-blur-sm"
               />
               <motion.div
                 ref={legalModalRef}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 16 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative w-full max-w-2xl max-h-[80vh] mesh-card rounded-[2rem] shadow-2xl overflow-hidden border border-white/70 flex flex-col"
+                exit={{ opacity: 0, scale: 0.95, y: 16 }}
+                className="relative w-full max-w-2xl max-h-[80vh] bg-white border border-[#EDE4D8] rounded-3xl shadow-2xl overflow-hidden flex flex-col"
               >
-                {/* Header */}
-                <div className="p-8 pb-4 flex items-start justify-between">
+                <div className="p-6 border-b border-[#EDE4D8] flex items-start justify-between">
                   <div>
-                    <h3 className="text-2xl font-bold text-slate-900">{legal.title}</h3>
-                    <p className="text-sm text-slate-500 mt-1">Last updated: {legal.lastUpdated}</p>
+                    <h3 className="font-serif text-2xl font-bold text-[#2C1A12]">{legal.title}</h3>
+                    <p className="text-xs text-[#7A6E65] mt-1">Last updated: {legal.lastUpdated}</p>
                   </div>
                   <button
                     onClick={() => setLegalModal(null)}
-                    className="text-slate-400 hover:text-slate-600 transition-colors p-1"
+                    className="text-[#8A7D73] hover:text-[#2C1A12] transition-colors p-1"
                     aria-label="Close modal"
                   >
-                    <X className="w-6 h-6" />
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
-                {/* Scrollable content */}
-                <div className="px-8 pb-8 overflow-y-auto">
+                <div className="p-6 overflow-y-auto text-sm text-[#6D6056] leading-relaxed space-y-4">
                   {legal.content}
                 </div>
               </motion.div>
@@ -797,172 +1199,6 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
           );
         })()}
       </AnimatePresence>
-
-      {/* ═══ Auth Modal ═══════════════════════════════════════ */}
-      <AnimatePresence>
-        {showAuthModal && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowAuthModal(false)}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-            />
-            <motion.div
-              ref={authModalRef}
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md mesh-card rounded-[2rem] shadow-2xl overflow-hidden border border-white/70"
-            >
-              <div className="p-8">
-                <button
-                  onClick={() => setShowAuthModal(false)}
-                  className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 transition-colors"
-                  aria-label="Close modal"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                    {authMode === 'login' ? 'Welcome back' : 'Create an account'}
-                  </h3>
-                  <p className="text-slate-500">
-                    {authMode === 'login'
-                      ? 'Enter your details to access your portal.'
-                      : 'Sign up to start transforming your learning experience.'}
-                  </p>
-                </div>
-
-                <form onSubmit={handleAuthSubmit} className="space-y-5">
-                  {/* Role Selector */}
-                  <div className="flex p-1 bg-slate-100 rounded-xl mb-6">
-                    <button
-                      type="button"
-                      onClick={() => setModalRole('teacher')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all ${modalRole === 'teacher'
-                        ? 'bg-white text-lagoon-500 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-700'
-                        }`}
-                    >
-                      <BookOpen className="w-4 h-4" /> Teacher
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setModalRole('student')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all ${modalRole === 'student'
-                        ? 'bg-white text-sun-500 shadow-sm'
-                        : 'text-slate-500 hover:text-slate-700'
-                        }`}
-                    >
-                      <GraduationCap className="w-4 h-4" /> Student
-                    </button>
-                  </div>
-
-                  {error && (
-                    <div className="p-3 bg-red-50 text-red-600 rounded-xl text-xs font-semibold border border-red-200">
-                      {error}
-                    </div>
-                  )}
-
-                  {authMode === 'signup' && (
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1.5">Full Name</label>
-                      <div className="relative">
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                          <User className="h-5 w-5 text-slate-400" />
-                        </div>
-                        <input
-                          type="text"
-                          required
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-lagoon-500/30 focus:border-lagoon-500 transition-colors"
-                          placeholder="John Doe"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Email Address</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Mail className="h-5 w-5 text-slate-400" />
-                      </div>
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-lagoon-500/30 focus:border-lagoon-500 transition-colors"
-                        placeholder="you@example.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <Lock className="h-5 w-5 text-slate-400" />
-                      </div>
-                      <input
-                        type="password"
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-lagoon-500/30 focus:border-lagoon-500 transition-colors"
-                        placeholder="••••••••"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={authLoading}
-                    className={`w-full py-3 px-4 rounded-xl text-white font-bold shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed ${modalRole === 'teacher'
-                      ? 'bg-gradient-to-r from-lagoon-500 to-blue-600 hover:from-lagoon-500/90 hover:to-blue-600/90'
-                      : 'bg-gradient-to-r from-sun-500 to-rose-400 hover:from-sun-500/90 hover:to-rose-400/90'
-                      }`}
-                  >
-                    {authLoading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                        Processing...
-                      </span>
-                    ) : (
-                      authMode === 'login' ? 'Log In' : 'Create Account'
-                    )}
-                  </button>
-                </form>
-
-                <div className="mt-6 text-center text-sm text-slate-500">
-                  {authMode === 'login' ? (
-                    <p>
-                      Don't have an account?{' '}
-                      <button onClick={() => setAuthMode('signup')} className="text-lagoon-500 font-semibold hover:underline">
-                        Sign up
-                      </button>
-                    </p>
-                  ) : (
-                    <p>
-                      Already have an account?{' '}
-                      <button onClick={() => setAuthMode('login')} className="text-lagoon-500 font-semibold hover:underline">
-                        Log in
-                      </button>
-                    </p>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-        </div>
-      </div>
-    </ReactLenis>
+    </div>
   );
 }

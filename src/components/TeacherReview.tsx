@@ -213,7 +213,7 @@ export default function TeacherReview({ onPublish, onBack }: TeacherReviewProps)
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
       exit={{ opacity: 0 }}
-      className="page-shell flex flex-col h-screen font-sans text-slate-800 relative"
+      className="flex flex-col h-screen font-sans text-[#2C1A12] bg-[#FAF7F2] relative"
     >
       <a href="#main-content" className="skip-link">
         Skip to main content
@@ -225,36 +225,35 @@ export default function TeacherReview({ onPublish, onBack }: TeacherReviewProps)
             initial={{ opacity: 0, y: 50, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: 50, x: '-50%' }}
-            className="fixed bottom-24 left-1/2 z-50 bg-slate-800 text-white px-6 py-3 rounded-full shadow-xl font-medium flex items-center gap-2"
+            className="fixed bottom-24 left-1/2 z-50 bg-[#2C1A12] text-white px-6 py-3 rounded-full shadow-xl font-medium flex items-center gap-2 border border-[#3E261B]"
           >
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-[#C26D43]" />
             {toastMessage}
           </motion.div>
         )}
       </AnimatePresence>
       
       {/* Header */}
-      <header className="h-16 panel-surface border-b border-white/60 flex items-center justify-between px-4 md:px-8 shrink-0 sticky top-0 z-20">
+      <header className="h-16 bg-white/90 backdrop-blur-md border-b border-[#EDE4D8] flex items-center justify-between px-4 md:px-8 shrink-0 sticky top-0 z-20">
         <div className="flex items-center gap-4 md:gap-6">
-          <h1 className="font-display text-xl font-bold flex items-center gap-2">
-            <span className="headline-gradient hidden sm:block">MindMerge</span>
-            <span className="bg-gradient-to-r from-sun-500 to-rose-400 bg-clip-text text-transparent">AI</span>
+          <h1 className="font-serif text-xl font-bold flex items-center gap-2 text-[#2C1A12]">
+            <span>MindMerge AI</span>
           </h1>
-          <div className="h-6 w-px bg-slate-200 hidden sm:block"></div>
-          <h2 className="text-base md:text-lg font-semibold text-slate-700">Review & Publish</h2>
-          <span className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-lagoon-500/10 text-lagoon-500 text-xs font-bold">Step 2 of 3</span>
+          <div className="h-5 w-px bg-[#EDE4D8] hidden sm:block"></div>
+          <h2 className="text-sm font-semibold text-[#6D6056]">Review & Publish</h2>
+          <span className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5EFE6] border border-[#E5DACB] text-[#2C1A12] text-xs font-semibold">Step 2 of 3</span>
         </div>
         <div className="flex items-center gap-3 md:gap-5">
-          <button className="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+          <button className="relative p-2 text-[#8A7D73] hover:text-[#2C1A12] hover:bg-[#FAF7F2] rounded-full transition-colors">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full border-2 border-white"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#C26D43] rounded-full animate-pulse"></span>
           </button>
-          <div className="flex items-center gap-3 pl-3 md:pl-5 border-l border-slate-200">
+          <div className="flex items-center gap-3 pl-3 md:pl-5 border-l border-[#EDE4D8]">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-semibold text-slate-700 leading-none">Dr. Anjali Sharma</p>
-              <p className="text-xs text-slate-500 mt-1">Computer Science</p>
+              <p className="text-sm font-bold text-[#2C1A12] leading-none">Dr. Anjali Sharma</p>
+              <p className="text-xs text-[#8A7D73] mt-1">Computer Science</p>
             </div>
-            <img src="/avatars/anjali.svg" alt="Profile" className="w-8 h-8 md:w-9 md:h-9 rounded-full ring-2 ring-white shadow-sm" referrerPolicy="no-referrer" />
+            <img src="/avatars/anjali.svg" alt="Profile" className="w-8 h-8 md:w-9 md:h-9 rounded-full ring-2 ring-[#EDE4D8] shadow-sm" referrerPolicy="no-referrer" />
           </div>
         </div>
       </header>
