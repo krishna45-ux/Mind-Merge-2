@@ -257,12 +257,15 @@ export default function LandingPage({ onSelectRole }: LandingPageProps) {
           Full-bleed morning sunlit study desk with scroll parallax & staggered typography
       ══════════════════════════════════════════════════════════ */}
       <main id="main-content" className="flex-1">
-        <section className="w-full relative min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex items-center overflow-hidden pt-16 sm:pt-18 lg:pt-20 pb-8 sm:pb-12">
+        <section className="w-full relative min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex items-center overflow-hidden pt-16 sm:pt-18 lg:pt-20 pb-8 sm:pb-12 bg-[#EDE4D8]">
           {/* Full-bleed photography background with scroll parallax */}
           <motion.img
             style={{ y: heroY, scale: heroScale }}
-            src="/theme/hero_warm_study.png"
+            src="/theme/hero_warm_study.jpg"
             alt="Cozy sunlit study desk with books, lamp, and laptop"
+            fetchPriority="high"
+            loading="eager"
+            decoding="async"
             className="absolute inset-0 w-full h-[115%] object-cover object-[50%_center] sm:object-[58%_center] lg:object-[64%_center] select-none -top-8"
           />
 
