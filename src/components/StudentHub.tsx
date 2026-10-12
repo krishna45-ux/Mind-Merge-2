@@ -764,7 +764,7 @@ If you have a general computer science or study question, try asking about **act
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="page-shell flex flex-col h-screen font-sans text-slate-800"
+      className="flex flex-col h-screen font-sans text-[#2C1A12] bg-[#FAF7F2]"
     >
       <a href="#main-content" className="skip-link">
         Skip to main content
@@ -776,9 +776,9 @@ If you have a general computer science or study question, try asking about **act
             initial={{ opacity: 0, y: 50, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: 50, x: '-50%' }}
-            className="fixed bottom-24 left-1/2 z-[60] bg-slate-800 text-white px-6 py-3 rounded-full shadow-xl font-medium flex items-center gap-2"
+            className="fixed bottom-24 left-1/2 z-[60] bg-[#2C1A12] text-white px-6 py-3 rounded-full shadow-xl font-medium flex items-center gap-2 border border-[#3E261B]"
           >
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-[#C26D43]" />
             {toastMessage}
           </motion.div>
         )}
@@ -791,111 +791,109 @@ If you have a general computer science or study question, try asking about **act
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/50 z-40 md:hidden"
+            className="fixed inset-0 bg-[#2C1A12]/50 z-40 md:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           />
         )}
       </AnimatePresence>
 
       {/* ─── Header ─────────────────────────────────────────── */}
-      <header className="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-4 md:px-8 shrink-0 sticky top-0 z-20">
+      <header className="h-16 bg-white/90 backdrop-blur-md border-b border-[#EDE4D8] flex items-center justify-between px-4 md:px-8 shrink-0 sticky top-0 z-20">
         <div className="flex items-center gap-3 md:gap-6">
-          <button className="md:hidden text-slate-500 hover:text-slate-700" onClick={() => setIsMobileMenuOpen(true)}>
+          <button className="md:hidden text-[#8A7D73] hover:text-[#2C1A12]" onClick={() => setIsMobileMenuOpen(true)}>
             <Menu className="w-6 h-6" />
           </button>
-          <h1 className="font-display text-xl font-black tracking-tight flex items-center gap-2">
-            <span className="headline-gradient hidden sm:block">MindMerge</span>
-            <span className="bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 bg-clip-text text-transparent">AI</span>
+          <h1 className="font-serif text-xl font-bold tracking-tight flex items-center gap-2 text-[#2C1A12]">
+            <span>MindMerge AI</span>
           </h1>
-          <div className="h-6 w-px bg-slate-200 hidden sm:block"></div>
-          <h2 className="text-base md:text-lg font-bold text-slate-800 hidden sm:block">Student Hub</h2>
+          <div className="h-5 w-px bg-[#EDE4D8] hidden sm:block"></div>
+          <h2 className="text-sm font-semibold text-[#6D6056] hidden sm:block">Student Hub</h2>
         </div>
         <div className="flex items-center gap-3 md:gap-5">
-          <button className="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+          <button className="relative p-2 text-[#8A7D73] hover:text-[#2C1A12] hover:bg-[#FAF7F2] rounded-full transition-colors">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#C26D43] rounded-full animate-pulse"></span>
           </button>
-          <div className="flex items-center gap-3 pl-3 md:pl-5 border-l border-slate-200">
+          <div className="flex items-center gap-3 pl-3 md:pl-5 border-l border-[#EDE4D8]">
             <div className="text-right hidden sm:block">
-              <p className="text-sm font-bold text-slate-800 leading-none">{studentName}</p>
-              <p className="text-xs font-semibold text-cyan-600 mt-1">Class 10-A · Scholar</p>
+              <p className="text-sm font-bold text-[#2C1A12] leading-none">{studentName}</p>
+              <p className="text-xs font-medium text-[#8A7D73] mt-1">Class 10-A · Scholar</p>
             </div>
-            <img src={studentAvatar} alt="Profile" className="w-9 h-9 md:w-10 md:h-10 rounded-full ring-2 ring-cyan-500/20 shadow-sm" referrerPolicy="no-referrer" />
+            <img src={studentAvatar} alt="Profile" className="w-9 h-9 md:w-10 md:h-10 rounded-full ring-2 ring-[#EDE4D8] shadow-sm" referrerPolicy="no-referrer" />
           </div>
         </div>
       </header>
 
       {/* ─── Main ────────────────────────────────────────────── */}
-      <main id="main-content" className="flex-1 flex flex-col md:flex-row overflow-hidden relative bg-slate-50/50">
+      <main id="main-content" className="flex-1 flex flex-col md:flex-row overflow-hidden relative bg-[#FAF7F2]">
         {/* Sidebar */}
         <aside
-          className={`fixed md:static inset-y-0 left-0 z-50 w-64 md:w-72 bg-white/80 backdrop-blur-xl border-r border-slate-200/80 flex flex-col py-4 md:py-6 shrink-0 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} shadow-xl md:shadow-none`}
+          className={`fixed md:static inset-y-0 left-0 z-50 w-64 md:w-72 bg-white border-r border-[#EDE4D8] flex flex-col py-4 md:py-6 shrink-0 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} shadow-xl md:shadow-none`}
         >
           <div className="flex items-center justify-between px-4 mb-4 md:hidden">
-            <h2 className="font-bold text-slate-800">Menu</h2>
-            <button className="text-slate-500" onClick={() => setIsMobileMenuOpen(false)}><X className="w-6 h-6" /></button>
+            <h2 className="font-bold text-[#2C1A12]">Menu</h2>
+            <button className="text-[#8A7D73]" onClick={() => setIsMobileMenuOpen(false)}><X className="w-6 h-6" /></button>
           </div>
 
           <nav className="flex flex-col gap-1.5 px-4">
             <button
               onClick={() => { setActiveTab('explore'); setSelectedNote(null); setIsMobileMenuOpen(false); }}
-              className={`flex items-center gap-3 text-left px-4 py-3.5 rounded-2xl font-bold transition-all border ${activeTab === 'explore' ? 'text-cyan-800 bg-cyan-500/10 border-cyan-500/30 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent'}`}
+              className={`flex items-center gap-3 text-left px-4 py-3 rounded-2xl font-bold transition-all border ${activeTab === 'explore' ? 'text-[#2C1A12] bg-[#F5EFE6] border-[#E5DACB] shadow-sm' : 'text-[#6D6056] hover:bg-[#FAF7F2] hover:text-[#2C1A12] border-transparent'}`}
             >
-              <Search className={`w-5 h-5 ${activeTab === 'explore' ? 'text-cyan-600' : 'text-slate-400'}`} />
+              <Search className={`w-5 h-5 ${activeTab === 'explore' ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
               <span>Explore Notes</span>
             </button>
             <button
               onClick={() => { setActiveTab('master-notes'); setSelectedNote(null); setIsMobileMenuOpen(false); }}
-              className={`flex items-center gap-3 text-left px-4 py-3.5 rounded-2xl font-bold transition-all border ${activeTab === 'master-notes' ? 'text-amber-800 bg-amber-500/10 border-amber-500/30 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent'}`}
+              className={`flex items-center gap-3 text-left px-4 py-3 rounded-2xl font-bold transition-all border ${activeTab === 'master-notes' ? 'text-[#2C1A12] bg-[#F5EFE6] border-[#E5DACB] shadow-sm' : 'text-[#6D6056] hover:bg-[#FAF7F2] hover:text-[#2C1A12] border-transparent'}`}
             >
-              <Crown className={`w-5 h-5 ${activeTab === 'master-notes' ? 'text-amber-600' : 'text-slate-400'}`} />
+              <Crown className={`w-5 h-5 ${activeTab === 'master-notes' ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
               <span>Master Notes</span>
             </button>
             <button
               onClick={() => { setActiveTab('upload'); setSelectedNote(null); setIsMobileMenuOpen(false); }}
-              className={`flex items-center gap-3 text-left px-4 py-3.5 rounded-2xl font-bold transition-all border ${activeTab === 'upload' ? 'text-cyan-800 bg-cyan-500/10 border-cyan-500/30 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent'}`}
+              className={`flex items-center gap-3 text-left px-4 py-3 rounded-2xl font-bold transition-all border ${activeTab === 'upload' ? 'text-[#2C1A12] bg-[#F5EFE6] border-[#E5DACB] shadow-sm' : 'text-[#6D6056] hover:bg-[#FAF7F2] hover:text-[#2C1A12] border-transparent'}`}
             >
-              <Upload className={`w-5 h-5 ${activeTab === 'upload' ? 'text-cyan-600' : 'text-slate-400'}`} />
+              <Upload className={`w-5 h-5 ${activeTab === 'upload' ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
               <span>Upload Notes</span>
             </button>
             <button
               onClick={() => { setActiveTab('practice-quiz'); setSelectedNote(null); setIsMobileMenuOpen(false); }}
-              className={`flex items-center gap-3 text-left px-4 py-3.5 rounded-2xl font-bold transition-all border ${activeTab === 'practice-quiz' ? 'text-cyan-800 bg-cyan-500/10 border-cyan-500/30 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent'}`}
+              className={`flex items-center gap-3 text-left px-4 py-3 rounded-2xl font-bold transition-all border ${activeTab === 'practice-quiz' ? 'text-[#2C1A12] bg-[#F5EFE6] border-[#E5DACB] shadow-sm' : 'text-[#6D6056] hover:bg-[#FAF7F2] hover:text-[#2C1A12] border-transparent'}`}
             >
-              <Target className={`w-5 h-5 ${activeTab === 'practice-quiz' ? 'text-cyan-600' : 'text-slate-400'}`} />
+              <Target className={`w-5 h-5 ${activeTab === 'practice-quiz' ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
               <span>Practice Quiz</span>
             </button>
             <button
               onClick={() => { setActiveTab('flashcards'); setSelectedNote(null); setIsMobileMenuOpen(false); }}
-              className={`flex items-center gap-3 text-left px-4 py-3.5 rounded-2xl font-bold transition-all border ${activeTab === 'flashcards' ? 'text-cyan-800 bg-cyan-500/10 border-cyan-500/30 shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-transparent'}`}
+              className={`flex items-center gap-3 text-left px-4 py-3 rounded-2xl font-bold transition-all border ${activeTab === 'flashcards' ? 'text-[#2C1A12] bg-[#F5EFE6] border-[#E5DACB] shadow-sm' : 'text-[#6D6056] hover:bg-[#FAF7F2] hover:text-[#2C1A12] border-transparent'}`}
             >
-              <Layers className={`w-5 h-5 ${activeTab === 'flashcards' ? 'text-cyan-600' : 'text-slate-400'}`} />
+              <Layers className={`w-5 h-5 ${activeTab === 'flashcards' ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
               <span>Flashcards</span>
             </button>
           </nav>
 
           {/* Progress Card */}
           <div className="px-4 mt-auto pt-6">
-            <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 rounded-2xl p-5 text-white shadow-lg border border-slate-800 relative overflow-hidden mb-3">
-              <div className="absolute top-0 right-0 w-28 h-28 bg-cyan-500/10 rounded-full blur-xl pointer-events-none" />
-              <div className="flex items-center justify-between mb-2 relative z-10">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-bold">Study Matrix</span>
-                <span className="text-[10px] font-bold px-2 py-0.5 bg-cyan-500/20 text-cyan-300 rounded-full">Level 2</span>
+            <div className="bg-[#F5EFE6] border border-[#E5DACB] rounded-2xl p-4.5 shadow-sm text-[#2C1A12] relative overflow-hidden mb-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#8A7D73]">Study Matrix</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 bg-[#EDE4D8] text-[#2C1A12] rounded-full border border-[#DFD2C0]">Level 2</span>
               </div>
-              <h4 className="font-bold text-base text-white mb-0.5 relative z-10">Your Progress</h4>
-              <p className="text-slate-400 text-xs mb-3 relative z-10">{notes.length} notes active in catalog</p>
+              <h4 className="font-serif font-bold text-base text-[#2C1A12] mb-0.5">Your Progress</h4>
+              <p className="text-[#7A6E65] text-xs mb-3">{notes.length} notes active in catalog</p>
               
-              <div className="w-full bg-slate-800 rounded-full h-2 mb-2 relative z-10 overflow-hidden">
-                <div className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 h-2 rounded-full w-[65%]" />
+              <div className="w-full bg-[#EDE4D8] rounded-full h-2 mb-2 overflow-hidden">
+                <div className="bg-gradient-to-r from-[#C26D43] to-[#A85832] h-2 rounded-full w-[65%]" />
               </div>
-              <div className="flex justify-between items-center text-[11px] font-semibold text-slate-400 relative z-10">
+              <div className="flex justify-between items-center text-[11px] font-semibold text-[#7A6E65]">
                 <span>Mastery Rate</span>
-                <span className="text-cyan-400 font-bold">65%</span>
+                <span className="text-[#C26D43] font-bold">65%</span>
               </div>
             </div>
             
-            <button onClick={onLogout} className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl font-semibold transition-all text-slate-600 hover:bg-rose-50 hover:text-rose-600 cursor-pointer">
-              <LogOut className="w-4 h-4 text-slate-400" />
+            <button onClick={onLogout} className="w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl font-semibold transition-all text-[#6D6056] hover:bg-[#F5EFE6] hover:text-[#2C1A12] cursor-pointer">
+              <LogOut className="w-4 h-4 text-[#8A7D73]" />
               <span>Logout</span>
             </button>
           </div>
@@ -911,23 +909,23 @@ If you have a general computer science or study question, try asking about **act
                  ════════════════════════════════════════════════ */}
               {activeTab === 'explore' && !selectedNote && (
                 <motion.div key="explore" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
-                  {/* Welcome Cyberpunk Banner */}
+                  {/* Welcome Academic Banner */}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-8 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 rounded-3xl p-6 md:p-8 text-white relative overflow-hidden border border-slate-800 shadow-xl"
+                    className="mb-8 bg-gradient-to-br from-[#684736] via-[#75503D] to-[#5A3C2D] rounded-3xl p-6 md:p-8 text-white relative overflow-hidden border border-[#8A614A] shadow-xl shadow-[#5A3C2D]/15"
                   >
-                    <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
-                    <div className="absolute right-24 bottom-0 h-32 w-32 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none" />
+                    <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-[#C26D43]/20 blur-3xl pointer-events-none" />
+                    <div className="absolute right-24 bottom-0 h-32 w-32 rounded-full bg-[#FAF7F2]/10 blur-3xl pointer-events-none" />
                     
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-bold tracking-wider uppercase mb-3">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-[#FAF7F2] text-xs font-semibold tracking-wider uppercase mb-3 backdrop-blur-sm">
                       <span>{greeting.emoji} {greeting.text}</span>
                     </div>
 
-                    <h2 className="font-display text-2xl md:text-3xl font-black text-white tracking-tight mb-2">
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
                       {studentName}
                     </h2>
-                    <p className="text-slate-300 text-sm max-w-xl leading-relaxed mb-6">
+                    <p className="text-[#F5EDE4] text-sm max-w-xl leading-relaxed mb-6">
                       Pick up where you left off. Search across {notes.length} curated teacher and student notes, test yourself with practice quizzes, and master concepts with flashcards.
                     </p>
 
@@ -935,23 +933,23 @@ If you have a general computer science or study question, try asking about **act
                     <div className="flex flex-wrap gap-2.5">
                       <button
                         onClick={() => setActiveTab('practice-quiz')}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 text-xs font-bold text-cyan-300 hover:text-white transition-all cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
                       >
-                        <Target className="w-3.5 h-3.5 text-cyan-400" />
+                        <Target className="w-3.5 h-3.5 text-[#F6C2A7]" />
                         <span>Quick Quiz</span>
                       </button>
                       <button
                         onClick={() => setActiveTab('flashcards')}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 text-xs font-bold text-amber-300 hover:text-white transition-all cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-xs font-bold text-white transition-all cursor-pointer shadow-xs"
                       >
-                        <Layers className="w-3.5 h-3.5 text-amber-400" />
+                        <Layers className="w-3.5 h-3.5 text-[#FDE68A]" />
                         <span>Flashcard Sprint</span>
                       </button>
                       <button
                         onClick={() => setIsAiChatOpen(true)}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-xs font-bold text-cyan-300 hover:text-white transition-all cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#C26D43] hover:bg-[#A85832] border border-[#D98256] text-xs font-bold text-white transition-all cursor-pointer shadow-md shadow-[#C26D43]/20"
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                        <Sparkles className="w-3.5 h-3.5 text-white" />
                         <span>Ask AI Assistant</span>
                       </button>
                     </div>
@@ -959,10 +957,10 @@ If you have a general computer science or study question, try asking about **act
 
                   <div className="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
                     <div>
-                      <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Explore Study Notes</h2>
-                      <p className="text-slate-500 text-sm font-medium">Search verified classroom materials and AI-generated Master Guides.</p>
+                      <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[#2C1A12] tracking-tight">Explore Study Notes</h2>
+                      <p className="text-[#6D6056] text-sm font-medium">Search verified classroom materials and AI-generated Master Guides.</p>
                     </div>
-                    <span className="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-600 rounded-full self-start sm:self-auto">
+                    <span className="text-xs font-bold px-3 py-1 bg-[#F5EFE6] text-[#6D6056] border border-[#EDE4D8] rounded-full self-start sm:self-auto">
                       {searchResults.length} {searchResults.length === 1 ? 'result' : 'results'}
                     </span>
                   </div>
@@ -970,52 +968,52 @@ If you have a general computer science or study question, try asking about **act
                   {/* Search Bar */}
                   <div className="flex flex-col sm:flex-row gap-3 mb-8">
                     <div className="relative flex-1">
-                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A7D73]" />
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search by title, keywords, or topic…"
-                        className="w-full pl-12 pr-5 py-4 rounded-2xl border border-slate-200 bg-white focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all text-slate-800 text-sm md:text-base shadow-sm font-medium"
+                        className="w-full pl-12 pr-5 py-4 rounded-2xl border border-[#EDE4D8] bg-white focus:outline-none focus:ring-4 focus:ring-[#C26D43]/15 focus:border-[#C26D43] transition-all text-[#2C1A12] placeholder:text-[#8A7D73] text-sm md:text-base shadow-xs font-medium"
                       />
                       {searchQuery && (
                         <button
                           onClick={() => setSearchQuery('')}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A7D73] hover:text-[#2C1A12] p-1"
                         >
                           <X className="w-4 h-4" />
                         </button>
                       )}
                     </div>
                     <div className="relative shrink-0">
-                      <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A7D73]" />
                       <select
                         value={filterSubject}
                         onChange={(e) => setFilterSubject(e.target.value)}
-                        className="pl-10 pr-10 py-4 rounded-2xl border border-slate-200 bg-white focus:outline-none focus:ring-4 focus:ring-cyan-500/10 focus:border-cyan-500 transition-all text-slate-700 text-sm font-bold shadow-sm appearance-none w-full sm:w-auto cursor-pointer"
+                        className="pl-10 pr-10 py-4 rounded-2xl border border-[#EDE4D8] bg-white focus:outline-none focus:ring-4 focus:ring-[#C26D43]/15 focus:border-[#C26D43] transition-all text-[#2C1A12] text-sm font-bold shadow-xs appearance-none w-full sm:w-auto cursor-pointer"
                       >
                         <option value="all">All Subjects</option>
                         {subjects.map((s) => (
                           <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
                         ))}
                       </select>
-                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A7D73] pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Results */}
                   <div className="space-y-4">
                     {searchResults.length === 0 && (
-                      <div className="text-center py-16 px-4 rounded-3xl border-2 border-dashed border-slate-200 bg-white/60">
-                        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+                      <div className="text-center py-16 px-4 rounded-3xl border-2 border-dashed border-[#EDE4D8] bg-[#F5EFE6]/50">
+                        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-[#F5EFE6] flex items-center justify-center text-[#8A7D73]">
                           <Search className="w-7 h-7" />
                         </div>
-                        <p className="font-bold text-slate-800 text-lg">No notes found</p>
-                        <p className="text-sm text-slate-500 mt-1 max-w-sm mx-auto mb-5">Try adjusting your keyword search or switch the subject filter to view more materials.</p>
+                        <p className="font-serif font-bold text-[#2C1A12] text-lg">No notes found</p>
+                        <p className="text-sm text-[#6D6056] mt-1 max-w-sm mx-auto mb-5">Try adjusting your keyword search or switch the subject filter to view more materials.</p>
                         {filterSubject !== 'all' && (
                           <button
                             onClick={() => setFilterSubject('all')}
-                            className="px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors cursor-pointer"
+                            className="px-4 py-2 rounded-xl bg-[#684736] text-white text-xs font-bold hover:bg-[#5A3C2D] transition-colors cursor-pointer"
                           >
                             Reset Subject Filter
                           </button>
@@ -1030,48 +1028,48 @@ If you have a general computer science or study question, try asking about **act
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
                           onClick={() => { setSelectedNote(n); setUserRating(0); }}
-                          className={`w-full text-left bg-white rounded-3xl p-5 md:p-6 shadow-sm hover:shadow-xl hover:-translate-y-0.5 border border-slate-200/80 transition-all duration-300 group cursor-pointer ${n.type === 'master' ? 'ring-1 ring-amber-400/40 border-amber-300' : ''}`}
+                          className={`w-full text-left bg-white rounded-3xl p-5 md:p-6 shadow-xs hover:shadow-md hover:-translate-y-0.5 border border-[#EDE4D8] transition-all duration-300 group cursor-pointer ${n.type === 'master' ? 'ring-1 ring-[#C26D43]/30 border-[#C26D43]/40' : ''}`}
                         >
                           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                             <div className="flex items-center gap-4 flex-1 min-w-0">
-                              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${n.type === 'master' ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-md shadow-amber-300/50' : n.authorRole === 'student' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-cyan-500/10 text-cyan-600'}`}>
+                              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${n.type === 'master' ? 'bg-gradient-to-br from-[#C26D43] to-[#A85832] text-white shadow-sm' : n.authorRole === 'student' ? 'bg-[#EAF3EB] text-[#2E6B3A]' : 'bg-[#F5EFE6] text-[#684736]'}`}>
                                 {n.type === 'master' ? <Crown className="w-6 h-6" /> : <FileText className="w-6 h-6" />}
                               </div>
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                                   {n.type === 'master' && (
-                                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-sm">👑 Master Note</span>
+                                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-[#C26D43] to-[#A85832] text-white shadow-xs">👑 Master Note</span>
                                   )}
                                   {n.authorRole === 'student' && (
-                                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">Student</span>
+                                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#EAF3EB] text-[#2E6B3A] border border-[#D5E8D7]">Student</span>
                                   )}
-                                  <span className="text-[11px] font-bold text-slate-500">
+                                  <span className="text-[11px] font-bold text-[#8A7D73]">
                                     {subjects.find((s) => s.id === n.subjectId)?.icon} {subjects.find((s) => s.id === n.subjectId)?.name}
                                   </span>
                                 </div>
-                                <h3 className="font-bold text-slate-900 group-hover:text-cyan-700 transition-colors truncate text-lg tracking-tight">{n.title}</h3>
-                                <p className="text-xs font-medium text-slate-400 mt-1">Uploaded by {n.authorName}</p>
+                                <h3 className="font-serif font-bold text-[#2C1A12] group-hover:text-[#C26D43] transition-colors truncate text-lg tracking-tight">{n.title}</h3>
+                                <p className="text-xs font-medium text-[#8A7D73] mt-1">Uploaded by {n.authorName}</p>
                               </div>
                             </div>
                             <div className="flex items-center gap-5 shrink-0">
                               <div className="text-center">
-                                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold flex items-center justify-center gap-1"><Bot className="w-3 h-3 text-cyan-500" /> AI Rating</p>
+                                <p className="text-[10px] uppercase tracking-wider text-[#8A7D73] font-bold flex items-center justify-center gap-1"><Bot className="w-3 h-3 text-[#C26D43]" /> AI Rating</p>
                                 {renderStars(n.aiRating)}
                               </div>
                               <div className="text-center">
-                                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold flex items-center justify-center gap-1"><Star className="w-3 h-3 text-amber-500" /> Student Score</p>
-                                {avgStudent > 0 ? renderStars(avgStudent) : <span className="text-xs font-medium text-slate-300">—</span>}
+                                <p className="text-[10px] uppercase tracking-wider text-[#8A7D73] font-bold flex items-center justify-center gap-1"><Star className="w-3 h-3 text-amber-500" /> Student Score</p>
+                                {avgStudent > 0 ? renderStars(avgStudent) : <span className="text-xs font-medium text-[#8A7D73]">—</span>}
                               </div>
-                              <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-cyan-600 transition-colors group-hover:translate-x-1 duration-200" />
+                              <ChevronRight className="w-5 h-5 text-[#8A7D73] group-hover:text-[#C26D43] transition-colors group-hover:translate-x-1 duration-200" />
                             </div>
                           </div>
                           {/* Keywords */}
                           {n.keywords.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-slate-100">
+                            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[#EDE4D8]">
                               {n.keywords.slice(0, 5).map((kw) => (
-                                <span key={kw} className="text-[10px] font-semibold text-slate-500 bg-slate-100 rounded-full px-2.5 py-0.5">{kw}</span>
+                                <span key={kw} className="text-[10px] font-semibold text-[#6D6056] bg-[#F5EFE6] border border-[#EDE4D8] rounded-full px-2.5 py-0.5">{kw}</span>
                               ))}
-                              {n.keywords.length > 5 && <span className="text-[10px] font-semibold text-slate-400">+{n.keywords.length - 5} more</span>}
+                              {n.keywords.length > 5 && <span className="text-[10px] font-semibold text-[#8A7D73]">+{n.keywords.length - 5} more</span>}
                             </div>
                           )}
                         </motion.button>
@@ -1089,69 +1087,69 @@ If you have a general computer science or study question, try asking about **act
                   {/* Back button */}
                   <button
                     onClick={() => setSelectedNote(null)}
-                    className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 mb-6 transition-colors"
+                    className="flex items-center gap-2 text-sm font-bold text-[#6D6056] hover:text-[#C26D43] mb-6 transition-colors cursor-pointer"
                   >
                     ← Back to {activeTab === 'master-notes' ? 'Master Notes' : 'Explore'}
                   </button>
 
                   {/* Note Header */}
-                  <div className="mb-10 rounded-[2rem] mesh-card p-8 md:p-10 border border-white/70 shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
+                  <div className="mb-10 rounded-[2rem] bg-white p-8 md:p-10 border border-[#EDE4D8] shadow-xs">
                     <div className="flex items-center gap-3 mb-4 flex-wrap">
                       {selectedNote.type === 'master' && (
-                        <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 text-xs font-bold rounded-md uppercase tracking-wide border border-amber-200">👑 Master Note</span>
+                        <span className="px-3 py-1 bg-gradient-to-r from-[#C26D43] to-[#A85832] text-white text-xs font-bold rounded-md uppercase tracking-wide shadow-xs">👑 Master Note</span>
                       )}
-                      <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-md uppercase tracking-wide">Published</span>
-                      <span className="text-sm font-medium text-slate-500">
+                      <span className="px-3 py-1 bg-[#EAF3EB] text-[#2E6B3A] border border-[#D5E8D7] text-xs font-bold rounded-md uppercase tracking-wide">Published</span>
+                      <span className="text-sm font-medium text-[#8A7D73]">
                         {subjects.find((s) => s.id === selectedNote.subjectId)?.icon} {subjects.find((s) => s.id === selectedNote.subjectId)?.name}
                       </span>
                     </div>
-                    <h1 className="font-display text-3xl md:text-4xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">{selectedNote.title}</h1>
+                    <h1 className="font-serif text-3xl md:text-4xl font-bold text-[#2C1A12] mb-6 tracking-tight leading-tight">{selectedNote.title}</h1>
 
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 pb-6 border-b border-slate-200">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 pb-6 border-b border-[#EDE4D8]">
                       <div className="flex items-center gap-3">
                         {selectedNote.authorAvatar ? (
-                          <img src={selectedNote.authorAvatar} alt={selectedNote.authorName} className="w-10 h-10 md:w-12 md:h-12 rounded-full ring-4 ring-white shadow-sm" referrerPolicy="no-referrer" />
+                          <img src={selectedNote.authorAvatar} alt={selectedNote.authorName} className="w-10 h-10 md:w-12 md:h-12 rounded-full ring-2 ring-[#EDE4D8] shadow-xs" referrerPolicy="no-referrer" />
                         ) : (
-                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm ring-4 ring-white">
+                          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-[#684736] to-[#5A3C2D] flex items-center justify-center shadow-xs ring-2 ring-[#EDE4D8]">
                             <Sparkles className="w-5 h-5 text-white" />
                           </div>
                         )}
                         <div>
-                          <p className="font-bold text-slate-800 text-base md:text-lg leading-none">{selectedNote.authorName}</p>
-                          <p className="text-sm font-medium text-slate-500 mt-1">{selectedNote.authorRole === 'student' ? 'Student Contributor' : 'Faculty'}</p>
+                          <p className="font-serif font-bold text-[#2C1A12] text-base md:text-lg leading-none">{selectedNote.authorName}</p>
+                          <p className="text-sm font-medium text-[#8A7D73] mt-1">{selectedNote.authorRole === 'student' ? 'Student Contributor' : 'Faculty'}</p>
                         </div>
                       </div>
 
                       {/* Ratings side-by-side */}
                       <div className="flex items-center gap-6">
                         <div>
-                          <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1 mb-1"><Bot className="w-3 h-3" /> AI Rating</p>
+                          <p className="text-[10px] uppercase tracking-wider text-[#8A7D73] font-bold flex items-center gap-1 mb-1"><Bot className="w-3 h-3 text-[#C26D43]" /> AI Rating</p>
                           {renderStars(selectedNote.aiRating)}
                         </div>
                         <div>
-                          <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1 mb-1"><Star className="w-3 h-3" /> Student Avg ({selectedNote.studentRatings.length})</p>
-                          {getAvgStudentRating(selectedNote) > 0 ? renderStars(getAvgStudentRating(selectedNote)) : <span className="text-xs text-slate-300">No ratings yet</span>}
+                          <p className="text-[10px] uppercase tracking-wider text-[#8A7D73] font-bold flex items-center gap-1 mb-1"><Star className="w-3 h-3 text-amber-500" /> Student Avg ({selectedNote.studentRatings.length})</p>
+                          {getAvgStudentRating(selectedNote) > 0 ? renderStars(getAvgStudentRating(selectedNote)) : <span className="text-xs text-[#8A7D73]">No ratings yet</span>}
                         </div>
                       </div>
                     </div>
                   </div>
 
                   {selectedNote.pdfData && (
-                    <div className="mb-6 p-4 rounded-2xl bg-orange-500/5 border border-orange-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="mb-6 p-4 rounded-2xl bg-[#F5EFE6] border border-[#E5DACB] flex flex-col sm:flex-row items-center justify-between gap-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-md">
+                        <div className="w-12 h-12 rounded-xl bg-[#684736] text-white flex items-center justify-center shadow-xs">
                           <FileText className="w-6 h-6" />
                         </div>
                         <div className="text-left">
-                          <p className="font-bold text-slate-800 text-sm md:text-base leading-tight">{selectedNote.pdfName || 'attachment.pdf'}</p>
-                          <p className="text-xs text-slate-500 mt-0.5">PDF Document Attachment</p>
+                          <p className="font-bold text-[#2C1A12] text-sm md:text-base leading-tight">{selectedNote.pdfName || 'attachment.pdf'}</p>
+                          <p className="text-xs text-[#8A7D73] mt-0.5">PDF Document Attachment</p>
                         </div>
                       </div>
                       <a
                         href={selectedNote.pdfData}
                         download={selectedNote.pdfName || 'attachment.pdf'}
                         onClick={(e) => e.stopPropagation()}
-                        className="px-6 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2"
+                        className="px-6 py-2.5 bg-[#C26D43] hover:bg-[#A85832] text-white rounded-xl text-sm font-bold shadow-xs transition-all flex items-center gap-2 cursor-pointer"
                       >
                         <Upload className="w-4 h-4 rotate-180" /> Download PDF
                       </a>
@@ -1159,28 +1157,28 @@ If you have a general computer science or study question, try asking about **act
                   )}
 
                   {/* Detail Tab Navigation */}
-                  <div className="flex border-b border-slate-200 mb-6 bg-slate-100/60 p-1 rounded-xl max-w-lg">
+                  <div className="flex border border-[#EDE4D8] mb-6 bg-[#F5EFE6] p-1 rounded-xl max-w-lg">
                     <button
                       onClick={() => setDetailTab('content')}
-                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors ${detailTab === 'content' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors cursor-pointer ${detailTab === 'content' ? 'bg-white text-[#2C1A12] shadow-xs' : 'text-[#6D6056] hover:text-[#2C1A12]'}`}
                     >
                       📚 Study Guide
                     </button>
                     <button
                       onClick={() => setDetailTab('questions')}
-                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors ${detailTab === 'questions' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors cursor-pointer ${detailTab === 'questions' ? 'bg-white text-[#2C1A12] shadow-xs' : 'text-[#6D6056] hover:text-[#2C1A12]'}`}
                     >
                       ❓ Questions
                     </button>
                     <button
                       onClick={() => setDetailTab('quiz')}
-                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors ${detailTab === 'quiz' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors cursor-pointer ${detailTab === 'quiz' ? 'bg-white text-[#2C1A12] shadow-xs' : 'text-[#6D6056] hover:text-[#2C1A12]'}`}
                     >
                       🧠 Quiz
                     </button>
                     <button
                       onClick={() => setDetailTab('flashcards')}
-                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors ${detailTab === 'flashcards' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-800'}`}
+                      className={`flex-1 py-2 text-center text-sm font-bold rounded-lg transition-colors cursor-pointer ${detailTab === 'flashcards' ? 'bg-white text-[#2C1A12] shadow-xs' : 'text-[#6D6056] hover:text-[#2C1A12]'}`}
                     >
                       ⚡ Flashcards
                     </button>
@@ -1188,19 +1186,19 @@ If you have a general computer science or study question, try asking about **act
 
                   {/* Render based on detailTab */}
                   {detailTab === 'content' && (
-                    <div className="prose prose-lg md:prose-xl prose-slate max-w-none rounded-[2rem] bg-white/70 backdrop-blur-xl p-8 md:p-10 border border-white/70 shadow-[0_24px_80px_rgba(15,23,42,0.08)] mb-8">
+                    <div className="prose prose-lg md:prose-xl prose-stone max-w-none rounded-[2rem] bg-white p-8 md:p-10 border border-[#EDE4D8] shadow-xs mb-8 text-[#2C1A12]">
                       {selectedNote.content.split('\n').map((line, i) => {
                         if (line.startsWith('🏆') || line.startsWith('──')) {
-                          return <h3 key={i} className="text-xl font-bold text-slate-800 mt-6 mb-3 flex items-center gap-2"><Sparkles className="w-5 h-5 text-orange-500" />{line.replace(/^🏆\s*/, '').replace(/^──\s*/, '')}</h3>;
+                          return <h3 key={i} className="font-serif text-xl font-bold text-[#2C1A12] mt-6 mb-3 flex items-center gap-2"><Sparkles className="w-5 h-5 text-[#C26D43]" />{line.replace(/^🏆\s*/, '').replace(/^──\s*/, '')}</h3>;
                         }
                         if (line.startsWith('•')) {
-                          return <li key={i} className="text-slate-700 leading-relaxed ml-4 list-disc marker:text-orange-400">{line.replace(/^•\s*/, '')}</li>;
+                          return <li key={i} className="text-[#4A3B32] leading-relaxed ml-4 list-disc marker:text-[#C26D43]">{line.replace(/^•\s*/, '')}</li>;
                         }
                         if (line.match(/^\d+\./)) {
-                          return <h3 key={i} className="text-xl font-bold text-slate-800 mt-8 mb-3 flex items-center gap-3"><div className="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center text-sm font-bold shadow-sm">{line.match(/^\d+/)?.[0]}</div>{line.replace(/^\d+\.\s*/, '')}</h3>;
+                          return <h3 key={i} className="font-serif text-xl font-bold text-[#2C1A12] mt-8 mb-3 flex items-center gap-3"><div className="w-8 h-8 rounded-lg bg-[#F5EFE6] text-[#684736] border border-[#EDE4D8] flex items-center justify-center text-sm font-bold shadow-xs">{line.match(/^\d+/)?.[0]}</div>{line.replace(/^\d+\.\s*/, '')}</h3>;
                         }
                         if (line.trim() === '') return <br key={i} />;
-                        return <p key={i} className="text-slate-700 leading-relaxed mb-2">{line}</p>;
+                        return <p key={i} className="text-[#4A3B32] leading-relaxed mb-2">{line}</p>;
                       })}
                     </div>
                   )}
@@ -1208,19 +1206,19 @@ If you have a general computer science or study question, try asking about **act
                   {detailTab === 'questions' && (
                     <div className="mb-8 space-y-6">
                       {(!selectedNote.importantQuestions || selectedNote.importantQuestions.length === 0) ? (
-                        <div className="text-center py-12 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <HelpCircle className="w-12 h-12 mx-auto mb-3 text-slate-300" />
+                        <div className="text-center py-12 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <HelpCircle className="w-12 h-12 mx-auto mb-3 text-[#8A7D73]" />
                           <p className="font-medium">No important questions generated for this note.</p>
                         </div>
                       ) : (
                         selectedNote.importantQuestions.map((q, idx) => (
-                          <div key={idx} className="p-6 rounded-[1.5rem] bg-white border border-slate-100 shadow-sm space-y-3">
-                            <h4 className="font-bold text-slate-800 text-lg flex items-start gap-3">
-                              <span className="w-6 h-6 rounded-md bg-blue-50 text-blue-600 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">Q{idx + 1}</span>
+                          <div key={idx} className="p-6 rounded-[1.5rem] bg-white border border-[#EDE4D8] shadow-xs space-y-3">
+                            <h4 className="font-serif font-bold text-[#2C1A12] text-lg flex items-start gap-3">
+                              <span className="w-6 h-6 rounded-md bg-[#F5EFE6] text-[#C26D43] border border-[#EDE4D8] text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">Q{idx + 1}</span>
                               {q.question}
                             </h4>
-                            <div className="pl-9 text-slate-600 leading-relaxed whitespace-pre-line text-sm">
-                              <strong>Answer:</strong> {q.answer}
+                            <div className="pl-9 text-[#4A3B32] leading-relaxed whitespace-pre-line text-sm">
+                              <strong className="text-[#2C1A12]">Answer:</strong> {q.answer}
                             </div>
                           </div>
                         ))
@@ -1231,34 +1229,34 @@ If you have a general computer science or study question, try asking about **act
                   {detailTab === 'quiz' && (
                     <div className="mb-8">
                       {(!selectedNote.quiz || selectedNote.quiz.length === 0) ? (
-                        <div className="text-center py-12 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <Bot className="w-12 h-12 mx-auto mb-3 text-slate-300" />
+                        <div className="text-center py-12 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <Bot className="w-12 h-12 mx-auto mb-3 text-[#8A7D73]" />
                           <p className="font-medium">No practice quiz generated for this note.</p>
                         </div>
                       ) : (
                         <div>
                           {quizFinished ? (
-                            <div className="mesh-card border border-white/70 rounded-[2rem] p-8 md:p-12 shadow-sm text-center max-w-2xl mx-auto space-y-6">
-                              <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">🏆</div>
-                              <h3 className="text-2xl font-extrabold text-slate-800">Quiz Completed!</h3>
-                              <p className="text-slate-600 font-medium text-lg text-center font-sans">
-                                You scored <span className="font-bold text-blue-600">{quizScore}</span> out of <span className="font-bold">{selectedNote.quiz.length}</span>!
+                            <div className="bg-white border border-[#EDE4D8] rounded-[2rem] p-8 md:p-12 shadow-xs text-center max-w-2xl mx-auto space-y-6">
+                              <div className="w-20 h-20 bg-[#EAF3EB] text-[#2E6B3A] rounded-full flex items-center justify-center mx-auto text-3xl">🏆</div>
+                              <h3 className="font-serif text-2xl font-bold text-[#2C1A12]">Quiz Completed!</h3>
+                              <p className="text-[#6D6056] font-medium text-lg text-center font-sans">
+                                You scored <span className="font-bold text-[#C26D43]">{quizScore}</span> out of <span className="font-bold text-[#2C1A12]">{selectedNote.quiz.length}</span>!
                               </p>
-                              <div className="w-full bg-slate-100 rounded-full h-3">
-                                <div className="bg-emerald-500 h-3 rounded-full transition-all duration-500" style={{ width: `${(quizScore / selectedNote.quiz.length) * 100}%` }}></div>
+                              <div className="w-full bg-[#F5EFE6] rounded-full h-3">
+                                <div className="bg-[#C26D43] h-3 rounded-full transition-all duration-500" style={{ width: `${(quizScore / selectedNote.quiz.length) * 100}%` }}></div>
                               </div>
-                              <button onClick={() => { setQuizIndex(0); setSelectedOpt(null); setQuizScore(0); setIsQuizSubmitted(false); setQuizFinished(false); }} className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg active:scale-95">Restart Quiz</button>
+                              <button onClick={() => { setQuizIndex(0); setSelectedOpt(null); setQuizScore(0); setIsQuizSubmitted(false); setQuizFinished(false); }} className="px-6 py-3 bg-[#C26D43] text-white rounded-xl font-bold hover:bg-[#A85832] transition-colors shadow-xs cursor-pointer">Restart Quiz</button>
                             </div>
                           ) : (
-                            <div className="mesh-card border border-white/70 rounded-[2rem] p-6 md:p-8 shadow-sm">
+                            <div className="bg-white border border-[#EDE4D8] rounded-[2rem] p-6 md:p-8 shadow-xs">
                               <div className="flex items-center justify-between mb-6">
-                                <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">Question {quizIndex + 1} of {selectedNote.quiz.length}</span>
-                                <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full">Practice</span>
+                                <span className="text-sm font-bold text-[#8A7D73] uppercase tracking-wider">Question {quizIndex + 1} of {selectedNote.quiz.length}</span>
+                                <span className="px-3 py-1 bg-[#F5EFE6] text-[#684736] text-xs font-bold rounded-full border border-[#EDE4D8]">Practice</span>
                               </div>
-                              <h4 className="font-bold text-slate-800 text-xl mb-6">{selectedNote.quiz[quizIndex].question}</h4>
+                              <h4 className="font-serif font-bold text-[#2C1A12] text-xl mb-6">{selectedNote.quiz[quizIndex].question}</h4>
                               <div className="space-y-3">
                                 {selectedNote.quiz[quizIndex].options.map((opt, i) => {
-                                  let btnClass = "border-slate-100 hover:border-blue-300 hover:bg-blue-50/30 text-slate-700";
+                                  let btnClass = "border-[#EDE4D8] hover:border-[#C26D43]/40 hover:bg-[#F5EFE6]/40 text-[#2C1A12]";
                                   const isOptionSelected = selectedOpt === i;
                                   const optionText = opt;
                                   const correctText = selectedNote.quiz[quizIndex].answer;
@@ -1269,24 +1267,24 @@ If you have a general computer science or study question, try asking about **act
                                     } else if (isOptionSelected) {
                                       btnClass = "border-rose-500 bg-rose-50 text-rose-800 font-bold";
                                     } else {
-                                      btnClass = "border-slate-100 opacity-60 text-slate-400";
+                                      btnClass = "border-[#EDE4D8] opacity-60 text-[#8A7D73]";
                                     }
                                   } else if (isOptionSelected) {
-                                    btnClass = "border-blue-500 bg-blue-50 text-blue-800 font-bold";
+                                    btnClass = "border-[#C26D43] bg-[#F5EFE6] text-[#2C1A12] font-bold";
                                   }
                                   return (
-                                    <button key={opt} disabled={isQuizSubmitted} onClick={() => setSelectedOpt(i)} className={`w-full text-left p-4 border-2 rounded-2xl transition-all font-medium flex items-center justify-between ${btnClass}`}>
+                                    <button key={opt} disabled={isQuizSubmitted} onClick={() => setSelectedOpt(i)} className={`w-full text-left p-4 border-2 rounded-2xl transition-all font-medium flex items-center justify-between cursor-pointer ${btnClass}`}>
                                       <span>{opt}</span>
-                                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${isOptionSelected ? 'border-blue-500 bg-blue-500' : 'border-slate-200'}`}>{isOptionSelected && <CheckCircle2 className="w-4 h-4 text-white" />}</div>
+                                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${isOptionSelected ? 'border-[#C26D43] bg-[#C26D43]' : 'border-[#EDE4D8]'}`}>{isOptionSelected && <CheckCircle2 className="w-4 h-4 text-white" />}</div>
                                     </button>
                                   );
                                 })}
                               </div>
-                              <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+                              <div className="mt-8 pt-6 border-t border-[#EDE4D8] flex justify-end">
                                 {!isQuizSubmitted ? (
-                                  <button onClick={() => { if (selectedOpt === null) { showToast('Please select an option first'); return; } const correctText = selectedNote.quiz[quizIndex].answer; const chosenText = selectedNote.quiz[quizIndex].options[selectedOpt]; if (chosenText === correctText) setQuizScore(prev => prev + 1); setIsQuizSubmitted(true); }} className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg active:scale-95">Submit Answer</button>
+                                  <button onClick={() => { if (selectedOpt === null) { showToast('Please select an option first'); return; } const correctText = selectedNote.quiz[quizIndex].answer; const chosenText = selectedNote.quiz[quizIndex].options[selectedOpt]; if (chosenText === correctText) setQuizScore(prev => prev + 1); setIsQuizSubmitted(true); }} className="bg-[#C26D43] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#A85832] transition-colors shadow-xs cursor-pointer">Submit Answer</button>
                                 ) : (
-                                  <button onClick={() => { if (quizIndex + 1 < selectedNote.quiz.length) { setQuizIndex(prev => prev + 1); setSelectedOpt(null); setIsQuizSubmitted(false); } else { setQuizFinished(true); } }} className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 transition-colors">
+                                  <button onClick={() => { if (quizIndex + 1 < selectedNote.quiz.length) { setQuizIndex(prev => prev + 1); setSelectedOpt(null); setIsQuizSubmitted(false); } else { setQuizFinished(true); } }} className="flex items-center gap-2 bg-[#684736] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#5A3C2D] transition-colors cursor-pointer">
                                     {quizIndex + 1 < selectedNote.quiz.length ? 'Next Question' : 'Finish Quiz'} <ChevronRight className="w-5 h-5" />
                                   </button>
                                 )}
@@ -1301,36 +1299,36 @@ If you have a general computer science or study question, try asking about **act
                   {detailTab === 'flashcards' && (
                     <div className="mb-8">
                       {(!selectedNote.flashcards || selectedNote.flashcards.length === 0) ? (
-                        <div className="text-center py-12 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <Layers className="w-12 h-12 mx-auto mb-3 text-slate-300" />
+                        <div className="text-center py-12 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <Layers className="w-12 h-12 mx-auto mb-3 text-[#8A7D73]" />
                           <p className="font-medium">No flashcards generated for this note.</p>
                         </div>
                       ) : (
                         <div className="max-w-xl mx-auto space-y-6">
                           <div className="flex items-center justify-between px-2">
-                            <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">Card {flashIndex + 1} of {selectedNote.flashcards.length}</span>
-                            <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">Interactive</span>
+                            <span className="text-sm font-bold text-[#8A7D73] uppercase tracking-wider">Card {flashIndex + 1} of {selectedNote.flashcards.length}</span>
+                            <span className="text-xs font-bold text-[#684736] bg-[#F5EFE6] border border-[#EDE4D8] px-2.5 py-1 rounded-full">Interactive</span>
                           </div>
 
                           <div onClick={() => setIsFlipped(!isFlipped)} className="relative w-full h-72 cursor-pointer perspective-1000">
                             <motion.div animate={{ rotateY: isFlipped ? 180 : 0 }} transition={{ duration: 0.5, ease: "easeOut" }} className="w-full h-full relative transform-style-3d">
-                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-white/10 bg-gradient-to-br from-indigo-500 to-blue-600 text-white ${isFlipped ? 'pointer-events-none' : ''}`}>
-                                <span className="absolute top-6 left-6 text-xs font-bold text-white/60 uppercase tracking-wider">Question / Concept</span>
-                                <h3 className="text-2xl font-bold leading-normal px-4">{selectedNote.flashcards[flashIndex].front}</h3>
-                                <span className="absolute bottom-6 text-xs text-white/50">Click to flip</span>
+                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-white/10 bg-gradient-to-br from-[#684736] via-[#75503D] to-[#5A3C2D] text-white ${isFlipped ? 'pointer-events-none' : ''}`}>
+                                <span className="absolute top-6 left-6 text-xs font-bold text-white/70 uppercase tracking-wider">Question / Concept</span>
+                                <h3 className="font-serif text-2xl font-bold leading-normal px-4 text-white">{selectedNote.flashcards[flashIndex].front}</h3>
+                                <span className="absolute bottom-6 text-xs text-white/60">Click to flip</span>
                               </div>
-                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-slate-200 bg-white text-slate-800 rotate-y-180 ${!isFlipped ? 'pointer-events-none' : ''}`}>
-                                <span className="absolute top-6 left-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Answer / Explanation</span>
-                                <p className="text-lg font-medium leading-relaxed text-slate-700 px-4">{selectedNote.flashcards[flashIndex].back}</p>
-                                <span className="absolute bottom-6 text-xs text-slate-400">Click to flip back</span>
+                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-[#EDE4D8] bg-white text-[#2C1A12] rotate-y-180 ${!isFlipped ? 'pointer-events-none' : ''}`}>
+                                <span className="absolute top-6 left-6 text-xs font-bold text-[#8A7D73] uppercase tracking-wider">Answer / Explanation</span>
+                                <p className="text-lg font-medium leading-relaxed text-[#4A3B32] px-4">{selectedNote.flashcards[flashIndex].back}</p>
+                                <span className="absolute bottom-6 text-xs text-[#8A7D73]">Click to flip back</span>
                               </div>
                             </motion.div>
                           </div>
 
                           <div className="flex items-center justify-between pt-4">
-                            <button disabled={flashIndex === 0} onClick={() => { if (flashIndex > 0) { setFlashIndex(prev => prev - 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">Previous</button>
-                            <button onClick={() => setIsFlipped(!isFlipped)} className="px-6 py-3 rounded-xl bg-indigo-50 text-indigo-700 font-bold hover:bg-indigo-100 transition-colors">🔄 Flip Card</button>
-                            <button disabled={flashIndex === selectedNote.flashcards.length - 1} onClick={() => { if (flashIndex < selectedNote.flashcards.length - 1) { setFlashIndex(prev => prev + 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">Next</button>
+                            <button disabled={flashIndex === 0} onClick={() => { if (flashIndex > 0) { setFlashIndex(prev => prev - 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-white border border-[#EDE4D8] text-[#2C1A12] font-bold hover:bg-[#F5EFE6] transition-colors shadow-xs disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">Previous</button>
+                            <button onClick={() => setIsFlipped(!isFlipped)} className="px-6 py-3 rounded-xl bg-[#F5EFE6] text-[#2C1A12] font-bold hover:bg-[#E5DACB] transition-colors border border-[#EDE4D8] cursor-pointer">🔄 Flip Card</button>
+                            <button disabled={flashIndex === selectedNote.flashcards.length - 1} onClick={() => { if (flashIndex < selectedNote.flashcards.length - 1) { setFlashIndex(prev => prev + 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-[#684736] text-white font-bold hover:bg-[#5A3C2D] transition-colors shadow-xs disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">Next</button>
                           </div>
                         </div>
                       )}
@@ -1338,14 +1336,14 @@ If you have a general computer science or study question, try asking about **act
                   )}
 
                   {/* Rate This Note */}
-                  <div className="rounded-[2rem] mesh-card p-8 border border-white/70 shadow-sm text-center">
-                    <h3 className="text-xl font-bold text-slate-800 mb-2">Rate This Note</h3>
-                    <p className="text-slate-500 text-sm mb-5">Help other students by sharing your opinion.</p>
+                  <div className="rounded-[2rem] bg-white p-8 border border-[#EDE4D8] shadow-xs text-center">
+                    <h3 className="font-serif text-xl font-bold text-[#2C1A12] mb-2">Rate This Note</h3>
+                    <p className="text-[#6D6056] text-sm mb-5">Help other students by sharing your opinion.</p>
                     <div className="flex items-center justify-center gap-2 mb-4">
                       {renderStars(0, true, selectedNote.id)}
                     </div>
                     {userRating > 0 && (
-                      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-emerald-600 font-bold text-sm">
+                      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[#2E6B3A] font-bold text-sm">
                         ✓ You rated this {userRating}/5 — Thank you!
                       </motion.p>
                     )}
@@ -1359,15 +1357,15 @@ If you have a general computer science or study question, try asking about **act
               {activeTab === 'master-notes' && !selectedNote && (
                 <motion.div key="masters" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                   <div className="mb-8">
-                    <h2 className="text-3xl font-extrabold text-slate-900 mb-2">👑 Master Notes</h2>
-                    <p className="text-slate-500 font-medium">AI-synthesized comprehensive notes combining all teacher contributions per subject.</p>
+                    <h2 className="text-3xl font-serif font-bold text-[#2C1A12] mb-2">👑 Master Notes</h2>
+                    <p className="text-[#6D6056] font-medium">AI-synthesized comprehensive notes combining all teacher contributions per subject.</p>
                   </div>
                   <div className="space-y-4">
                     {notes.filter((n) => n.type === 'master').length === 0 && (
-                      <div className="text-center py-16 text-slate-400">
-                        <Crown className="w-12 h-12 mx-auto mb-4 text-slate-300" />
-                        <p className="font-medium text-lg">No master notes yet</p>
-                        <p className="text-sm mt-1">Teachers need to generate them from the dashboard.</p>
+                      <div className="text-center py-16 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                        <Crown className="w-12 h-12 mx-auto mb-4 text-[#8A7D73]" />
+                        <p className="font-serif font-bold text-lg text-[#2C1A12]">No master notes yet</p>
+                        <p className="text-sm mt-1 text-[#6D6056]">Teachers need to generate them from the dashboard.</p>
                       </div>
                     )}
                     {notes
@@ -1378,19 +1376,19 @@ If you have a general computer science or study question, try asking about **act
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
                           onClick={() => { setSelectedNote(n); setUserRating(0); }}
-                          className="w-full text-left bg-gradient-to-r from-amber-50/80 to-orange-50/80 backdrop-blur-xl border-2 border-amber-200/60 rounded-[1.5rem] p-6 md:p-8 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 group"
+                          className="w-full text-left bg-white border border-[#EDE4D8] rounded-[1.5rem] p-6 md:p-8 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer"
                         >
                           <div className="flex items-center gap-4 mb-3">
-                            <div className="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-200/60 group-hover:scale-110 transition-transform">
+                            <div className="w-14 h-14 bg-gradient-to-br from-[#C26D43] to-[#A85832] rounded-xl flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform">
                               <Crown className="w-7 h-7" />
                             </div>
                             <div className="flex-1">
-                              <span className="text-[10px] font-bold text-amber-600 uppercase tracking-wider">{subjects.find((s) => s.id === n.subjectId)?.icon} {subjects.find((s) => s.id === n.subjectId)?.name}</span>
-                              <h3 className="text-xl font-bold text-slate-800 group-hover:text-amber-700 transition-colors">{n.title}</h3>
+                              <span className="text-[10px] font-bold text-[#C26D43] uppercase tracking-wider">{subjects.find((s) => s.id === n.subjectId)?.icon} {subjects.find((s) => s.id === n.subjectId)?.name}</span>
+                              <h3 className="text-xl font-serif font-bold text-[#2C1A12] group-hover:text-[#C26D43] transition-colors">{n.title}</h3>
                             </div>
-                            <ChevronRight className="w-6 h-6 text-amber-300 group-hover:text-amber-500 transition-colors" />
+                            <ChevronRight className="w-6 h-6 text-[#8A7D73] group-hover:text-[#C26D43] transition-colors" />
                           </div>
-                          <p className="text-sm text-slate-500">{n.content.slice(0, 120)}…</p>
+                          <p className="text-sm text-[#6D6056]">{n.content.slice(0, 120)}…</p>
                         </motion.button>
                       ))}
                   </div>
@@ -1403,64 +1401,64 @@ If you have a general computer science or study question, try asking about **act
               {activeTab === 'upload' && (
                 <motion.div key="upload" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}>
                   <div className="mb-8">
-                    <h2 className="text-3xl font-extrabold text-slate-900 mb-2">Share Your Notes</h2>
-                    <p className="text-slate-500 font-medium">Help your fellow students by uploading your own study notes.</p>
+                    <h2 className="text-3xl font-serif font-bold text-[#2C1A12] mb-2">Share Your Notes</h2>
+                    <p className="text-[#6D6056] font-medium">Help your fellow students by uploading your own study notes.</p>
                   </div>
 
-                  <div className="mesh-card border border-white/70 rounded-[2rem] p-6 md:p-10 shadow-sm space-y-6">
+                  <div className="bg-white border border-[#EDE4D8] rounded-[2rem] p-6 md:p-10 shadow-xs space-y-6">
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-3">Note Title</label>
+                      <label className="block text-sm font-semibold text-[#2C1A12] mb-3">Note Title</label>
                       <input
                         type="text"
                         value={uploadTitle}
                         onChange={(e) => setUploadTitle(e.target.value)}
                         placeholder="e.g., My Summary of Chapter 3: Graph Algorithms"
-                        className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all text-slate-800 text-base md:text-lg shadow-sm"
+                        className="w-full px-5 py-4 rounded-xl border border-[#EDE4D8] focus:outline-none focus:ring-4 focus:ring-[#C26D43]/15 focus:border-[#C26D43] transition-all text-[#2C1A12] text-base md:text-lg shadow-xs"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-3">Subject</label>
+                      <label className="block text-sm font-semibold text-[#2C1A12] mb-3">Subject</label>
                       <div className="relative">
                         <select
                           value={uploadSubject}
                           onChange={(e) => setUploadSubject(e.target.value)}
-                          className="w-full px-5 py-4 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all text-slate-800 text-base shadow-sm appearance-none"
+                          className="w-full px-5 py-4 rounded-xl border border-[#EDE4D8] bg-white focus:outline-none focus:ring-4 focus:ring-[#C26D43]/15 focus:border-[#C26D43] transition-all text-[#2C1A12] text-base shadow-xs appearance-none cursor-pointer"
                         >
                           {subjects.map((s) => (
                             <option key={s.id} value={s.id}>{s.icon} {s.name}</option>
                           ))}
                         </select>
-                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A7D73] pointer-events-none" />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-3">Keywords <span className="text-slate-400 font-normal">(comma-separated)</span></label>
+                      <label className="block text-sm font-semibold text-[#2C1A12] mb-3">Keywords <span className="text-[#8A7D73] font-normal">(comma-separated)</span></label>
                       <input
                         type="text"
                         value={uploadKeywords}
                         onChange={(e) => setUploadKeywords(e.target.value)}
                         placeholder="e.g., graph, BFS, DFS, shortest path"
-                        className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all text-slate-800 text-base shadow-sm"
+                        className="w-full px-5 py-4 rounded-xl border border-[#EDE4D8] focus:outline-none focus:ring-4 focus:ring-[#C26D43]/15 focus:border-[#C26D43] transition-all text-[#2C1A12] text-base shadow-xs"
                       />
                     </div>
 
                     {selectedFile ? (
-                      <div className="p-5 border border-orange-500/20 rounded-2xl bg-orange-500/5 flex items-center justify-between gap-4">
+                      <div className="p-5 border border-[#E5DACB] rounded-2xl bg-[#F5EFE6] flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-orange-500 text-white flex items-center justify-center shadow-md">
+                          <div className="w-12 h-12 rounded-xl bg-[#684736] text-white flex items-center justify-center shadow-xs">
                             <FileText className="w-6 h-6" />
                           </div>
                           <div className="text-left">
-                            <p className="font-bold text-slate-800 text-sm md:text-base leading-tight truncate max-w-[200px] sm:max-w-xs">{selectedFile.name}</p>
-                            <p className="text-xs text-slate-500 mt-0.5">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB · {isExtracting ? 'Extracting text...' : 'Text extracted'}</p>
+                            <p className="font-bold text-[#2C1A12] text-sm md:text-base leading-tight truncate max-w-[200px] sm:max-w-xs">{selectedFile.name}</p>
+                            <p className="text-xs text-[#8A7D73] mt-0.5">{(selectedFile.size / 1024 / 1024).toFixed(2)} MB · {isExtracting ? 'Extracting text...' : 'Text extracted'}</p>
                           </div>
                         </div>
                         <button
                           type="button"
                           onClick={() => { setSelectedFile(null); setPdfData(''); setExtractedPdfText(''); }}
-                          className="p-2 hover:bg-slate-200/50 rounded-lg text-slate-400 hover:text-slate-600 transition-colors"
+                          className="p-2 hover:bg-[#EDE4D8] rounded-lg text-[#8A7D73] hover:text-[#2C1A12] transition-colors cursor-pointer"
                         >
                           <X className="w-5 h-5" />
                         </button>
@@ -1471,7 +1469,7 @@ If you have a general computer science or study question, try asking about **act
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}
                         onClick={() => fileInputRef.current?.click()}
-                        className={`border-2 border-dashed rounded-3xl p-10 flex flex-col items-center justify-center gap-4 transition-all duration-300 cursor-pointer group ${isDragging ? 'border-orange-500 bg-orange-500/5 animate-pulse' : 'border-slate-200 hover:border-orange-500/50 bg-slate-50 hover:bg-orange-50/5'}`}
+                        className={`border-2 border-dashed rounded-3xl p-10 flex flex-col items-center justify-center gap-4 transition-all duration-300 cursor-pointer group ${isDragging ? 'border-[#C26D43] bg-[#F5EFE6] animate-pulse' : 'border-[#EDE4D8] hover:border-[#C26D43]/50 bg-[#FAF7F2] hover:bg-[#F5EFE6]'}`}
                       >
                         <input
                           type="file"
@@ -1480,25 +1478,25 @@ If you have a general computer science or study question, try asking about **act
                           accept="application/pdf"
                           className="hidden"
                         />
-                        <div className="w-16 h-16 rounded-full bg-white shadow-sm group-hover:bg-orange-100 flex items-center justify-center transition-colors">
-                          <UploadCloud className="w-8 h-8 text-slate-400 group-hover:text-orange-600 transition-colors" />
+                        <div className="w-16 h-16 rounded-full bg-white shadow-xs group-hover:bg-[#F5EFE6] flex items-center justify-center transition-colors">
+                          <UploadCloud className="w-8 h-8 text-[#8A7D73] group-hover:text-[#C26D43] transition-colors" />
                         </div>
                         <div className="text-center">
-                          <span className="text-base font-semibold text-slate-700 group-hover:text-orange-700 block mb-1">Drag & Drop your PDF here</span>
-                          <span className="text-sm text-slate-500">Supports PDF format (Max 50MB)</span>
+                          <span className="text-base font-semibold text-[#2C1A12] group-hover:text-[#C26D43] block mb-1">Drag & Drop your PDF here</span>
+                          <span className="text-sm text-[#8A7D73]">Supports PDF format (Max 50MB)</span>
                         </div>
                       </div>
                     )}
 
-                    <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-slate-100 gap-4">
-                      <div className="flex items-center gap-2 text-sm text-slate-500">
-                        <Bot className="w-4 h-4 text-amber-500" />
+                    <div className="flex flex-col sm:flex-row items-center justify-between pt-6 border-t border-[#EDE4D8] gap-4">
+                      <div className="flex items-center gap-2 text-sm text-[#6D6056]">
+                        <Bot className="w-4 h-4 text-[#C26D43]" />
                         <span>AI will automatically rate and categorise your notes</span>
                       </div>
                       <button
                         onClick={handleStudentUpload}
                         disabled={isAnalyzing || isExtracting}
-                        className="w-full sm:w-auto bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-xl font-bold tracking-wide shadow-lg shadow-orange-500/25 transition-all hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full sm:w-auto bg-[#C26D43] hover:bg-[#A85832] text-white px-8 py-4 rounded-xl font-bold tracking-wide shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                       >
                         {isAnalyzing ? (
                           <>
@@ -1517,51 +1515,48 @@ If you have a general computer science or study question, try asking about **act
               )}
 
               {/* ════════════════════════════════════════════════
-                   PRACTICE QUIZ (kept from original)
-                 ════════════════════════════════════════════════ */}
-              {/* ════════════════════════════════════════════════
                    PRACTICE QUIZ
                  ════════════════════════════════════════════════ */}
               {activeTab === 'practice-quiz' && (
                 <motion.div key="practice-quiz" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }} className="space-y-8">
                   <div className="mb-8">
-                    <h2 className="text-3xl font-extrabold text-slate-900 mb-2">🧠 Practice Quiz</h2>
-                    <p className="text-slate-500 font-medium">Test your knowledge with AI-generated multiple-choice questions.</p>
+                    <h2 className="text-3xl font-serif font-bold text-[#2C1A12] mb-2">🧠 Practice Quiz</h2>
+                    <p className="text-[#6D6056] font-medium">Test your knowledge with AI-generated multiple-choice questions.</p>
                   </div>
 
                   {selectedNote ? (
                     <div>
-                      <button onClick={() => setSelectedNote(null)} className="mb-4 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-1">← Select different note</button>
+                      <button onClick={() => setSelectedNote(null)} className="mb-4 text-sm font-bold text-[#6D6056] hover:text-[#C26D43] transition-colors flex items-center gap-1 cursor-pointer">← Select different note</button>
 
                       {(!selectedNote.quiz || selectedNote.quiz.length === 0) ? (
-                        <div className="text-center py-12 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <Bot className="w-12 h-12 mx-auto mb-3 text-slate-300" />
+                        <div className="text-center py-12 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <Bot className="w-12 h-12 mx-auto mb-3 text-[#8A7D73]" />
                           <p className="font-medium">No practice quiz generated for this note.</p>
                         </div>
                       ) : (
                         <div>
                           {quizFinished ? (
-                            <div className="mesh-card border border-white/70 rounded-[2rem] p-8 md:p-12 shadow-sm text-center max-w-2xl mx-auto space-y-6">
-                              <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">🏆</div>
-                              <h3 className="text-2xl font-extrabold text-slate-800">Quiz Completed!</h3>
-                              <p className="text-slate-600 font-medium text-lg text-center font-sans">
-                                You scored <span className="font-bold text-blue-600">{quizScore}</span> out of <span className="font-bold">{selectedNote.quiz.length}</span>!
+                            <div className="bg-white border border-[#EDE4D8] rounded-[2rem] p-8 md:p-12 shadow-xs text-center max-w-2xl mx-auto space-y-6">
+                              <div className="w-20 h-20 bg-[#EAF3EB] text-[#2E6B3A] rounded-full flex items-center justify-center mx-auto text-3xl">🏆</div>
+                              <h3 className="font-serif text-2xl font-bold text-[#2C1A12]">Quiz Completed!</h3>
+                              <p className="text-[#6D6056] font-medium text-lg text-center font-sans">
+                                You scored <span className="font-bold text-[#C26D43]">{quizScore}</span> out of <span className="font-bold text-[#2C1A12]">{selectedNote.quiz.length}</span>!
                               </p>
-                              <div className="w-full bg-slate-100 rounded-full h-3">
-                                <div className="bg-emerald-500 h-3 rounded-full transition-all duration-500" style={{ width: `${(quizScore / selectedNote.quiz.length) * 100}%` }}></div>
+                              <div className="w-full bg-[#F5EFE6] rounded-full h-3">
+                                <div className="bg-[#C26D43] h-3 rounded-full transition-all duration-500" style={{ width: `${(quizScore / selectedNote.quiz.length) * 100}%` }}></div>
                               </div>
-                              <button onClick={() => { setQuizIndex(0); setSelectedOpt(null); setQuizScore(0); setIsQuizSubmitted(false); setQuizFinished(false); }} className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg active:scale-95">Restart Quiz</button>
+                              <button onClick={() => { setQuizIndex(0); setSelectedOpt(null); setQuizScore(0); setIsQuizSubmitted(false); setQuizFinished(false); }} className="px-6 py-3 bg-[#C26D43] text-white rounded-xl font-bold hover:bg-[#A85832] transition-colors shadow-xs cursor-pointer">Restart Quiz</button>
                             </div>
                           ) : (
-                            <div className="mesh-card border border-white/70 rounded-[2rem] p-6 md:p-8 shadow-sm">
+                            <div className="bg-white border border-[#EDE4D8] rounded-[2rem] p-6 md:p-8 shadow-xs">
                               <div className="flex items-center justify-between mb-6">
-                                <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">Question {quizIndex + 1} of {selectedNote.quiz.length}</span>
-                                <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full">Practice: {selectedNote.title}</span>
+                                <span className="text-sm font-bold text-[#8A7D73] uppercase tracking-wider">Question {quizIndex + 1} of {selectedNote.quiz.length}</span>
+                                <span className="px-3 py-1 bg-[#F5EFE6] text-[#684736] text-xs font-bold rounded-full border border-[#EDE4D8]">Practice: {selectedNote.title}</span>
                               </div>
-                              <h4 className="font-bold text-slate-800 text-xl mb-6">{selectedNote.quiz[quizIndex].question}</h4>
+                              <h4 className="font-serif font-bold text-[#2C1A12] text-xl mb-6">{selectedNote.quiz[quizIndex].question}</h4>
                               <div className="space-y-3">
                                 {selectedNote.quiz[quizIndex].options.map((opt, i) => {
-                                  let btnClass = "border-slate-100 hover:border-blue-300 hover:bg-blue-50/30 text-slate-700";
+                                  let btnClass = "border-[#EDE4D8] hover:border-[#C26D43]/40 hover:bg-[#F5EFE6]/40 text-[#2C1A12]";
                                   const isOptionSelected = selectedOpt === i;
                                   const optionText = opt;
                                   const correctText = selectedNote.quiz[quizIndex].answer;
@@ -1572,24 +1567,24 @@ If you have a general computer science or study question, try asking about **act
                                     } else if (isOptionSelected) {
                                       btnClass = "border-rose-500 bg-rose-50 text-rose-800 font-bold";
                                     } else {
-                                      btnClass = "border-slate-100 opacity-60 text-slate-400";
+                                      btnClass = "border-[#EDE4D8] opacity-60 text-[#8A7D73]";
                                     }
                                   } else if (isOptionSelected) {
-                                    btnClass = "border-blue-500 bg-blue-50 text-blue-800 font-bold";
+                                    btnClass = "border-[#C26D43] bg-[#F5EFE6] text-[#2C1A12] font-bold";
                                   }
                                   return (
-                                    <button key={opt} disabled={isQuizSubmitted} onClick={() => setSelectedOpt(i)} className={`w-full text-left p-4 border-2 rounded-2xl transition-all font-medium flex items-center justify-between ${btnClass}`}>
+                                    <button key={opt} disabled={isQuizSubmitted} onClick={() => setSelectedOpt(i)} className={`w-full text-left p-4 border-2 rounded-2xl transition-all font-medium flex items-center justify-between cursor-pointer ${btnClass}`}>
                                       <span>{opt}</span>
-                                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${isOptionSelected ? 'border-blue-500 bg-blue-500' : 'border-slate-200'}`}>{isOptionSelected && <CheckCircle2 className="w-4 h-4 text-white" />}</div>
+                                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${isOptionSelected ? 'border-[#C26D43] bg-[#C26D43]' : 'border-[#EDE4D8]'}`}>{isOptionSelected && <CheckCircle2 className="w-4 h-4 text-white" />}</div>
                                     </button>
                                   );
                                 })}
                               </div>
-                              <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+                              <div className="mt-8 pt-6 border-t border-[#EDE4D8] flex justify-end">
                                 {!isQuizSubmitted ? (
-                                  <button onClick={() => { if (selectedOpt === null) { showToast('Please select an option first'); return; } const correctText = selectedNote.quiz[quizIndex].answer; const chosenText = selectedNote.quiz[quizIndex].options[selectedOpt]; if (chosenText === correctText) setQuizScore(prev => prev + 1); setIsQuizSubmitted(true); }} className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg active:scale-95">Submit Answer</button>
+                                  <button onClick={() => { if (selectedOpt === null) { showToast('Please select an option first'); return; } const correctText = selectedNote.quiz[quizIndex].answer; const chosenText = selectedNote.quiz[quizIndex].options[selectedOpt]; if (chosenText === correctText) setQuizScore(prev => prev + 1); setIsQuizSubmitted(true); }} className="bg-[#C26D43] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#A85832] transition-colors shadow-xs cursor-pointer">Submit Answer</button>
                                 ) : (
-                                  <button onClick={() => { if (quizIndex + 1 < selectedNote.quiz.length) { setQuizIndex(prev => prev + 1); setSelectedOpt(null); setIsQuizSubmitted(false); } else { setQuizFinished(true); } }} className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-800 transition-colors">
+                                  <button onClick={() => { if (quizIndex + 1 < selectedNote.quiz.length) { setQuizIndex(prev => prev + 1); setSelectedOpt(null); setIsQuizSubmitted(false); } else { setQuizFinished(true); } }} className="flex items-center gap-2 bg-[#684736] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#5A3C2D] transition-colors cursor-pointer">
                                     {quizIndex + 1 < selectedNote.quiz.length ? 'Next Question' : 'Finish Quiz'} <ChevronRight className="w-5 h-5" />
                                   </button>
                                 )}
@@ -1602,22 +1597,22 @@ If you have a general computer science or study question, try asking about **act
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {notes.filter(n => n.quiz && n.quiz.length > 0).length === 0 ? (
-                        <div className="col-span-full text-center py-16 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <BookOpen className="w-12 h-12 mx-auto mb-4 text-slate-300" />
-                          <p className="font-medium">No notes with practice quizzes available yet.</p>
-                          <p className="text-sm mt-1">Upload a PDF note or generate master notes with AI to get started!</p>
+                        <div className="col-span-full text-center py-16 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <BookOpen className="w-12 h-12 mx-auto mb-4 text-[#8A7D73]" />
+                          <p className="font-serif font-bold text-lg text-[#2C1A12]">No notes with practice quizzes available yet.</p>
+                          <p className="text-sm mt-1 text-[#6D6056]">Upload a PDF note or generate master notes with AI to get started!</p>
                         </div>
                       ) : (
                         notes.filter(n => n.quiz && n.quiz.length > 0).map(n => (
-                          <button key={n.id} onClick={() => { setSelectedNote(n); }} className="text-left bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between group">
+                          <button key={n.id} onClick={() => { setSelectedNote(n); }} className="text-left bg-white border border-[#EDE4D8] rounded-3xl p-6 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between group cursor-pointer">
                             <div>
-                              <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider block mb-1">
+                              <span className="text-[10px] font-bold text-[#C26D43] uppercase tracking-wider block mb-1">
                                 {subjects.find((s) => s.id === n.subjectId)?.icon} {subjects.find((s) => s.id === n.subjectId)?.name}
                               </span>
-                              <h3 className="font-bold text-slate-800 group-hover:text-blue-600 transition-colors">{n.title}</h3>
-                              <p className="text-xs text-slate-500 mt-1">{n.quiz.length} Questions · by {n.authorName}</p>
+                              <h3 className="font-serif font-bold text-[#2C1A12] group-hover:text-[#C26D43] transition-colors">{n.title}</h3>
+                              <p className="text-xs text-[#8A7D73] mt-1">{n.quiz.length} Questions · by {n.authorName}</p>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-blue-500 transition-colors" />
+                            <ChevronRight className="w-5 h-5 text-[#8A7D73] group-hover:text-[#C26D43] transition-colors" />
                           </button>
                         ))
                       )}
@@ -1632,45 +1627,45 @@ If you have a general computer science or study question, try asking about **act
               {activeTab === 'flashcards' && (
                 <motion.div key="flashcards" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }} className="space-y-8">
                   <div className="mb-8">
-                    <h2 className="text-3xl font-extrabold text-slate-900 mb-2">⚡ Flashcards</h2>
-                    <p className="text-slate-500 font-medium">Click to flip and reveal the answers. Great for active recall.</p>
+                    <h2 className="text-3xl font-serif font-bold text-[#2C1A12] mb-2">⚡ Flashcards</h2>
+                    <p className="text-[#6D6056] font-medium">Click to flip and reveal the answers. Great for active recall.</p>
                   </div>
 
                   {selectedNote ? (
                     <div>
-                      <button onClick={() => setSelectedNote(null)} className="mb-4 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors flex items-center gap-1">← Select different note</button>
+                      <button onClick={() => setSelectedNote(null)} className="mb-4 text-sm font-bold text-[#6D6056] hover:text-[#C26D43] transition-colors flex items-center gap-1 cursor-pointer">← Select different note</button>
 
                       {(!selectedNote.flashcards || selectedNote.flashcards.length === 0) ? (
-                        <div className="text-center py-12 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <Layers className="w-12 h-12 mx-auto mb-3 text-slate-300" />
+                        <div className="text-center py-12 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <Layers className="w-12 h-12 mx-auto mb-3 text-[#8A7D73]" />
                           <p className="font-medium">No flashcards generated for this note.</p>
                         </div>
                       ) : (
                         <div className="max-w-xl mx-auto space-y-6">
                           <div className="flex items-center justify-between px-2">
-                            <span className="text-sm font-bold text-slate-400 uppercase tracking-wider">Card {flashIndex + 1} of {selectedNote.flashcards.length}</span>
-                            <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">Interactive: {selectedNote.title}</span>
+                            <span className="text-sm font-bold text-[#8A7D73] uppercase tracking-wider">Card {flashIndex + 1} of {selectedNote.flashcards.length}</span>
+                            <span className="text-xs font-bold text-[#684736] bg-[#F5EFE6] border border-[#EDE4D8] px-2.5 py-1 rounded-full">Interactive: {selectedNote.title}</span>
                           </div>
 
                           <div onClick={() => setIsFlipped(!isFlipped)} className="relative w-full h-72 cursor-pointer perspective-1000">
                             <motion.div animate={{ rotateY: isFlipped ? 180 : 0 }} transition={{ duration: 0.5, ease: "easeOut" }} className="w-full h-full relative transform-style-3d">
-                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-white/10 bg-gradient-to-br from-indigo-500 to-blue-600 text-white ${isFlipped ? 'pointer-events-none' : ''}`}>
-                                <span className="absolute top-6 left-6 text-xs font-bold text-white/60 uppercase tracking-wider">Question / Concept</span>
-                                <h3 className="text-2xl font-bold leading-normal px-4">{selectedNote.flashcards[flashIndex].front}</h3>
-                                <span className="absolute bottom-6 text-xs text-white/50">Click to flip</span>
+                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-white/10 bg-gradient-to-br from-[#684736] via-[#75503D] to-[#5A3C2D] text-white ${isFlipped ? 'pointer-events-none' : ''}`}>
+                                <span className="absolute top-6 left-6 text-xs font-bold text-white/70 uppercase tracking-wider">Question / Concept</span>
+                                <h3 className="font-serif text-2xl font-bold leading-normal px-4 text-white">{selectedNote.flashcards[flashIndex].front}</h3>
+                                <span className="absolute bottom-6 text-xs text-white/60">Click to flip</span>
                               </div>
-                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-slate-200 bg-white text-slate-800 rotate-y-180 ${!isFlipped ? 'pointer-events-none' : ''}`}>
-                                <span className="absolute top-6 left-6 text-xs font-bold text-slate-400 uppercase tracking-wider">Answer / Explanation</span>
-                                <p className="text-lg font-medium leading-relaxed text-slate-700 px-4">{selectedNote.flashcards[flashIndex].back}</p>
-                                <span className="absolute bottom-6 text-xs text-slate-400">Click to flip back</span>
+                              <div className={`absolute inset-0 backface-hidden rounded-[2rem] p-8 flex flex-col items-center justify-center text-center shadow-lg border border-[#EDE4D8] bg-white text-[#2C1A12] rotate-y-180 ${!isFlipped ? 'pointer-events-none' : ''}`}>
+                                <span className="absolute top-6 left-6 text-xs font-bold text-[#8A7D73] uppercase tracking-wider">Answer / Explanation</span>
+                                <p className="text-lg font-medium leading-relaxed text-[#4A3B32] px-4">{selectedNote.flashcards[flashIndex].back}</p>
+                                <span className="absolute bottom-6 text-xs text-[#8A7D73]">Click to flip back</span>
                               </div>
                             </motion.div>
                           </div>
 
                           <div className="flex items-center justify-between pt-4">
-                            <button disabled={flashIndex === 0} onClick={() => { if (flashIndex > 0) { setFlashIndex(prev => prev - 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">Previous</button>
-                            <button onClick={() => setIsFlipped(!isFlipped)} className="px-6 py-3 rounded-xl bg-indigo-50 text-indigo-700 font-bold hover:bg-indigo-100 transition-colors">🔄 Flip Card</button>
-                            <button disabled={flashIndex === selectedNote.flashcards.length - 1} onClick={() => { if (flashIndex < selectedNote.flashcards.length - 1) { setFlashIndex(prev => prev + 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-colors shadow-sm disabled:opacity-40 disabled:cursor-not-allowed">Next</button>
+                            <button disabled={flashIndex === 0} onClick={() => { if (flashIndex > 0) { setFlashIndex(prev => prev - 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-white border border-[#EDE4D8] text-[#2C1A12] font-bold hover:bg-[#F5EFE6] transition-colors shadow-xs disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">Previous</button>
+                            <button onClick={() => setIsFlipped(!isFlipped)} className="px-6 py-3 rounded-xl bg-[#F5EFE6] text-[#2C1A12] font-bold hover:bg-[#E5DACB] transition-colors border border-[#EDE4D8] cursor-pointer">🔄 Flip Card</button>
+                            <button disabled={flashIndex === selectedNote.flashcards.length - 1} onClick={() => { if (flashIndex < selectedNote.flashcards.length - 1) { setFlashIndex(prev => prev + 1); setIsFlipped(false); } }} className="px-5 py-3 rounded-xl bg-[#684736] text-white font-bold hover:bg-[#5A3C2D] transition-colors shadow-xs disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">Next</button>
                           </div>
                         </div>
                       )}
@@ -1678,22 +1673,22 @@ If you have a general computer science or study question, try asking about **act
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {notes.filter(n => n.flashcards && n.flashcards.length > 0).length === 0 ? (
-                        <div className="col-span-full text-center py-16 text-slate-400 bg-white/50 rounded-[2rem] border border-slate-100 shadow-sm">
-                          <Layers className="w-12 h-12 mx-auto mb-4 text-slate-300" />
-                          <p className="font-medium">No notes with flashcards available yet.</p>
-                          <p className="text-sm mt-1">Upload a PDF note or generate master notes with AI to get started!</p>
+                        <div className="col-span-full text-center py-16 text-[#8A7D73] bg-white rounded-[2rem] border border-[#EDE4D8] shadow-xs">
+                          <Layers className="w-12 h-12 mx-auto mb-4 text-[#8A7D73]" />
+                          <p className="font-serif font-bold text-lg text-[#2C1A12]">No notes with flashcards available yet.</p>
+                          <p className="text-sm mt-1 text-[#6D6056]">Upload a PDF note or generate master notes with AI to get started!</p>
                         </div>
                       ) : (
                         notes.filter(n => n.flashcards && n.flashcards.length > 0).map(n => (
-                          <button key={n.id} onClick={() => { setSelectedNote(n); }} className="text-left bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between group">
+                          <button key={n.id} onClick={() => { setSelectedNote(n); }} className="text-left bg-white border border-[#EDE4D8] rounded-3xl p-6 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-between group cursor-pointer">
                             <div>
-                              <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider block mb-1">
+                              <span className="text-[10px] font-bold text-[#C26D43] uppercase tracking-wider block mb-1">
                                 {subjects.find((s) => s.id === n.subjectId)?.icon} {subjects.find((s) => s.id === n.subjectId)?.name}
                               </span>
-                              <h3 className="font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">{n.title}</h3>
-                              <p className="text-xs text-slate-500 mt-1">{n.flashcards.length} Cards · by {n.authorName}</p>
+                              <h3 className="font-serif font-bold text-[#2C1A12] group-hover:text-[#C26D43] transition-colors">{n.title}</h3>
+                              <p className="text-xs text-[#8A7D73] mt-1">{n.flashcards.length} Cards · by {n.authorName}</p>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-indigo-500 transition-colors" />
+                            <ChevronRight className="w-5 h-5 text-[#8A7D73] group-hover:text-[#C26D43] transition-colors" />
                           </button>
                         ))
                       )}
@@ -1714,19 +1709,19 @@ If you have a general computer science or study question, try asking about **act
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                  className="mesh-card rounded-[2rem] shadow-2xl border border-white/70 w-full md:w-[400px] overflow-hidden flex flex-col h-[500px] max-h-[80vh]"
+                  className="bg-white rounded-[2rem] shadow-2xl border border-[#EDE4D8] w-full md:w-[400px] overflow-hidden flex flex-col h-[500px] max-h-[80vh]"
                 >
-                  <div className="p-4 bg-gradient-to-r from-slate-900 to-slate-800 flex justify-between items-center text-white shrink-0">
+                  <div className="p-4 bg-gradient-to-r from-[#684736] to-[#5A3C2D] flex justify-between items-center text-white shrink-0 border-b border-[#8A614A]">
                     <div className="flex items-center gap-3">
-                      <div className="bg-gradient-to-r from-orange-500 to-rose-500 p-1.5 rounded-full"><Sparkles className="w-4 h-4 text-white" /></div>
-                      <span className="font-bold">AI Study Assistant</span>
+                      <div className="bg-[#C26D43] p-1.5 rounded-full"><Sparkles className="w-4 h-4 text-white" /></div>
+                      <span className="font-serif font-bold text-white">AI Study Assistant</span>
                     </div>
-                    <button onClick={() => setIsAiChatOpen(false)} className="p-1 hover:bg-white/20 rounded-full transition-colors"><X className="w-5 h-5" /></button>
+                    <button onClick={() => setIsAiChatOpen(false)} className="p-1 hover:bg-white/20 rounded-full transition-colors text-white"><X className="w-5 h-5" /></button>
                   </div>
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#FAF7F2]">
                     {chatHistory.map((msg, idx) => (
                       <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                        <div className={`max-w-[85%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-700 rounded-bl-sm shadow-sm'}`}>
+                        <div className={`max-w-[85%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-[#684736] text-white rounded-br-sm' : 'bg-white border border-[#EDE4D8] text-[#2C1A12] rounded-bl-sm shadow-xs'}`}>
                           <div className="text-sm leading-relaxed whitespace-pre-line space-y-1">
                             {msg.content}
                           </div>
@@ -1735,10 +1730,10 @@ If you have a general computer science or study question, try asking about **act
                     ))}
                     {isAiTyping && (
                       <div className="flex justify-start">
-                        <div className="bg-white border border-slate-200 text-slate-700 p-3 rounded-2xl rounded-bl-sm shadow-sm flex items-center gap-1.5">
-                          <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                          <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                          <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                        <div className="bg-white border border-[#EDE4D8] text-[#8A7D73] p-3 rounded-2xl rounded-bl-sm shadow-xs flex items-center gap-1.5">
+                          <span className="w-2 h-2 bg-[#8A7D73] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                          <span className="w-2 h-2 bg-[#8A7D73] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                          <span className="w-2 h-2 bg-[#8A7D73] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                         </div>
                       </div>
                     )}
@@ -1746,21 +1741,21 @@ If you have a general computer science or study question, try asking about **act
                   </div>
 
                   {/* Suggestion Chips */}
-                  <div className="px-3 py-2 bg-slate-100 border-t border-slate-200/60 flex gap-2 overflow-x-auto hide-scrollbar shrink-0">
+                  <div className="px-3 py-2 bg-[#F5EFE6] border-t border-[#EDE4D8] flex gap-2 overflow-x-auto hide-scrollbar shrink-0">
                     {chips.map((chipText) => (
                       <button
                         key={chipText}
                         type="button"
                         onClick={() => handleChipClick(chipText)}
                         disabled={isAiTyping}
-                        className="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50/50 shadow-sm transition-all disabled:opacity-50 cursor-pointer"
+                        className="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold bg-white border border-[#EDE4D8] text-[#6D6056] hover:text-[#C26D43] hover:border-[#C26D43]/40 hover:bg-[#F5EFE6] shadow-xs transition-all disabled:opacity-50 cursor-pointer"
                       >
                         {chipText}
                       </button>
                     ))}
                   </div>
 
-                  <div className="p-4 bg-white border-t border-slate-100 shrink-0">
+                  <div className="p-4 bg-white border-t border-[#EDE4D8] shrink-0">
                     <form onSubmit={handleSendMessage} className="relative">
                       <input
                         type="text"
@@ -1768,12 +1763,12 @@ If you have a general computer science or study question, try asking about **act
                         onChange={(e) => setChatMessage(e.target.value)}
                         placeholder={isAiTyping ? "AI is typing..." : "Ask a question..."}
                         disabled={isAiTyping}
-                        className="w-full bg-slate-100 border-none rounded-full py-3 pl-4 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50"
+                        className="w-full bg-[#FAF7F2] border border-[#EDE4D8] rounded-full py-3 pl-4 pr-12 text-sm text-[#2C1A12] placeholder:text-[#8A7D73] focus:outline-none focus:ring-2 focus:ring-[#C26D43]/20 focus:border-[#C26D43] disabled:opacity-50"
                       />
                       <button
                         type="submit"
                         disabled={!chatMessage.trim() || isAiTyping}
-                        className="absolute right-1.5 top-1.5 bottom-1.5 w-9 bg-blue-600 text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:bg-slate-400 transition-colors cursor-pointer"
+                        className="absolute right-1.5 top-1.5 bottom-1.5 w-9 bg-[#C26D43] hover:bg-[#A85832] text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:bg-[#8A7D73] transition-colors cursor-pointer"
                       >
                         <Send className="w-4 h-4" />
                       </button>
@@ -1783,15 +1778,15 @@ If you have a general computer science or study question, try asking about **act
               ) : (
                 <button
                   onClick={() => setIsAiChatOpen(true)}
-                  className="w-full md:w-auto group flex items-center justify-center gap-3 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 hover:from-slate-900 hover:to-indigo-900 text-white px-6 md:px-7 py-3.5 rounded-full font-bold shadow-2xl shadow-cyan-950/40 transition-all hover:shadow-cyan-500/20 hover:-translate-y-1 active:translate-y-0 border border-cyan-500/30 cursor-pointer"
+                  className="w-full md:w-auto group flex items-center justify-center gap-3 bg-gradient-to-r from-[#684736] via-[#75503D] to-[#5A3C2D] hover:from-[#5A3C2D] hover:to-[#4A3022] text-white px-6 md:px-7 py-3.5 rounded-full font-bold shadow-2xl shadow-[#5A3C2D]/25 transition-all hover:-translate-y-1 active:translate-y-0 border border-[#8A614A] cursor-pointer"
                 >
                   <div className="relative flex items-center justify-center">
-                    <span className="absolute w-7 h-7 rounded-full bg-cyan-500/30 animate-ping pointer-events-none" />
-                    <div className="relative bg-gradient-to-r from-cyan-400 to-blue-600 p-2 rounded-full shadow-md shadow-cyan-500/40 group-hover:scale-110 transition-transform">
+                    <span className="absolute w-7 h-7 rounded-full bg-[#C26D43]/30 animate-ping pointer-events-none" />
+                    <div className="relative bg-[#C26D43] p-2 rounded-full shadow-md shadow-[#C26D43]/40 group-hover:scale-110 transition-transform">
                       <Sparkles className="w-4 h-4 text-white" />
                     </div>
                   </div>
-                  <span className="font-display font-bold text-sm tracking-wide bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent">Ask Neural AI Tutor</span>
+                  <span className="font-serif font-bold text-sm tracking-wide text-white">Ask AI Study Tutor</span>
                 </button>
               )}
             </AnimatePresence>

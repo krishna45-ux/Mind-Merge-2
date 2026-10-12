@@ -216,7 +216,7 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="page-shell flex h-screen font-sans text-slate-800 relative"
+      className="flex h-screen font-sans text-[#2C1A12] bg-[#FAF7F2] relative"
     >
       <a href="#main-content" className="skip-link">
         Skip to main content
@@ -228,9 +228,9 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
             initial={{ opacity: 0, y: 50, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: 50, x: '-50%' }}
-            className="fixed bottom-6 left-1/2 z-[60] bg-slate-800 text-white px-6 py-3 rounded-full shadow-xl font-medium flex items-center gap-2"
+            className="fixed bottom-6 left-1/2 z-[60] bg-[#684736] text-white px-6 py-3 rounded-full shadow-xl font-medium flex items-center gap-2 border border-[#8A614A]"
           >
-            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <CheckCircle2 className="w-5 h-5 text-[#F6C2A7]" />
             {toastMessage}
           </motion.div>
         )}
@@ -245,46 +245,44 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setAiRatingModal({ ...aiRatingModal, open: false })}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-[#2C1A12]/40 backdrop-blur-sm"
             />
             <motion.div
               ref={aiRatingRef}
               initial={{ opacity: 0, scale: 0.9, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
-              className="relative mesh-card rounded-[2rem] shadow-2xl border border-white/70 p-8 md:p-10 max-w-md w-full text-center"
+              className="relative bg-white rounded-3xl shadow-2xl border border-[#EDE4D8] p-8 md:p-10 max-w-md w-full text-center"
             >
-              {/* Decorative glow */}
-              <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-40 h-40 bg-amber-300/30 rounded-full blur-3xl pointer-events-none" />
               <div className="relative z-10">
-                <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-[1.5rem] flex items-center justify-center shadow-xl shadow-amber-300/40">
-                  <Bot className="w-10 h-10 text-white" />
+                <div className="w-16 h-16 mx-auto mb-5 bg-[#F5EFE6] border border-[#E5DACB] rounded-2xl flex items-center justify-center shadow-md">
+                  <Bot className="w-8 h-8 text-[#C26D43]" />
                 </div>
-                <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">AI Quality Analysis</h3>
-                <p className="text-slate-500 mb-6">Our AI has analysed your notes and assigned a quality score.</p>
+                <h3 className="font-serif text-2xl font-bold text-[#2C1A12] mb-2">AI Quality Analysis</h3>
+                <p className="text-[#6D6056] text-sm mb-6">Our AI has analysed your notes and assigned a quality score.</p>
 
-                <div className="bg-slate-50 rounded-2xl p-6 mb-6 border border-slate-100">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400 font-bold mb-3">AI Rating</p>
+                <div className="bg-[#FAF7F2] rounded-2xl p-6 mb-6 border border-[#EDE4D8]">
+                  <p className="text-xs uppercase tracking-[0.2em] text-[#8A7D73] font-bold mb-3">AI Rating</p>
                   <div className="flex items-center justify-center gap-1 mb-4">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-8 h-8 transition-all duration-300 ${i < Math.round(aiRatingModal.rating) ? 'text-amber-400 fill-amber-400 scale-110' : 'text-slate-200'}`}
+                        className={`w-7 h-7 transition-all duration-300 ${i < Math.round(aiRatingModal.rating) ? 'text-[#C26D43] fill-[#C26D43] scale-105' : 'text-[#EDE4D8]'}`}
                         style={{ transitionDelay: `${i * 100}ms` }}
                       />
                     ))}
                   </div>
-                  <p className="text-3xl font-black text-slate-800">{aiRatingModal.rating.toFixed(1)} <span className="text-base font-medium text-slate-400">/ 5.0</span></p>
+                  <p className="text-3xl font-black text-[#2C1A12]">{aiRatingModal.rating.toFixed(1)} <span className="text-base font-medium text-[#8A7D73]">/ 5.0</span></p>
                 </div>
 
-                <div className="flex items-center justify-center gap-2 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl px-5 py-3 mb-6">
-                  <Coins className="w-5 h-5 text-amber-500" />
-                  <span className="font-bold text-amber-700 text-lg">+{aiRatingModal.coins} Coins Earned!</span>
+                <div className="flex items-center justify-center gap-2 bg-[#F5EFE6] border border-[#E5DACB] rounded-xl px-5 py-3 mb-6">
+                  <Coins className="w-5 h-5 text-[#C26D43]" />
+                  <span className="font-bold text-[#2C1A12] text-sm">+{aiRatingModal.coins} Coins Earned!</span>
                 </div>
 
                 <button
                   onClick={() => setAiRatingModal({ ...aiRatingModal, open: false })}
-                  className="w-full bg-slate-900 hover:bg-slate-800 text-white py-3.5 rounded-xl font-bold transition-colors shadow-md"
+                  className="w-full bg-[#684736] hover:bg-[#58392B] text-white py-3.5 rounded-xl font-bold transition-colors shadow-md cursor-pointer"
                 >
                   Awesome, Continue
                 </button>
@@ -301,7 +299,7 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/50 z-40 md:hidden"
+            className="fixed inset-0 bg-[#2C1A12]/50 z-40 md:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           />
         )}
@@ -309,47 +307,46 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
 
       {/* ─── Sidebar ──────────────────────────────────────────── */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white/80 backdrop-blur-xl border-r border-slate-200/80 flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} shadow-xl md:shadow-none`}
+        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-[#EDE4D8] flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} shadow-xl md:shadow-none`}
       >
         <div className="p-6 flex items-center justify-between">
-          <h1 className="font-display text-2xl font-black tracking-tight flex items-center gap-2">
-            <span className="headline-gradient">MindMerge</span> <span className="text-slate-400 font-semibold text-lg">Teacher</span>
+          <h1 className="font-serif text-2xl font-bold tracking-tight flex items-center gap-2 text-[#2C1A12]">
+            <span>MindMerge</span> <span className="text-[#8A7D73] font-sans font-medium text-xs uppercase px-2 py-0.5 rounded-md bg-[#F5EFE6]">Teacher</span>
           </h1>
-          <button className="md:hidden text-slate-500 hover:text-slate-800" onClick={() => setIsMobileMenuOpen(false)}>
+          <button className="md:hidden text-[#8A7D73] hover:text-[#2C1A12]" onClick={() => setIsMobileMenuOpen(false)}>
             <X className="w-6 h-6" />
           </button>
         </div>
 
         {/* Profile Card */}
-        <div className="mx-4 mb-3 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 rounded-2xl p-4 text-white shadow-md relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl pointer-events-none" />
+        <div className="mx-4 mb-3 bg-gradient-to-br from-[#684736] to-[#58392B] border border-[#8A614A] rounded-2xl p-4 text-white shadow-md relative overflow-hidden">
           <div className="flex items-center gap-3 relative z-10">
             <div className="relative">
-              <img src={teacher.avatar} alt="Profile" className="w-11 h-11 rounded-full ring-2 ring-cyan-400/40 shadow-md object-cover" referrerPolicy="no-referrer" />
-              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-slate-900" />
+              <img src={teacher.avatar} alt="Profile" className="w-11 h-11 rounded-full ring-2 ring-white/20 shadow-md object-cover" referrerPolicy="no-referrer" />
+              <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-[#58392B]" />
             </div>
             <div className="min-w-0">
               <p className="text-sm font-bold text-white truncate">{teacher.name}</p>
-              <p className="text-xs text-cyan-300/80 font-medium">Faculty Member</p>
+              <p className="text-xs text-[#F5EDE4] font-medium">Faculty Member</p>
             </div>
           </div>
         </div>
 
         {/* Coins Card */}
-        <div className="mx-4 mb-4 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-amber-500/10 border border-amber-300/60 rounded-2xl p-4 shadow-sm relative overflow-hidden">
+        <div className="mx-4 mb-4 bg-[#F5EFE6] border border-[#E5DACB] rounded-2xl p-4 shadow-sm relative overflow-hidden">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-md shadow-amber-500/30">
-                <Coins className="w-5 h-5 text-white animate-pulse" />
+              <div className="w-10 h-10 bg-white border border-[#EDE4D8] rounded-xl flex items-center justify-center shadow-sm">
+                <Coins className="w-5 h-5 text-[#C26D43]" />
               </div>
               <div>
-                <p className="text-[10px] font-extrabold text-amber-700 uppercase tracking-widest">Reward Balance</p>
-                <p className="text-2xl font-black text-amber-900 tracking-tight">{teacher.coins} <span className="text-xs font-semibold text-amber-600">coins</span></p>
+                <p className="text-[10px] font-extrabold text-[#8A7D73] uppercase tracking-widest">Reward Balance</p>
+                <p className="text-2xl font-black text-[#2C1A12] tracking-tight">{teacher.coins} <span className="text-xs font-semibold text-[#8A7D73]">coins</span></p>
               </div>
             </div>
           </div>
-          <div className="mt-2.5 text-[11px] text-amber-800/80 font-medium flex items-center gap-1.5">
-            <Sparkles className="w-3 h-3 text-amber-600 shrink-0" />
+          <div className="mt-2.5 text-[11px] text-[#7A6E65] font-medium flex items-center gap-1.5">
+            <Sparkles className="w-3 h-3 text-[#C26D43] shrink-0" />
             <span>{teacher.uploadCount} notes uploaded · Earn on ratings</span>
           </div>
         </div>
@@ -359,42 +356,42 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
             <button
               key={item.key}
               onClick={() => { setActiveTab(item.key); setIsMobileMenuOpen(false); }}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-200 ${activeTab === item.key ? 'text-cyan-700 bg-cyan-500/10 shadow-sm border border-cyan-500/20' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-200 ${activeTab === item.key ? 'text-[#2C1A12] bg-[#F5EFE6] shadow-sm border border-[#E5DACB]' : 'text-[#6D6056] hover:bg-[#FAF7F2] hover:text-[#2C1A12]'}`}
             >
-              <item.icon className={`w-5 h-5 ${activeTab === item.key ? 'text-cyan-600' : 'text-slate-400'}`} />
+              <item.icon className={`w-5 h-5 ${activeTab === item.key ? 'text-[#C26D43]' : 'text-[#8A7D73]'}`} />
               {item.label}
             </button>
           ))}
         </nav>
-        <div className="p-4 border-t border-slate-200/80">
-          <button onClick={onLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-200 text-slate-600 hover:bg-rose-50 hover:text-rose-600">
-            <LogOut className="w-5 h-5 text-slate-400 group-hover:text-rose-500" /> Logout
+        <div className="p-4 border-t border-[#EDE4D8]">
+          <button onClick={onLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-200 text-[#6D6056] hover:bg-rose-50 hover:text-rose-600">
+            <LogOut className="w-5 h-5 text-[#8A7D73] group-hover:text-rose-500" /> Logout
           </button>
         </div>
       </aside>
 
       {/* ─── Main ──────────────────────────────────────────────── */}
-      <main id="main-content" className="flex-1 flex flex-col overflow-hidden w-full bg-slate-50/50">
+      <main id="main-content" className="flex-1 flex flex-col overflow-hidden w-full bg-[#FAF7F2]">
         {/* Header */}
-        <header className="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-4 md:px-8 shrink-0">
+        <header className="h-16 bg-white/90 backdrop-blur-md border-b border-[#EDE4D8] flex items-center justify-between px-4 md:px-8 shrink-0">
           <div className="flex items-center gap-3">
-            <button className="md:hidden text-slate-500 hover:text-slate-700" onClick={() => setIsMobileMenuOpen(true)}>
+            <button className="md:hidden text-[#8A7D73] hover:text-[#2C1A12]" onClick={() => setIsMobileMenuOpen(true)}>
               <Menu className="w-6 h-6" />
             </button>
-            <h2 className="text-lg font-bold text-slate-800 hidden sm:block">Teacher Workspace</h2>
+            <h2 className="font-serif text-lg font-bold text-[#2C1A12] hidden sm:block">Teacher Workspace</h2>
           </div>
           <div className="flex items-center gap-4">
             {/* Coins badge in header */}
-            <div className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 text-amber-800 px-3.5 py-1.5 rounded-full text-xs font-black shadow-sm">
-              <Coins className="w-4 h-4 text-amber-500" /> {teacher.coins} COINS
+            <div className="hidden sm:flex items-center gap-2 bg-[#F5EFE6] border border-[#E5DACB] text-[#2C1A12] px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm">
+              <Coins className="w-4 h-4 text-[#C26D43]" /> {teacher.coins} COINS
             </div>
-            <button className="text-slate-400 hover:text-slate-600 relative p-2 hover:bg-slate-100 rounded-full transition-colors">
+            <button className="text-[#8A7D73] hover:text-[#2C1A12] relative p-2 hover:bg-[#FAF7F2] rounded-full transition-colors">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#C26D43] rounded-full animate-pulse"></span>
             </button>
-            <div className="flex items-center gap-3 border-l border-slate-200 pl-4">
-              <span className="text-sm font-bold text-slate-700 hidden sm:block">{teacher.name}</span>
-              <img src={teacher.avatar} alt="Profile" className="w-8 h-8 rounded-full ring-2 ring-cyan-500/20 shadow-sm" referrerPolicy="no-referrer" />
+            <div className="flex items-center gap-3 border-l border-[#EDE4D8] pl-4">
+              <span className="text-sm font-semibold text-[#2C1A12] hidden sm:block">{teacher.name}</span>
+              <img src={teacher.avatar} alt="Profile" className="w-8 h-8 rounded-full ring-2 ring-[#EDE4D8] shadow-sm" referrerPolicy="no-referrer" />
             </div>
           </div>
         </header>
@@ -409,78 +406,78 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0 }}
-                  className="bg-white/90 backdrop-blur-md rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between"
+                  className="bg-white rounded-2xl p-5 border border-[#EDE4D8] shadow-sm flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center text-white shadow-md shadow-cyan-500/25">
-                      <FileText className="w-6 h-6" />
+                    <div className="w-12 h-12 bg-[#F5EFE6] rounded-2xl flex items-center justify-center text-[#2C1A12] border border-[#E5DACB]">
+                      <FileText className="w-6 h-6 text-[#C26D43]" />
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Notes</p>
-                      <p className="text-2xl font-black text-slate-900 tracking-tight">{myNotes.length}</p>
+                      <p className="text-[11px] font-bold text-[#8A7D73] uppercase tracking-wider">Total Notes</p>
+                      <p className="text-2xl font-black text-[#2C1A12] tracking-tight">{myNotes.length}</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-1 bg-cyan-50 text-cyan-700 rounded-lg border border-cyan-200">Sync Active</span>
+                  <span className="text-[10px] font-bold px-2 py-1 bg-[#F5EFE6] text-[#2C1A12] rounded-lg border border-[#E5DACB]">Sync Active</span>
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="bg-white/90 backdrop-blur-md rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between"
+                  className="bg-white rounded-2xl p-5 border border-[#EDE4D8] shadow-sm flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center text-white shadow-md shadow-amber-500/25">
-                      <TrendingUp className="w-6 h-6" />
+                    <div className="w-12 h-12 bg-[#F5EFE6] rounded-2xl flex items-center justify-center text-[#2C1A12] border border-[#E5DACB]">
+                      <TrendingUp className="w-6 h-6 text-[#C26D43]" />
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Avg AI Rating</p>
-                      <p className="text-2xl font-black text-slate-900 tracking-tight">{avgRating.toFixed(1)} <span className="text-xs text-slate-400 font-normal">/ 5.0</span></p>
+                      <p className="text-[11px] font-bold text-[#8A7D73] uppercase tracking-wider">Avg AI Rating</p>
+                      <p className="text-2xl font-black text-[#2C1A12] tracking-tight">{avgRating.toFixed(1)} <span className="text-xs text-[#8A7D73] font-normal">/ 5.0</span></p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-lg border border-amber-200">Quality Verified</span>
+                  <span className="text-[10px] font-bold px-2 py-1 bg-[#F5EFE6] text-[#2C1A12] rounded-lg border border-[#E5DACB]">Quality Verified</span>
                 </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="bg-white/90 backdrop-blur-md rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-between"
+                  className="bg-white rounded-2xl p-5 border border-[#EDE4D8] shadow-sm flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl flex items-center justify-center text-white shadow-md shadow-violet-500/25">
-                      <Award className="w-6 h-6" />
+                    <div className="w-12 h-12 bg-[#F5EFE6] rounded-2xl flex items-center justify-center text-[#2C1A12] border border-[#E5DACB]">
+                      <Award className="w-6 h-6 text-[#C26D43]" />
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Student Reviews</p>
-                      <p className="text-2xl font-black text-slate-900 tracking-tight">{totalRatings}</p>
+                      <p className="text-[11px] font-bold text-[#8A7D73] uppercase tracking-wider">Student Reviews</p>
+                      <p className="text-2xl font-black text-[#2C1A12] tracking-tight">{totalRatings}</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-1 bg-violet-50 text-violet-700 rounded-lg border border-violet-200">Community</span>
+                  <span className="text-[10px] font-bold px-2 py-1 bg-[#F5EFE6] text-[#2C1A12] rounded-lg border border-[#E5DACB]">Community</span>
                 </motion.div>
               </div>
 
               {/* ── Main Card ──────────────────────────────── */}
-              <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-200/80 overflow-hidden">
+              <div className="bg-white rounded-3xl shadow-sm border border-[#EDE4D8] overflow-hidden">
                 {/* Segmented Floating Tabs */}
-                <div className="flex border-b border-slate-200 bg-slate-50/60 p-2 gap-2">
+                <div className="flex border-b border-[#EDE4D8] bg-[#FAF7F2] p-2 gap-2">
                   <button
                     onClick={() => setDashboardTab('ai-generation')}
-                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${dashboardTab === 'ai-generation' ? 'bg-white text-cyan-700 shadow-sm border border-slate-200/80' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'}`}
+                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${dashboardTab === 'ai-generation' ? 'bg-white text-[#2C1A12] shadow-sm border border-[#EDE4D8]' : 'text-[#6D6056] hover:text-[#2C1A12] hover:bg-white/60'}`}
                   >
-                    <Sparkles className="w-4 h-4 text-cyan-600" /> AI Master Note
+                    <Sparkles className="w-4 h-4 text-[#C26D43]" /> AI Master Note
                   </button>
                   <button
                     onClick={() => setDashboardTab('raw-upload')}
-                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${dashboardTab === 'raw-upload' ? 'bg-white text-cyan-700 shadow-sm border border-slate-200/80' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'}`}
+                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${dashboardTab === 'raw-upload' ? 'bg-white text-[#2C1A12] shadow-sm border border-[#EDE4D8]' : 'text-[#6D6056] hover:text-[#2C1A12] hover:bg-white/60'}`}
                   >
-                    <Upload className="w-4 h-4 text-cyan-600" /> Raw Notes Upload
+                    <Upload className="w-4 h-4 text-[#C26D43]" /> Raw Notes Upload
                   </button>
                   <button
                     onClick={() => setDashboardTab('my-notes')}
-                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${dashboardTab === 'my-notes' ? 'bg-white text-cyan-700 shadow-sm border border-slate-200/80' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'}`}
+                    className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${dashboardTab === 'my-notes' ? 'bg-white text-[#2C1A12] shadow-sm border border-[#EDE4D8]' : 'text-[#6D6056] hover:text-[#2C1A12] hover:bg-white/60'}`}
                   >
-                    <FileText className="w-4 h-4 text-cyan-600" /> My Notes
+                    <FileText className="w-4 h-4 text-[#C26D43]" /> My Notes
                   </button>
                 </div>
 
@@ -488,26 +485,28 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                   {/* ─── AI Master Note Tab ──────────────── */}
                   {dashboardTab === 'ai-generation' && (
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
-                      {/* Dark Cyberpunk Banner */}
-                      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 rounded-3xl p-6 md:p-8 text-white relative overflow-hidden border border-slate-800 shadow-lg">
-                        <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-cyan-500/10 blur-3xl pointer-events-none" />
-                        <div className="absolute right-24 bottom-0 h-32 w-32 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
+                      {/* Warm Banner */}
+                      <div className="bg-gradient-to-br from-[#684736] via-[#75503D] to-[#5A3C2D] rounded-3xl p-6 md:p-8 text-white relative overflow-hidden border border-[#8A614A] shadow-lg shadow-[#5A3C2D]/10">
+                        <div className="absolute -right-8 -bottom-8 w-60 h-60 rounded-full bg-[#C26D43]/20 blur-3xl pointer-events-none" />
+                        <div className="absolute left-1/4 -top-12 w-48 h-48 rounded-full bg-amber-400/10 blur-2xl pointer-events-none" />
                         
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-bold tracking-wider uppercase mb-3">
-                          <Sparkles className="w-3.5 h-3.5" /> AI Synthesis Engine
+                        <div className="relative z-10">
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-[#FAF7F2] text-xs font-semibold uppercase tracking-wider mb-3 backdrop-blur-sm">
+                            <Sparkles className="w-3.5 h-3.5 text-[#F6C2A7]" /> AI Synthesis Engine
+                          </div>
+                          
+                          <h3 className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-white mb-2">
+                            Generate a Master Note
+                          </h3>
+                          <p className="text-[#F5EDE4] text-sm max-w-xl leading-relaxed">
+                            AI analyses and synthesises all teacher notes for a subject, combining them into one definitive, verified Master Study Guide with automatic quizzes and flashcards.
+                          </p>
                         </div>
-                        
-                        <h3 className="font-display text-2xl md:text-3xl font-black tracking-tight text-white mb-2">
-                          Generate a Master Note
-                        </h3>
-                        <p className="text-slate-300 text-sm max-w-xl leading-relaxed">
-                          AI analyses and synthesises all teacher notes for a subject, combining them into one definitive, verified Master Study Guide with automatic quizzes and flashcards.
-                        </p>
                       </div>
 
                       {/* Subject Selector */}
                       <div>
-                        <label className="block text-sm font-bold text-slate-800 mb-3">Select Subject Pipeline</label>
+                        <label className="block text-sm font-bold text-[#2C1A12] mb-3">Select Subject Pipeline</label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                           {subjects.map((s) => {
                             const count = subjectNotesCount(s.id);
@@ -516,11 +515,11 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                               <button
                                 key={s.id}
                                 onClick={() => setSelectedSubject(s.id)}
-                                className={`p-4 rounded-2xl border-2 text-center transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${isSelected ? 'border-cyan-500 bg-cyan-50/50 shadow-lg shadow-cyan-500/10 ring-2 ring-cyan-500/20' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50'}`}
+                                className={`p-4 rounded-2xl border text-center transition-all duration-200 hover:-translate-y-0.5 cursor-pointer ${isSelected ? 'border-[#684736] bg-[#F5EFE6] shadow-sm ring-2 ring-[#684736]' : 'border-[#EDE4D8] bg-white hover:border-[#DFD2C0] hover:bg-[#FAF7F2]'}`}
                               >
                                 <span className="text-3xl block mb-2">{s.icon}</span>
-                                <span className="text-xs font-bold text-slate-800 leading-tight block truncate">{s.name}</span>
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full mt-2 inline-block ${count > 0 ? 'bg-cyan-100 text-cyan-800' : 'bg-slate-100 text-slate-500'}`}>
+                                <span className="text-xs font-bold text-[#2C1A12] leading-tight block truncate">{s.name}</span>
+                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full mt-2 inline-block ${count > 0 ? 'bg-[#FAF7F2] text-[#2C1A12] border border-[#EDE4D8]' : 'bg-slate-100 text-slate-500'}`}>
                                   {count} {count === 1 ? 'note' : 'notes'}
                                 </span>
                               </button>
@@ -536,7 +535,7 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                           {subjectNotesCount(selectedSubject) === 0 && (
                             <button
                               onClick={() => setDashboardTab('raw-upload')}
-                              className="text-xs font-bold text-cyan-600 hover:text-cyan-700 flex items-center gap-1 cursor-pointer"
+                              className="text-xs font-bold text-[#C26D43] hover:text-[#A85832] flex items-center gap-1 cursor-pointer"
                             >
                               <Upload className="w-3.5 h-3.5" /> Upload for this subject
                             </button>
@@ -547,8 +546,8 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                           {notes
                             .filter((n) => n.subjectId === selectedSubject && n.type === 'raw')
                             .map((n) => (
-                              <div key={n.id} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-cyan-400/40 hover:shadow-md transition-all">
-                                <div className="w-10 h-10 bg-cyan-500/10 text-cyan-600 rounded-xl flex items-center justify-center shrink-0">
+                              <div key={n.id} className="flex items-center gap-4 p-4 rounded-2xl border border-[#EDE4D8] bg-[#FAF7F2]/60 hover:bg-white hover:border-[#DFD2C0] hover:shadow-md transition-all">
+                                <div className="w-10 h-10 bg-[#F5EFE6] text-[#C26D43] rounded-xl flex items-center justify-center shrink-0 border border-[#E5DACB]">
                                   <FileText className="w-5 h-5" />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -559,13 +558,13 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                               </div>
                             ))}
                           {subjectNotesCount(selectedSubject) === 0 && (
-                            <div className="text-center py-10 px-4 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/50">
+                            <div className="text-center py-10 px-4 rounded-2xl border-2 border-dashed border-[#EDE4D8] bg-[#FAF7F2]/50">
                               <BookOpen className="w-8 h-8 mx-auto mb-2 text-slate-300" />
                               <p className="font-bold text-slate-700 text-sm">No raw notes for this subject yet</p>
                               <p className="text-xs text-slate-400 mt-1 mb-4">Upload note materials to feed the AI synthesis engine</p>
                               <button
                                 onClick={() => setDashboardTab('raw-upload')}
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition-colors cursor-pointer"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#684736] hover:bg-[#58392B] text-white text-xs font-bold transition-colors cursor-pointer"
                               >
                                 <Upload className="w-3.5 h-3.5" /> Upload First Note
                               </button>
@@ -574,11 +573,11 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                         </div>
                       </div>
 
-                      <div className="flex justify-end pt-4 border-t border-slate-200">
+                      <div className="flex justify-end pt-4 border-t border-[#EDE4D8]">
                         <button
                           onClick={handleGenerateMaster}
                           disabled={isGenerating || subjectNotesCount(selectedSubject) === 0}
-                          className="w-full sm:w-auto bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:via-blue-500 hover:to-indigo-500 text-white px-8 py-4 rounded-2xl font-bold tracking-wide shadow-xl shadow-cyan-500/25 transition-all hover:shadow-cyan-500/40 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 cursor-pointer"
+                          className="w-full sm:w-auto bg-gradient-to-r from-[#C26D43] via-[#B86237] to-[#A85832] hover:from-[#B56238] hover:via-[#A75429] hover:to-[#964B26] text-white px-8 py-4 rounded-2xl font-bold tracking-wide shadow-xl shadow-[#C26D43]/25 transition-all hover:shadow-[#C26D43]/40 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 cursor-pointer"
                         >
                           {isGenerating ? (
                             <>
@@ -598,9 +597,20 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                   {/* ─── Raw Upload Tab ──────────────── */}
                   {dashboardTab === 'raw-upload' && (
                     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
-                      <div>
-                        <h3 className="text-lg font-bold text-slate-800 mb-2">Upload Raw Notes</h3>
-                        <p className="text-slate-500 text-sm">Upload your notes — AI will automatically rate them on a scale of 1-5 and award you coins.</p>
+                      {/* Warm Banner */}
+                      <div className="bg-gradient-to-br from-[#684736] via-[#75503D] to-[#5A3C2D] rounded-3xl p-6 md:p-8 text-white relative overflow-hidden border border-[#8A614A] shadow-lg shadow-[#5A3C2D]/10">
+                        <div className="absolute -right-8 -bottom-8 w-60 h-60 rounded-full bg-[#C26D43]/20 blur-3xl pointer-events-none" />
+                        <div className="relative z-10">
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-[#FAF7F2] text-xs font-semibold uppercase tracking-wider mb-3 backdrop-blur-sm">
+                            <Upload className="w-3.5 h-3.5 text-[#F6C2A7]" /> Direct Notes Upload
+                          </div>
+                          <h3 className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-white mb-2">
+                            Upload Raw Notes
+                          </h3>
+                          <p className="text-[#F5EDE4] text-sm max-w-xl leading-relaxed">
+                            Upload note materials to feed the AI synthesis engine. AI will automatically evaluate content quality and award you coins.
+                          </p>
+                        </div>
                       </div>
 
                       <div>
@@ -693,7 +703,7 @@ export default function TeacherDashboard({ onGenerate, onPublishDirectly, onLogo
                         <button
                           onClick={handleRawUpload}
                           disabled={isAnalyzing || isExtracting}
-                          className="w-full sm:w-auto bg-slate-800 hover:bg-slate-900 text-white px-8 py-4 rounded-xl font-bold tracking-wide shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full sm:w-auto bg-[#684736] hover:bg-[#58392B] text-white px-8 py-4 rounded-xl font-bold tracking-wide shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                         >
                           {isAnalyzing ? (
                             <>
